@@ -1,0 +1,21 @@
+import styled from "styled-components";
+
+export default styled.button`
+    min-width: max-content;
+    height: max-content;
+    font-size: 1em ;
+    margin-right: 10px;
+    padding: 5px 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 2px ;
+
+    &:hover{
+      background-color: yellow;
+    }
+
+    &:active{
+      box-shadow: none ;
+      background-color: green;
+    }
+`;

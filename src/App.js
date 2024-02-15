@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Navigation from './Navigation';
+import Container from './common/Container';
+import Header from './common/Header';
+import Tasks from './features/Tasks';
+import useTasks from './features/useTasks';
 
-function App() {
+const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const { loading } = useTasks();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Container>
+        <Header>{loading ? "Ładowanie ..." : "Lista zadań"}</Header>
+        {loading || <Tasks loggedIn={loggedIn} />}
+      </Container>
+    </>
   );
-}
+};
 
 export default App;
