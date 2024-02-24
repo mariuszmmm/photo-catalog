@@ -11,7 +11,7 @@ export const Nav = styled.nav`
   font-weight: 700;
   border-bottom: 1px solid black;
   padding: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 `;
 
 export const Input = styled.input`

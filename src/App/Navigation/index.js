@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Nav, Input, LogInfo } from "./styled";
-import Button from "../common/Button";
+import Button from "../../common/Button";
 
 const Navigation = ({ loggedIn, setLoggedIn }) => {
   const [userName, setUserName] = useState('admin');
@@ -52,9 +52,19 @@ const Navigation = ({ loggedIn, setLoggedIn }) => {
       }
       {!loggedIn && showLoginForm &&
         <form onSubmit={handleSubmit}>
-          <Input value={userName} $incorrect={incorrectLogin} onChange={handleOnInputUser} onClick={handleOnInputUser} />
+          <Input
+            value={userName}
+            $incorrect={incorrectLogin}
+            onChange={handleOnInputUser}
+            onClick={handleOnInputUser}
+          />
           password:
-          <Input value={password} $incorrect={incorrectLogin} onChange={handleOnInputPassword} onClick={handleOnInputUser} />
+          <Input
+            value={password}
+            $incorrect={incorrectLogin}
+            onChange={handleOnInputPassword}
+            onClick={handleOnInputUser}
+          />
           <Button type="onSumbit" >Zaloguj</Button>
         </form>
       }
