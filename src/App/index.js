@@ -9,7 +9,6 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [state, setState] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
-  console.log("API_URL: ", API_URL);
 
   return (
     <>
