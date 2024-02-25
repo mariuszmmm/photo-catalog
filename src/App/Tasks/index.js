@@ -6,8 +6,7 @@ import Form from "../../common/Form";
 import Loader from "../../common/Loader";
 import Img from "../../common/Img";
 import InputFile from "../../common/InputFile";
-import { API_URL } from "../../features/api";
-
+import { API_URL } from "../../api";
 
 const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
 
@@ -84,10 +83,10 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
                 <>
                   <Button type="button" onClick={() => setEditedTaskId(task._id)}>
                     Edytuj
-                    </Button>
+                  </Button>
                   <Button type="button" onClick={() => deleteTask(task._id)}>
                     Usuń zadanie
-                    </Button>
+                  </Button>
                 </>}
             </>}
         </ItemsContainer>
