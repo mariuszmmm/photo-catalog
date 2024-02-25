@@ -4,7 +4,8 @@ export default styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 35px;
+  text-shadow: 10px 5px 15px teal;
+  font-size: 50px;
   font-weight: 900;
   position: fixed;
   top: 0;
