@@ -31,7 +31,8 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
 
   return (
     <>
-      {loading && <Loader />}
+      {loading &&
+        <Loader>ŁADOWANIE ...</Loader>}
       <Form onSubmit={addNewTask}  >
         {loggedIn &&
           <ItemsContainer>

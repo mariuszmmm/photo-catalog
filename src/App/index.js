@@ -3,7 +3,6 @@ import Navigation from './Navigation';
 import Container from '../common/Container';
 import Header from '../common/Header';
 import Tasks from './Tasks';
-import { API_URL } from '../api';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -17,7 +16,7 @@ const App = () => {
         setLoggedIn={setLoggedIn}
       />
       <Container>
-        <Header>{loading ? "Ładowanie ..." : "Lista zadań"}</Header>
+        <Header>Lista zadań</Header>
         <Tasks
           loading={loading}
           setLoading={setLoading}

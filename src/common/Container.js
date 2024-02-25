@@ -7,6 +7,6 @@ export default styled.div`
   flex-direction: column;
   align-items: left;
   /* border: 1px solid black; */
-  width: 400px;
+  width: 600px;
   gap: 10px;
 `;
