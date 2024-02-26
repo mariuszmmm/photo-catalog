@@ -52,13 +52,14 @@ const Navigation = ({ loggedIn, setLoggedIn }) => {
       }
       {!loggedIn && showLoginForm &&
         <form onSubmit={handleSubmit}>
+          user: 
           <Input
             value={userName}
             $incorrect={incorrectLogin}
             onChange={handleOnInputUser}
             onClick={handleOnInputUser}
           />
-          password:
+          password: 
           <Input
             value={password}
             $incorrect={incorrectLogin}

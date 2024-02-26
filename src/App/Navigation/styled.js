@@ -20,8 +20,8 @@ export const Input = styled.input`
   padding: 15px;
   border: 1px solid black;
   border-radius: 5px;
-  font-size: 1em ;
-  margin-right: 10px;
+  font-size: 1em;
+  margin: 0 20px 0 5px;
 
   ${({ $incorrect }) => $incorrect && css`
     background-color: #f78e8e;

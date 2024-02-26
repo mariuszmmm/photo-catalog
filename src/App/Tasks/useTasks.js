@@ -66,6 +66,11 @@ const useTasks = (state, setState, setLoading) => {
         updateItemInBackEnd(formdata, editedTaskId) : sendItemToBackEnd(formdata));
       const res = await getItemFromBackEnd()
       setState(res.data)
+      setEditedTaskId(null)
+      setEditContent("");
+      setEditFile(null);
+      setEditImage(null);
+      setImageEditTarget(null);
       setLoading(false)
       if (imageTarget) imageTarget.value = null;
     } catch (err) {
@@ -95,11 +100,7 @@ const useTasks = (state, setState, setLoading) => {
       return
     }
     handleUpload(editFile, editContent, imageEditTarget, editedTaskId);
-    setEditedTaskId(null)
-    setEditContent("");
-    setEditFile(null);
-    setEditImage(null);
-    setImageEditTarget(null);
+
   };
 
   const deleteTask = async (id) => {

@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
 export default styled.img`
-border: 1px black solid;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  visibility: ${props => props.isLoaded ? 'visible' : 'hidden'};
 `;
+

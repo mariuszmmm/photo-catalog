@@ -9,6 +9,7 @@ export default styled.button`
     border: 1px solid black;
     border-radius: 5px;
     box-shadow: 2px 2px 2px 2px ;
+    cursor: pointer;
 
     &:hover{
       background-color: yellow;
@@ -17,5 +18,14 @@ export default styled.button`
     &:active{
       box-shadow: none ;
       background-color: green;
+    }
+
+    &:disabled{
+      background-color: inherit;
+      cursor: auto;
+    }
+
+    &:disabled:active{
+      box-shadow: 2px 2px 2px 2px ;
     }
 `;

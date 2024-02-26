@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: end;
   gap: 15px;
   padding: 10px;
   border: 1px solid black;
@@ -12,5 +12,6 @@ export default styled.div`
   p{
     margin:0 10px 0 0;
     font-weight:700;
+    flex-grow: 1;
   }
 `;

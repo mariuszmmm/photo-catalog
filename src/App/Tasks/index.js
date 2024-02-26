@@ -4,11 +4,11 @@ import Textarea from "../../common/Textarea";
 import useTasks from "./useTasks";
 import FormContainer from "../../common/FormContainer";
 import TaskContainer from "../../common/TaskContainer";
-import ImgContainer from "../../common/ImgContainer";
 import Loader from "../../common/Loader";
 import Img from "../../common/Img";
 import InputFile from "../../common/InputFile";
-import { API_URL } from "../../api";
+import { Image } from "./Image";
+import ImgContainer from "../../common/ImgContainer";
 
 const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
 
@@ -37,7 +37,6 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
         <Loader>ŁADOWANIE ...</Loader>}
       {loggedIn && <FormContainer>
         <form onSubmit={addNewTask}  >
-
           <ItemsContainer>
             <Textarea
               ref={areaRef}
@@ -45,9 +44,12 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
               type="text"
               name="textarea"
               value={newTask}
+              placeholder="wpisz tekst"
               onChange={inputNewTaskHandler}
             />
-            {image && <Img src={image} alt="image task" />}
+            <ImgContainer>
+              {image && <Img src={image} alt="image task" />}
+            </ImgContainer>
             <InputFile type="file" onChange={handleFileChange} />
             <Button type="onSumbit">Dodaj</Button>
           </ItemsContainer>
@@ -57,9 +59,8 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
 
 
       <TaskContainer>
-        {state.map((task, index) =>
+        {state.map((task) =>
           <ItemsContainer key={task._id}>
-            <p>{index + 1}.({task._id})</p>
             {editedTaskId === task._id ? <Textarea
               ref={areaEditRef}
               type="text"
@@ -67,15 +68,7 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
               value={editContent || setEditContent(task.content)}
               onChange={(event) => setEditContent(event.target.value)}
             /> : <p>{task.content}</p>}
-            {/* <ImgContainer> */}
-              {editedTaskId === task._id ?
-                (editImage ?
-                  <Img src={editImage} alt="aaa" />
-                  :
-                  task.image && <Img src={`${API_URL}/Images/` + task.image} alt="image task" />)
-                :
-                task.image && <Img src={`${API_URL}/Images/` + task.image} alt="image task" />}
-            {/* </ImgContainer> */}
+            {<Image task={task} editedTaskId={editedTaskId} editImage={editImage} />}
             {loggedIn &&
               <>
                 {editedTaskId ?
