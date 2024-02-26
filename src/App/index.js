@@ -15,8 +15,8 @@ const App = () => {
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
       />
+      <Header>Lista zadań</Header>
       <Container>
-        <Header>Lista zadań</Header>
         <Tasks
           loading={loading}
           setLoading={setLoading}

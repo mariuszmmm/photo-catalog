@@ -2,7 +2,9 @@ import Button from "../../common/Button";
 import ItemsContainer from "../../common/ItemsContainer";
 import Textarea from "../../common/Textarea";
 import useTasks from "./useTasks";
-import Form from "../../common/Form";
+import FormContainer from "../../common/FormContainer";
+import TaskContainer from "../../common/TaskContainer";
+import ImgContainer from "../../common/ImgContainer";
 import Loader from "../../common/Loader";
 import Img from "../../common/Img";
 import InputFile from "../../common/InputFile";
@@ -33,8 +35,9 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
     <>
       {loading &&
         <Loader>ŁADOWANIE ...</Loader>}
-      <Form onSubmit={addNewTask}  >
-        {loggedIn &&
+      {loggedIn && <FormContainer>
+        <form onSubmit={addNewTask}  >
+
           <ItemsContainer>
             <Textarea
               ref={areaRef}
@@ -48,50 +51,56 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
             <InputFile type="file" onChange={handleFileChange} />
             <Button type="onSumbit">Dodaj</Button>
           </ItemsContainer>
-        }
-      </Form >
-      <p>Ilość zadań: {state.length}</p>
-      {state.map((task, index) =>
-        <ItemsContainer key={task._id}>
-          <p>{index + 1}.({task._id})</p>
-          {editedTaskId === task._id ? <Textarea
-            ref={areaEditRef}
-            type="text"
-            name="textarea"
-            value={editContent || setEditContent(task.content)}
-            onChange={(event) => setEditContent(event.target.value)}
-          /> : <p>{task.content}</p>}
-          {editedTaskId === task._id ?
-            (editImage ?
-              <Img src={editImage} alt="aaa" />
-              :
-              task.image && <Img src={`${API_URL}/Images/` + task.image} alt="image task" />)
-            :
-            task.image && <Img src={`${API_URL}/Images/` + task.image} alt="image task" />}
-          {loggedIn &&
-            <>
-              {editedTaskId ?
-                <>
-                  <InputFile type="file" onChange={(event) => handleEditFileChange(event, task._id)} disabled={editedTaskId !== task._id} />
-                  <Button type="button" onClick={() => deleteImage(task._id)} disabled={editedTaskId !== task._id}>
-                    Usuń zdjęcie
-                  </Button>
-                  <Button type="button" onClick={() => saveEditedTask(task._id)} disabled={editedTaskId !== task._id}>
-                    Zapisz
-                  </Button>
-                </>
+          <p>Ilość zadań: {state.length}</p>
+        </form>
+      </FormContainer >}
+
+
+      <TaskContainer>
+        {state.map((task, index) =>
+          <ItemsContainer key={task._id}>
+            <p>{index + 1}.({task._id})</p>
+            {editedTaskId === task._id ? <Textarea
+              ref={areaEditRef}
+              type="text"
+              name="textarea"
+              value={editContent || setEditContent(task.content)}
+              onChange={(event) => setEditContent(event.target.value)}
+            /> : <p>{task.content}</p>}
+            {/* <ImgContainer> */}
+              {editedTaskId === task._id ?
+                (editImage ?
+                  <Img src={editImage} alt="aaa" />
+                  :
+                  task.image && <Img src={`${API_URL}/Images/` + task.image} alt="image task" />)
                 :
-                <>
-                  <Button type="button" onClick={() => setEditedTaskId(task._id)}>
-                    Edytuj
-                  </Button>
-                  <Button type="button" onClick={() => deleteTask(task._id)}>
-                    Usuń zadanie
-                  </Button>
-                </>}
-            </>}
-        </ItemsContainer>
-      )}
+                task.image && <Img src={`${API_URL}/Images/` + task.image} alt="image task" />}
+            {/* </ImgContainer> */}
+            {loggedIn &&
+              <>
+                {editedTaskId ?
+                  <>
+                    <InputFile type="file" onChange={(event) => handleEditFileChange(event, task._id)} disabled={editedTaskId !== task._id} />
+                    <Button type="button" onClick={() => deleteImage(task._id)} disabled={editedTaskId !== task._id}>
+                      Usuń zdjęcie
+                    </Button>
+                    <Button type="button" onClick={() => saveEditedTask(task._id)} disabled={editedTaskId !== task._id}>
+                      Zapisz
+                    </Button>
+                  </>
+                  :
+                  <>
+                    <Button type="button" onClick={() => setEditedTaskId(task._id)}>
+                      Edytuj
+                    </Button>
+                    <Button type="button" onClick={() => deleteTask(task._id)}>
+                      Usuń zadanie
+                    </Button>
+                  </>}
+              </>}
+          </ItemsContainer>
+        )}
+      </TaskContainer>
     </>
   )
 };
