@@ -5,6 +5,7 @@ export default styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  visibility: visible;
   ${({ isLoaded }) => !isLoaded && css`visibility: hidden`}
 `;
 
