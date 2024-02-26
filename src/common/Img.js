@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export default styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  visibility: ${props => props.isLoaded ? 'visible' : 'hidden'};
+  ${({ isLoaded }) => !isLoaded && css`visibility: "hidden"`}
 `;
 
