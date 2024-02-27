@@ -5,24 +5,23 @@ import Header from '../common/Header';
 import Tasks from './Tasks';
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
-  const [state, setState] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [state, setState] = useState({
+    loading: true,
+    loggedIn: false,
+    tasks: []
+  });
 
   return (
     <>
       <Navigation
-        loggedIn={loggedIn}
-        setLoggedIn={setLoggedIn}
+        state={state}
+        setState={setState}
       />
       <Header>Lista zadań</Header>
       <Container>
         <Tasks
-          loading={loading}
-          setLoading={setLoading}
           state={state}
           setState={setState}
-          loggedIn={loggedIn}
         />
       </Container>
     </>

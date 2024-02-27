@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useFetch from "./useFetch";
 
-const useTasks = (state, setState, setLoading) => {
+const useTasks = (state, setState) => {
   const areaRef = useRef(null);
   const areaEditRef = useRef(null);
 
@@ -22,11 +22,19 @@ const useTasks = (state, setState, setLoading) => {
     updateItemInBackEnd,
     deleteItemFromBackEnd,
     deleteTaskImageFromBackEnd
-  } = useFetch(state, setState, setLoading);
+  } = useFetch();
 
   const inputNewTaskHandler = ({ target }) => {
     setNewTask(target.value);
   };
+
+  const createFormData = (file, content) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('content', content);
+    return formData;
+  }
+
 
   //convert to base64encoded (string)
   const convertToBase64 = (targetFile, set) => {
@@ -54,27 +62,51 @@ const useTasks = (state, setState, setLoading) => {
     convertToBase64(targetFile, setEditImage)
   };
 
-  const handleUpload = async (file, content, imageTarget, editedTaskId) => {
-    setLoading(true)
-
-    const formdata = new FormData();
-    formdata.append('file', file);
-    formdata.append('content', content);
+  const handleAddNewTask = async (imageTarget) => {
+    const formData = createFormData(file, newTask);
 
     try {
-      await (editedTaskId ?
-        updateItemInBackEnd(formdata, editedTaskId) : sendItemToBackEnd(formdata));
-      const res = await getItemFromBackEnd()
-      setState(res.data)
+      const res = await sendItemToBackEnd(formData)
+      setState({
+        ...state,
+        tasks: [...state.tasks, res.data],
+        loading: false,
+      });
       setEditedTaskId(null)
       setEditContent("");
       setEditFile(null);
       setEditImage(null);
       setImageEditTarget(null);
-      setLoading(false)
+
       if (imageTarget) imageTarget.value = null;
     } catch (err) {
-      alert("error in handleUpload: ", err)
+      alert("error in handleAddNewTask: ", err)
+    }
+  };
+
+  const handleSaveEditedTask = async (imageTarget, editedTaskId) => {
+    const formData = createFormData(editFile, editContent)
+    try {
+      const res = await updateItemInBackEnd(formData, editedTaskId);
+
+      const newTasks = state.tasks.map((task) => (
+        task._id !== res.data._id ? task : res.data
+      ));
+
+      setState({
+        ...state,
+        tasks: newTasks,
+        loading: false,
+      });
+      setEditedTaskId(null)
+      setEditContent("");
+      setEditFile(null);
+      setEditImage(null);
+      setImageEditTarget(null);
+
+      if (imageTarget) imageTarget.value = null;
+    } catch (err) {
+      alert("error in handleSaveEditedTask: ", err)
     }
   };
 
@@ -85,8 +117,9 @@ const useTasks = (state, setState, setLoading) => {
       areaRef.current.focus();
       return
     }
-    setLoading(true)
-    handleUpload(file, newTask, imageTarget);
+
+    handleAddNewTask(imageTarget);
+
     setNewTask("");
     setFile(null);
     setImage(null);
@@ -99,29 +132,35 @@ const useTasks = (state, setState, setLoading) => {
       areaEditRef.current.focus();
       return
     }
-    handleUpload(editFile, editContent, imageEditTarget, editedTaskId);
+    handleSaveEditedTask(imageEditTarget, editedTaskId);
 
   };
 
   const deleteTask = async (id) => {
-    setLoading(true)
     try {
       await deleteItemFromBackEnd(id);
-      const res = await getItemFromBackEnd()
-      setState(res.data)
-      setLoading(false)
+      const newTasks = state.tasks.filter((task) => task._id !== id);
+      setState({
+        ...state,
+        tasks: newTasks,
+        loading: false,
+      });
     } catch (err) {
       alert("error in deleteTask: ", err)
     }
   };
 
   const deleteImage = async (id) => {
-    setLoading(true)
     try {
       await deleteTaskImageFromBackEnd(id)
-      const res = await getItemFromBackEnd()
-      setState(res.data)
-      setLoading(false)
+      const newTasks = state.tasks.map((task) => (
+        task._id === id ? { ...task, image: null } : task));
+
+      setState({
+        ...state,
+        tasks: newTasks,
+        loading: false,
+      });
     } catch (err) {
       alert("error in deleteImage: ", err)
     }
@@ -131,8 +170,11 @@ const useTasks = (state, setState, setLoading) => {
     const fetchData = async () => {
       try {
         const res = await getItemFromBackEnd()
-        setState(res.data)
-        setLoading(false)
+        setState({
+          ...state,
+          tasks: [...res.data],
+          loading: false,
+        })
       } catch (err) {
         alert("error in fetchData: ", err)
       }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Nav, Input, LogInfo } from "./styled";
 import Button from "../../common/Button";
 
-const Navigation = ({ loggedIn, setLoggedIn }) => {
+const Navigation = ({ loggedIn, setLoggedIn, state, setState }) => {
   const [userName, setUserName] = useState('admin');
   const [password, setPassword] = useState('admin');
   const [incorrectLogin, setIncorrectLogin] = useState(false)
@@ -26,7 +26,7 @@ const Navigation = ({ loggedIn, setLoggedIn }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    isCorrectLogin() && setLoggedIn(true)
+    isCorrectLogin() && setState({ ...state, loggedIn: true })
   };
 
   const handleOnInputUser = ({ target }) => {
@@ -40,26 +40,26 @@ const Navigation = ({ loggedIn, setLoggedIn }) => {
   }
 
   const handleLogout = () => {
-    setLoggedIn(false);
+    setState({ ...state, loggedIn: false });
     setShowLoginForm(false);
   };
 
   return (
     <Nav>
-      {loggedIn && <LogInfo>zalogowano : {user.name}</LogInfo>}
-      {!loggedIn && !showLoginForm &&
+      {state.loggedIn && <LogInfo>zalogowano : {user.name}</LogInfo>}
+      {!state.loggedIn && !showLoginForm &&
         <Button onClick={handleLogin}>Logowanie</Button>
       }
-      {!loggedIn && showLoginForm &&
+      {!state.loggedIn && showLoginForm &&
         <form onSubmit={handleSubmit}>
-          user: 
+          user:
           <Input
             value={userName}
             $incorrect={incorrectLogin}
             onChange={handleOnInputUser}
             onClick={handleOnInputUser}
           />
-          password: 
+          password:
           <Input
             value={password}
             $incorrect={incorrectLogin}
@@ -69,7 +69,7 @@ const Navigation = ({ loggedIn, setLoggedIn }) => {
           <Button type="onSumbit" >Zaloguj</Button>
         </form>
       }
-      {loggedIn &&
+      {state.loggedIn &&
         <Button onClick={handleLogout}>Wyloguj</Button>
       }
     </Nav>

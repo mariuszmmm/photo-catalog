@@ -10,7 +10,7 @@ import InputFile from "../../common/InputFile";
 import { Image } from "./Image";
 import ImgContainer from "../../common/ImgContainer";
 
-const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
+const Tasks = ({ state, setState }) => {
 
   const {
     areaRef,
@@ -29,15 +29,18 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
     setEditedTaskId,
     setEditContent,
     handleEditFileChange,
-  } = useTasks(state, setState, setLoading);
+  } = useTasks(state, setState);
 
   return (
     <>
-      {loading &&
+      {state.loading &&
         <Loader>ŁADOWANIE ...</Loader>}
-      {loggedIn && <FormContainer>
+      {state.loggedIn &&
         <form onSubmit={addNewTask}  >
-          <ItemsContainer>
+          <FormContainer>
+            <ImgContainer>
+              {image && <Img $isLoaded={image} src={image} alt="image task" />}
+            </ImgContainer>
             <Textarea
               ref={areaRef}
               autoFocus
@@ -47,19 +50,14 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
               placeholder="wpisz tekst"
               onChange={inputNewTaskHandler}
             />
-            <ImgContainer>
-              {image && <Img $isLoaded={image} src={image} alt="image task" />}
-            </ImgContainer>
             <InputFile type="file" onChange={handleFileChange} />
             <Button type="onSumbit">Dodaj</Button>
-          </ItemsContainer>
-          <p>Ilość zadań: {state.length}</p>
+            <p>Ilość zadań: {state.tasks.length}</p>
+          </FormContainer>
         </form>
-      </FormContainer >}
-
-
+      }
       <TaskContainer>
-        {state.map((task) =>
+        {state.tasks.map((task) =>
           <ItemsContainer key={task._id}>
             {editedTaskId === task._id ? <Textarea
               ref={areaEditRef}
@@ -69,7 +67,7 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
               onChange={(event) => setEditContent(event.target.value)}
             /> : <p>{task.content}</p>}
             {<Image task={task} editedTaskId={editedTaskId} editImage={editImage} />}
-            {loggedIn &&
+            {state.loggedIn &&
               <>
                 {editedTaskId ?
                   <>

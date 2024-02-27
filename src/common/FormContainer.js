@@ -2,7 +2,12 @@ import styled from "styled-components";
 
 export default styled.div`
   display: grid;
-  grid-template-columns: 50%;
   justify-content: center;
-  gap: 50px;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 10%;
+
+  @media (max-width:760px){
+    grid-template-columns: 60%;
+  }
 `;
