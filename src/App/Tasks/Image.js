@@ -10,11 +10,11 @@ export const Image = ({ task, editedTaskId, editImage }) => {
     <ImgContainer>
       {editedTaskId === task._id ?
         (editImage ?
-          <Img isLoaded={editImage} src={editImage} alt="aaa" />
+          <Img $isLoaded={editImage} src={editImage} alt="aaa" />
           :
-          task.image && <Img isLoaded={task.image} src={`${API_URL}/Images/` + task.image} alt="image task" />)
+          task.image && <Img $isLoaded={task.image} src={`${API_URL}/Images/` + task.image} alt="image task" />)
         :
-        task.image && <Img isLoaded={isLoaded} onLoad={() => setIsLoaded(true)} src={`${API_URL}/Images/` + task.image} alt="image task" />}
+        task.image && <Img $isLoaded={isLoaded} onLoad={() => setIsLoaded(true)} src={`${API_URL}/Images/` + task.image} alt="image task" />}
     </ImgContainer>
   )
 };

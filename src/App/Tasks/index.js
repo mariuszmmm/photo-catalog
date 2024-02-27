@@ -48,7 +48,7 @@ const Tasks = ({ loading, setLoading, state, setState, loggedIn }) => {
               onChange={inputNewTaskHandler}
             />
             <ImgContainer>
-              {image && <Img isLoaded={image} src={image} alt="image task" />}
+              {image && <Img $isLoaded={image} src={image} alt="image task" />}
             </ImgContainer>
             <InputFile type="file" onChange={handleFileChange} />
             <Button type="onSumbit">Dodaj</Button>
