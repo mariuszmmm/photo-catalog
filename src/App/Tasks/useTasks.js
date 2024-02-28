@@ -31,9 +31,16 @@ const useTasks = (state, setState) => {
     deleteTaskImageFromBackEnd
   } = useFetch();
 
-  const inputNewTaskHandler = ({ target }) => {
+  const newTaskContentChange = ({ target }) => {
     setNewTask({
       ...newTask,
+      content: target.value,
+    });
+  };
+
+  const editedTaskContentChange = ({ target }) => {
+    setEditedTask({
+      ...editedTask,
       content: target.value,
     });
   };
@@ -63,7 +70,7 @@ const useTasks = (state, setState) => {
     };
   };
 
-  const handleNewFileChange = (event) => {
+  const newTaskFileChange = (event) => {
     const targetFile = event.target.files[0];
     setNewTask(
       {
@@ -75,7 +82,7 @@ const useTasks = (state, setState) => {
     convertToBase64(targetFile, newTask, setNewTask);
   };
 
-  const handleEditFileChange = (event) => {
+  const editedTaskFileChange = (event) => {
     const targetFile = event.target.files[0]
     setEditedTask(
       {
@@ -224,19 +231,18 @@ const useTasks = (state, setState) => {
 
   return {
     areaRef,
-    areaEditRef,
-    inputNewTaskHandler,
-    addNewTask,
-    deleteTask,
-    handleNewFileChange,
-    deleteImage,
-    saveEditedTask,
-    handleEditFileChange,
-
     newTask,
-    setNewTask,
+    addNewTask,
+    newTaskContentChange,
+    newTaskFileChange,
+    areaEditRef,
     editedTask,
-    setEditedTask
+    editedTaskContentChange,
+    editedTaskFileChange,
+    setEditedTask,
+    deleteTask,
+    deleteImage,
+    saveEditedTask
   };
 };
 
