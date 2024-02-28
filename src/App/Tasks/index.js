@@ -69,7 +69,7 @@ const Tasks = ({ state, setState }) => {
                 {editedTask.id ?
                   <>
                     <InputFile type="file" onChange={(event) => handleEditFileChange(event, task._id)} disabled={editedTask.id !== task._id} />
-                    <Button type="button" onClick={() => deleteImage(task._id)} disabled={editedTask.id !== task._id}>
+                    <Button type="button" onClick={() => deleteImage(task._id)} disabled={(editedTask.id !== task._id) || !task.image}>
                       Usuń zdjęcie
                     </Button>
                     <Button type="button" onClick={() => saveEditedTask(task._id)} disabled={editedTask.id !== task._id}>
