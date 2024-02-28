@@ -11,24 +11,20 @@ import { Image } from "./Image";
 import ImgContainer from "../../common/ImgContainer";
 
 const Tasks = ({ state, setState }) => {
-
   const {
     areaRef,
     areaEditRef,
-    newTask,
     inputNewTaskHandler,
     addNewTask,
     deleteTask,
-    handleFileChange,
-    image,
+    handleNewFileChange,
     deleteImage,
     saveEditedTask,
-    editedTaskId,
-    editContent,
-    editImage,
-    setEditedTaskId,
-    setEditContent,
     handleEditFileChange,
+
+    newTask,
+    editedTask,
+    setEditedTask
   } = useTasks(state, setState);
 
   return (
@@ -39,18 +35,18 @@ const Tasks = ({ state, setState }) => {
         <form onSubmit={addNewTask}  >
           <FormContainer>
             <ImgContainer>
-              {image && <Img $isLoaded={image} src={image} alt="image task" />}
+              {newTask.image && <Img $isLoaded={newTask.image} src={newTask.image} alt="image task" />}
             </ImgContainer>
             <Textarea
               ref={areaRef}
               autoFocus
               type="text"
               name="textarea"
-              value={newTask}
+              value={newTask.content}
               placeholder="wpisz tekst"
               onChange={inputNewTaskHandler}
             />
-            <InputFile type="file" onChange={handleFileChange} />
+            <InputFile type="file" onChange={handleNewFileChange} />
             <Button type="onSumbit">Dodaj</Button>
             <p>Ilość zadań: {state.tasks.length}</p>
           </FormContainer>
@@ -59,29 +55,32 @@ const Tasks = ({ state, setState }) => {
       <TaskContainer>
         {state.tasks.map((task) =>
           <ItemsContainer key={task._id}>
-            {editedTaskId === task._id ? <Textarea
+            {editedTask.id === task._id ? <Textarea
               ref={areaEditRef}
               type="text"
               name="textarea"
-              value={editContent || setEditContent(task.content)}
-              onChange={(event) => setEditContent(event.target.value)}
+              value={editedTask.content || setEditedTask({ ...editedTask, content: task.content })}
+              onChange={(event) =>
+                setEditedTask({ ...editedTask, content: event.target.value })}
             /> : <p>{task.content}</p>}
-            {<Image task={task} editedTaskId={editedTaskId} editImage={editImage} />}
+            {<Image task={task} editedTaskId={editedTask.id} editImage={editedTask.image} />}
             {state.loggedIn &&
               <>
-                {editedTaskId ?
+                {editedTask.id ?
                   <>
-                    <InputFile type="file" onChange={(event) => handleEditFileChange(event, task._id)} disabled={editedTaskId !== task._id} />
-                    <Button type="button" onClick={() => deleteImage(task._id)} disabled={editedTaskId !== task._id}>
+                    <InputFile type="file" onChange={(event) => handleEditFileChange(event, task._id)} disabled={editedTask.id !== task._id} />
+                    <Button type="button" onClick={() => deleteImage(task._id)} disabled={editedTask.id !== task._id}>
                       Usuń zdjęcie
                     </Button>
-                    <Button type="button" onClick={() => saveEditedTask(task._id)} disabled={editedTaskId !== task._id}>
+                    <Button type="button" onClick={() => saveEditedTask(task._id)} disabled={editedTask.id !== task._id}>
                       Zapisz
                     </Button>
                   </>
                   :
                   <>
-                    <Button type="button" onClick={() => setEditedTaskId(task._id)}>
+                    <Button type="button" onClick={() => setEditedTask({
+                      ...editedTask, id: task._id
+                    })}>
                       Edytuj
                     </Button>
                     <Button type="button" onClick={() => deleteTask(task._id)}>

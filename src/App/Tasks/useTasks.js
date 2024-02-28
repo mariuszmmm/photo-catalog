@@ -4,17 +4,24 @@ import useFetch from "./useFetch";
 const useTasks = (state, setState) => {
   const areaRef = useRef(null);
   const areaEditRef = useRef(null);
+  const [newTask, setNewTask] = useState(
+    {
+      content: "",
+      file: null,
+      image: null,
+      targetImage: null
+    }
+  );
 
-  const [newTask, setNewTask] = useState("");
-  const [file, setFile] = useState(null);
-  const [image, setImage] = useState(null);
-  const [imageTarget, setImageTarget] = useState(null);
-
-  const [editedTaskId, setEditedTaskId] = useState(null);
-  const [editContent, setEditContent] = useState("");
-  const [editFile, setEditFile] = useState(null);
-  const [editImage, setEditImage] = useState(null);
-  const [imageEditTarget, setImageEditTarget] = useState(null);
+  const [editedTask, setEditedTask] = useState(
+    {
+      id: null,
+      content: "",
+      file: null,
+      image: null,
+      targetImage: null
+    }
+  );
 
   const {
     getItemFromBackEnd,
@@ -25,7 +32,10 @@ const useTasks = (state, setState) => {
   } = useFetch();
 
   const inputNewTaskHandler = ({ target }) => {
-    setNewTask(target.value);
+    setNewTask({
+      ...newTask,
+      content: target.value,
+    });
   };
 
   const createFormData = (file, content) => {
@@ -35,118 +45,142 @@ const useTasks = (state, setState) => {
     return formData;
   }
 
-
   //convert to base64encoded (string)
-  const convertToBase64 = (targetFile, set) => {
+  const convertToBase64 = (targetFile, task, set) => {
     const reader = new FileReader();
     reader.readAsDataURL(targetFile);
     reader.onload = () => {
-      set(reader.result)
+      set((prevState) => (
+        {
+          ...prevState,
+          image: reader.result,
+
+        }
+      ));
     };
     reader.onerror = error => {
       alert("error in convertToBase64: ", error)
     };
   };
 
-  const handleFileChange = (event) => {
-    const targetFile = event.target.files[0]
-    setFile(targetFile);
-    setImageTarget(event.target)
-    convertToBase64(targetFile, setImage)
+  const handleNewFileChange = (event) => {
+    const targetFile = event.target.files[0];
+    setNewTask(
+      {
+        ...newTask,
+        file: targetFile,
+        targetImage: event.target,
+      }
+    );
+    convertToBase64(targetFile, newTask, setNewTask);
   };
 
   const handleEditFileChange = (event) => {
     const targetFile = event.target.files[0]
-    setEditFile(targetFile);
-    setImageEditTarget(event.target)
-    convertToBase64(targetFile, setEditImage)
+    setEditedTask(
+      {
+        ...editedTask,
+        file: targetFile,
+        targetImage: event.target,
+      }
+    );
+    convertToBase64(targetFile, editedTask, setEditedTask);
   };
 
-  const handleAddNewTask = async (imageTarget) => {
-    const formData = createFormData(file, newTask);
-
+  const handleAddNewTask = async () => {
+    const formData = createFormData(newTask.file, newTask.content);
     try {
       const res = await sendItemToBackEnd(formData)
-      setState({
-        ...state,
-        tasks: [...state.tasks, res.data],
-        loading: false,
-      });
-      setEditedTaskId(null)
-      setEditContent("");
-      setEditFile(null);
-      setEditImage(null);
-      setImageEditTarget(null);
-
-      if (imageTarget) imageTarget.value = null;
+      setState(
+        {
+          ...state,
+          tasks: [...state.tasks, res.data],
+          loading: false,
+        }
+      );
     } catch (err) {
-      alert("error in handleAddNewTask: ", err)
-    }
+      alert("error in handleAddNewTask: ")
+    };
   };
 
-  const handleSaveEditedTask = async (imageTarget, editedTaskId) => {
-    const formData = createFormData(editFile, editContent)
+  const handleSaveEditedTask = async () => {
+    const formData = createFormData(editedTask.file, editedTask.content)
     try {
-      const res = await updateItemInBackEnd(formData, editedTaskId);
-
+      const res = await updateItemInBackEnd(formData, editedTask.id);
       const newTasks = state.tasks.map((task) => (
         task._id !== res.data._id ? task : res.data
       ));
-
-      setState({
-        ...state,
-        tasks: newTasks,
-        loading: false,
-      });
-      setEditedTaskId(null)
-      setEditContent("");
-      setEditFile(null);
-      setEditImage(null);
-      setImageEditTarget(null);
-
-      if (imageTarget) imageTarget.value = null;
+      setState(
+        {
+          ...state,
+          tasks: newTasks,
+          loading: false,
+        }
+      );
+      setEditedTask(
+        {
+          id: null,
+          content: "",
+          file: null,
+          image: null,
+          targetImage: null
+        }
+      );
     } catch (err) {
-      alert("error in handleSaveEditedTask: ", err)
+      alert("error in handleSaveEditedTask: ")
     }
   };
 
   const addNewTask = (event) => {
     event.preventDefault();
-    if (newTask.trim() === "") {
-      setNewTask("");
+    if (newTask.content.trim() === "") {
+      setNewTask(
+        {
+          ...newTask,
+          content: ""
+        }
+      );
       areaRef.current.focus();
       return
     }
-
-    handleAddNewTask(imageTarget);
-
-    setNewTask("");
-    setFile(null);
-    setImage(null);
+    handleAddNewTask();
+    setNewTask(
+      {
+        content: "",
+        file: null,
+        image: null,
+      }
+    )
     areaRef.current.focus();
   };
 
   const saveEditedTask = () => {
-    if (editContent.trim() === "") {
-      setEditContent("");
+    if (editedTask.content.trim() === "") {
+      setEditedTask(
+        {
+          ...editedTask,
+          conetnt: "",
+        }
+      );
       areaEditRef.current.focus();
       return
     }
-    handleSaveEditedTask(imageEditTarget, editedTaskId);
-
+    handleSaveEditedTask();
   };
 
   const deleteTask = async (id) => {
     try {
       await deleteItemFromBackEnd(id);
       const newTasks = state.tasks.filter((task) => task._id !== id);
-      setState({
-        ...state,
-        tasks: newTasks,
-        loading: false,
-      });
+      setState(
+        {
+          ...state,
+          tasks: newTasks,
+          loading: false,
+        }
+      );
     } catch (err) {
-      alert("error in deleteTask: ", err)
+      alert("error in deleteTask: ")
     }
   };
 
@@ -156,13 +190,15 @@ const useTasks = (state, setState) => {
       const newTasks = state.tasks.map((task) => (
         task._id === id ? { ...task, image: null } : task));
 
-      setState({
-        ...state,
-        tasks: newTasks,
-        loading: false,
-      });
+      setState(
+        {
+          ...state,
+          tasks: newTasks,
+          loading: false,
+        }
+      );
     } catch (err) {
-      alert("error in deleteImage: ", err)
+      alert("error in deleteImage: ")
     }
   };
 
@@ -170,13 +206,15 @@ const useTasks = (state, setState) => {
     const fetchData = async () => {
       try {
         const res = await getItemFromBackEnd()
-        setState({
-          ...state,
-          tasks: [...res.data],
-          loading: false,
-        })
+        setState(
+          {
+            ...state,
+            tasks: [...res.data],
+            loading: false,
+          }
+        )
       } catch (err) {
-        alert("error in fetchData: ", err)
+        alert("error in fetchData: ")
       }
     };
 
@@ -187,20 +225,18 @@ const useTasks = (state, setState) => {
   return {
     areaRef,
     areaEditRef,
-    newTask,
     inputNewTaskHandler,
     addNewTask,
     deleteTask,
-    handleFileChange,
-    image,
+    handleNewFileChange,
     deleteImage,
     saveEditedTask,
-    editedTaskId,
-    editContent,
-    editImage,
-    setEditedTaskId,
-    setEditContent,
     handleEditFileChange,
+
+    newTask,
+    setNewTask,
+    editedTask,
+    setEditedTask
   };
 };
 
