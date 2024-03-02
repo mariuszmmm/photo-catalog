@@ -4,7 +4,7 @@ export default styled.button`
     min-width: max-content;
     height: max-content;
     font-size: 1em ;
-    margin: 0 2px 2px 0;
+    margin: 0 12px 2px 8px;
     padding: 5px 15px;
     border: 1px solid black;
     border-radius: 5px;

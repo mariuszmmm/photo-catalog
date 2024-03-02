@@ -1,77 +1,42 @@
 import { useState } from "react";
-import { Nav, Input, LogInfo } from "./styled";
-import Button from "../../common/Button";
+import { Nav, LogInfo } from "./styled";
+import { ChangePassword } from "./ChangePassword";
+import { AddUserForm } from "./AddUserForm";
+import { LogIn } from "./LogIn";
+import { LogOut } from "./LogOut";
+import LoginForm from "./LoginForm";
+import ChangePasswordForm from "./ChangePasswordForm";
+import { AddUser } from "./AddUser";
 
-const Navigation = ({ loggedIn, setLoggedIn, state, setState }) => {
-  const [userName, setUserName] = useState('admin');
-  const [password, setPassword] = useState('admin');
-  const [incorrectLogin, setIncorrectLogin] = useState(false)
+const Navigation = ({ state, setState }) => {
+
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
+  const [showAddUserForm, setShowAddUserForm] = useState(false);
 
-  const user = {
-    name: "admin",
-    password: "admin"
-  };
-
-  const handleLogin = () => {
-    setShowLoginForm(true);
-  };
-
-  const isCorrectLogin = () => {
-    const isCorrectLogin = user.name === userName && user.password === password
-    setIncorrectLogin(!isCorrectLogin);
-    return isCorrectLogin;
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    isCorrectLogin() && setState({ ...state, loggedIn: true })
-  };
-
-  const handleOnInputUser = ({ target }) => {
-    setIncorrectLogin(false);
-    setUserName(target.value)
-  }
-
-  const handleOnInputPassword = ({ target }) => {
-    setIncorrectLogin(false);
-    setPassword(target.value)
-  }
-
-  const handleLogout = () => {
-    setState({ ...state, loggedIn: false });
-    setShowLoginForm(false);
-  };
+  const { isLoggedIn, username } = state;
 
   return (
     <Nav>
-      {state.loggedIn && <LogInfo>zalogowano : {user.name}</LogInfo>}
-      {!state.loggedIn && !showLoginForm &&
-        <Button onClick={handleLogin}>Logowanie</Button>
+      {isLoggedIn &&
+        <LogInfo>zalogowano: {username}</LogInfo>}
+      {!isLoggedIn && !showLoginForm &&
+        <LogIn setShowLoginForm={setShowLoginForm} />
       }
-      {!state.loggedIn && showLoginForm &&
-        <form onSubmit={handleSubmit}>
-          user:
-          <Input
-            value={userName}
-            $incorrect={incorrectLogin}
-            onChange={handleOnInputUser}
-            onClick={handleOnInputUser}
-          />
-          password:
-          <Input
-            value={password}
-            $incorrect={incorrectLogin}
-            onChange={handleOnInputPassword}
-            onClick={handleOnInputUser}
-          />
-          <Button type="onSumbit" >Zaloguj</Button>
-        </form>
+      {!isLoggedIn && showLoginForm &&
+        <LoginForm setState={setState} setShowLoginForm={setShowLoginForm}
+        />}
+      {isLoggedIn && !showChangePasswordForm && !showAddUserForm &&
+        <>
+          {state.isAdmin && <AddUser setShowAddUserForm={setShowAddUserForm} />}
+          <ChangePassword setChangePasswordForm={setShowChangePasswordForm} />
+          <LogOut state={state} setState={setState} setShowLoginForm={setShowLoginForm} />
+        </>
       }
-      {state.loggedIn &&
-        <Button onClick={handleLogout}>Wyloguj</Button>
-      }
+      {isLoggedIn && showChangePasswordForm &&
+        <ChangePasswordForm setShowChangePasswordForm={setShowChangePasswordForm} state={state} setState={setState} />}
+      {isLoggedIn && showAddUserForm && state.isAdmin &&
+        <AddUserForm setShowAddUserForm={setShowAddUserForm} />}
     </Nav>
   )
 };

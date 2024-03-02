@@ -2,14 +2,17 @@ import { useState } from 'react';
 import Navigation from './Navigation';
 import Container from '../common/Container';
 import Header from '../common/Header';
-import Tasks from './Tasks';
+import Items from './Items';
 
 const App = () => {
   const [state, setState] = useState({
-    loading: true,
-    loggedIn: false,
-    tasks: []
+    loading: false,
+    username: undefined,
+    isAdmin: false,
+    isLoggedIn: false,
+    items: []
   });
+  // console.log("state: ", state)
 
   return (
     <>
@@ -17,9 +20,9 @@ const App = () => {
         state={state}
         setState={setState}
       />
-      <Header>Lista zadań</Header>
+      <Header>Foto Katalog</Header>
       <Container>
-        <Tasks
+        <Items
           state={state}
           setState={setState}
         />

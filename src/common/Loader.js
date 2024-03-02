@@ -16,4 +16,5 @@ export default styled.div`
   background-color: rgba(0,0,0,0.8);
   backdrop-filter: blur(5px);
   z-index: 1;
+  user-select: none;
 `;

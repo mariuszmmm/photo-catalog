@@ -5,26 +5,26 @@ import ImgContainer from "../../common/ImgContainer";
 import InputFile from "../../common/InputFile";
 import Textarea from "../../common/Textarea";
 
-const FormAddNewTask = ({ newTask, areaRef, addNewTask, newTaskContentChange, newTaskFileChange, state }) => (
-  <form onSubmit={addNewTask}  >
+const FormAddNewItem = ({ newItem, areaRef, addNewItem, newItemContentChange, newItemFileChange, state }) => (
+  <form onSubmit={addNewItem}  >
     <FormContainer>
       <ImgContainer>
-        {newTask.image && <Img $isLoaded={newTask.image} src={newTask.image} alt="image task" />}
+        {newItem.image && <Img $isLoaded={newItem.image} src={newItem.image} alt="foto" />}
       </ImgContainer>
       <Textarea
         ref={areaRef}
         autoFocus
         type="text"
         name="textarea"
-        value={newTask.content}
+        value={newItem.content}
         placeholder="wpisz tekst"
-        onChange={newTaskContentChange}
+        onChange={newItemContentChange}
       />
-      <InputFile type="file" onChange={newTaskFileChange} />
+      <InputFile type="file" onChange={newItemFileChange} />
       <Button type="onSumbit">Dodaj</Button>
-      <p>Ilość zadań: {state.tasks.length}</p>
+      <p>Ilość elementów: {state.items.length}</p>
     </FormContainer>
   </form>
 );
 
-export default FormAddNewTask;
+export default FormAddNewItem;

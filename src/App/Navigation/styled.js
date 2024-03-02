@@ -21,10 +21,14 @@ export const Input = styled.input`
   border: 1px solid black;
   border-radius: 5px;
   font-size: 1em;
-  margin: 0 20px 0 5px;
+  margin: 0 12px 0 3px;
 
   ${({ $incorrect }) => $incorrect && css`
-    background-color: #f78e8e;
+    background-color: #ff0000;
+  `}
+
+  ${({ $hidden }) => $hidden && css`
+    visibility: hidden;
   `}
 `;
 
