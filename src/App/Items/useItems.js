@@ -3,6 +3,7 @@ import useFetch from "../api/useFetch";
 
 const useItems = (state, setState) => {
   const areaRef = useRef(null);
+  const formRef = useRef(null);
   const areaEditRef = useRef(null);
   const [newItem, setNewItem] = useState(
     {
@@ -158,6 +159,7 @@ const useItems = (state, setState) => {
         image: null,
       }
     )
+    formRef.current.reset();
     areaRef.current.focus();
   };
 
@@ -210,40 +212,40 @@ const useItems = (state, setState) => {
   };
 
   useEffect(() => {
-    if (state.isLoggedIn) {
-      setState((prevState) =>
-      ({
-        ...prevState,
-        loading: true,
-      }));
-      const fetchData = async () => {
-        try {
-          const items = await getItemFromBackEnd();
-          if (items) {
-            setState((prevState) =>
-            ({
-              ...prevState,
-              items: [...items.data],
-            }));
-          };
-        } catch (err) {
-          alert("error in fetchData: ")
-        } finally {
+    setState((prevState) =>
+    ({
+      ...prevState,
+      loading: true,
+    }));
+    const fetchData = async () => {
+      try {
+        const items = await getItemFromBackEnd();
+        if (items) {
           setState((prevState) =>
           ({
             ...prevState,
-            loading: false,
+            items: [...items.data],
           }));
-        }
-      };
-      fetchData();
-    }
+        };
+      } catch (err) {
+        alert("error in fetchData: ")
+      } finally {
+        setState((prevState) =>
+        ({
+          ...prevState,
+          loading: false,
+        }));
+      }
+    };
+
+    fetchData();
 
     // eslint-disable-next-line
   }, [state.isLoggedIn]);
 
   return {
     areaRef,
+    formRef,
     newItem,
     addNewItem,
     newItemContentChange,

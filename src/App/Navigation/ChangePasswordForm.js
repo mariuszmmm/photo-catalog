@@ -44,6 +44,8 @@ const ChangePasswordForm = ({ setShowChangePasswordForm, state }) => {
       } else if (status === 401) {
         setIncorrectLogin(true)
         alert("HASŁO NIEPOPRAWNE")
+      } else if (status === 403) {
+        alert("ZABRONIONA ZMIANA HASŁA ADMINISTORA")
       } else {
         alert("BŁĄD ZMIANY HASŁA")
       }
@@ -76,6 +78,7 @@ const ChangePasswordForm = ({ setShowChangePasswordForm, state }) => {
         onChange={newPasswordChange}
       />
       <Button type="submit">Save</Button>
+      <Button type="button" onClick={() => setShowChangePasswordForm(false)} >Anuluj</Button>
     </Form>
 
 

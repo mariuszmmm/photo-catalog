@@ -10,7 +10,6 @@ export const LogOut = ({ setState, setShowLoginForm }) => {
       isLoggedIn: false,
       user: undefined,
       isAdmin: false,
-      items: []
     }));
     setShowLoginForm(false);
   };

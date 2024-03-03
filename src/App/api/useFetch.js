@@ -17,17 +17,8 @@ const useFetch = () => {
   };
 
   const getItemFromBackEnd = async () => {
-    const token = getSessionStorage("token");
     try {
-      return await (axios.get(`${API_URL}/items`,
-        {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`, // Przekazanie tokenu jako nagłówek autoryzacyjny
-            'Content-Type': 'application/json', // Ustawienie typu treści
-          },
-        }
-      ))
+      return await (axios.get(`${API_URL}/items`))
     } catch (err) {
       alert("error in getItemFromBackEnd: ")
     }

@@ -11,6 +11,7 @@ import FormAddNewItem from "./FormAddNewItem";
 const Items = ({ state, setState }) => {
   const {
     areaRef,
+    formRef,
     newItem,
     addNewItem,
     newItemContentChange,
@@ -33,12 +34,13 @@ const Items = ({ state, setState }) => {
         <FormAddNewItem
           newItem={newItem}
           areaRef={areaRef}
+          formRef={formRef}
           addNewItem={addNewItem}
           newItemContentChange={newItemContentChange}
           newItemFileChange={newItemFileChange}
           state={state}
         />}
-      {state.isLoggedIn && <ItemContainer>
+      {!state.loading && <ItemContainer>
         {state.items.map((item) =>
           <ItemsContainer key={item._id}>
             {editedItem.id === item._id ? <Textarea
@@ -49,7 +51,7 @@ const Items = ({ state, setState }) => {
               onChange={editedItemContentChange}
             /> : <p>{item.content}</p>}
             {<Image item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
-            {state.isAdmin &&
+            {state.isLoggedIn &&
               <>
                 {editedItem.id ?
                   <>

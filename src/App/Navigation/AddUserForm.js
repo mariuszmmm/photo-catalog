@@ -15,16 +15,20 @@ export const AddUserForm = ({ setShowAddUserForm }) => {
     event.preventDefault();
     const token = getSessionStorage("token")
     try {
-      await axios.post(
+      const response = await axios.post(
         `${API_URL}/user/add`,
         { username, password },
         { headers: { Authorization: token } }
       );
-      console.log("zmiana hasła")
+      if (response.status === 201) {
+        alert(response.data.message)
+      }
       setShowAddUserForm(false);
-      console.log('User added successfully');
     } catch (error) {
-      console.error('Error adding user:', error);
+
+      if (error.response.status === 409) {
+        alert(error.response.data.message)
+      }
     }
   };
 
@@ -48,7 +52,8 @@ export const AddUserForm = ({ setShowAddUserForm }) => {
         autoComplete="current-password"
         onChange={e => setPassword(e.target.value)}
       />
-      <Button type="submit" >Add user</Button>
+      <Button type="submit" >Save</Button>
+      <Button type="button" onClick={() => setShowAddUserForm(false)} >Anuluj</Button>
     </Form>
   );
 };
