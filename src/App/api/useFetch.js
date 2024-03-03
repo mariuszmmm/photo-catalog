@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "./api";
 import { jwtDecode } from "jwt-decode";
-import { getSessionStorage, setSessionStorage } from "../sessionStorage";
+import { setSessionStorage } from "../sessionStorage";
 
 const useFetch = () => {
 
