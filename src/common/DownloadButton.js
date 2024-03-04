@@ -1,7 +1,24 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components"
+import Button from "./Button";
 
-export default styled.button`
-    min-width: max-content;
+export default styled.a`
+  width: fit-content;
+  color: black;
+
+
+
+  ${({ $aaa }) => $aaa && css`
+    color: black;
+    /* background-color: grey; */
+    padding: 10px;
+    text-decoration: none;
+    /* display: none; */
+  `};
+
+
+
+
+  min-width: max-content;
     height: max-content;
     font-size: 1em ;
     margin: 0 8px 2px 4px;
@@ -28,4 +45,8 @@ export default styled.button`
     &:disabled:active{
       box-shadow: 2px 2px 2px 2px ;
     }
+
+
+
+
 `;

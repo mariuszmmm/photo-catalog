@@ -10,7 +10,9 @@ export default styled.div`
   background-color: rgba(255,255,255, 0.2);
 
   p{
-    margin:0 10px 0 0;
+    margin:0;
+    padding: 10px;
+    border: 1px solid transparent;
     font-weight:700;
     flex-grow: 1;
   }

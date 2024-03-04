@@ -8,6 +8,6 @@ export default styled.div`
   margin: 0 10%;
 
   @media (max-width:760px){
-    grid-template-columns: 60%;
+    grid-template-columns: 80%;
   }
 `;

@@ -33,7 +33,7 @@ export const Input = styled.input`
 `;
 
 export const LogInfo = styled.p`
-  font-size: 1.5em ;
+  font-size: 1em ;
   width: 100%;
   margin: 0;
 `;
