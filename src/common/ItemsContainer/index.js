@@ -12,8 +12,8 @@ export default styled.div`
   p{
     margin:0;
     padding: 10px;
-    border: 1px solid transparent;
     font-weight:700;
+    text-align: justify;
     flex-grow: 1;
   }
 `;

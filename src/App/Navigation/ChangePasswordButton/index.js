@@ -1,6 +1,6 @@
-import Button from "../../common/Button";
+import Button from "../../../common/Button";
 
-export const ChangePassword = ({ setChangePasswordForm }) => {
+export const ChangePasswordButton = ({ setChangePasswordForm }) => {
   const changePasswordHendler = () => {
     setChangePasswordForm(true);
   };

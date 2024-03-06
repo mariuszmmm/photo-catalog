@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { API_URL } from "../api/api";
-import { getSessionStorage } from '../sessionStorage';
-import { Input } from './styled';
-import Button from '../../common/Button';
-import Form from '../../common/Form';
+import { API_URL } from "../../api/api";
+import { getSessionStorage } from '../../sessionStorage';
+import { Input } from '../styled';
+import Button from '../../../common/Button';
+import Form from '../../../common/Form';
+import Loader from '../../../common/Loader';
 
 
 const ChangePasswordForm = ({ setShowChangePasswordForm, state }) => {
@@ -53,33 +54,41 @@ const ChangePasswordForm = ({ setShowChangePasswordForm, state }) => {
   };
 
   return (
-    <Form onSubmit={passwordChange}>
-      <Input
-        $hidden
-        type="text"
-        autoComplete="username"
-      />
-      <p>old password:</p>
-      <Input
-        type="password"
-        placeholder="old password"
-        value={oldPassword}
-        autoComplete="current-password"
-        $incorrect={incorrectLogin}
-        onChange={oldPasswordChange}
-      />
-      <p>new password:</p>
-      <Input
-        type="password"
-        placeholder="new password"
-        value={newPassword}
-        $incorrect={incorrectLogin}
-        autoComplete="new-password"
-        onChange={newPasswordChange}
-      />
-      <Button type="submit">Save</Button>
-      <Button type="button" onClick={() => setShowChangePasswordForm(false)} >Anuluj</Button>
-    </Form>
+    <Loader>
+      <Form onSubmit={passwordChange}>
+        {/* <div>
+        <Input
+          $hidden
+          type="text"
+          autoComplete="username"
+        />
+        </div> */}
+        <div>
+          <p>old password:</p>
+          <Input
+            type="password"
+            placeholder="old password"
+            value={oldPassword}
+            autoComplete="current-password"
+            $incorrect={incorrectLogin}
+            onChange={oldPasswordChange}
+          />
+        </div>
+        <div>
+        <p>new password:</p>
+          <Input
+            type="password"
+            placeholder="new password"
+            value={newPassword}
+            $incorrect={incorrectLogin}
+            autoComplete="new-password"
+            onChange={newPasswordChange}
+          />
+        </div>
+        <Button type="submit">Save</Button>
+        <Button type="button" onClick={() => setShowChangePasswordForm(false)} >Anuluj</Button>
+      </Form>
+    </Loader>
 
 
   );

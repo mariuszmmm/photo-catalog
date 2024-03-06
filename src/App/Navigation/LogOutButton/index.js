@@ -1,6 +1,6 @@
-import Button from "../../common/Button";
+import Button from "../../../common/Button";
 
-export const LogOut = ({ setState, setShowLoginForm }) => {
+export const LogOutButton = ({ setState, setShowLoginForm }) => {
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");

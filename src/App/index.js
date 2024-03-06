@@ -15,7 +15,6 @@ const App = () => {
     sessionTime: undefined,
     remainingTime: 0,
   });
-  // console.log("state: ", state)
 
   useEffect(() => {
     const iterval = setInterval(() => {

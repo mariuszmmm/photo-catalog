@@ -1,6 +1,6 @@
-import Button from "../../common/Button";
+import Button from "../../../common/Button";
 
-export const LogIn = ({ setShowLoginForm }) => {
+export const LogInButton = ({ setShowLoginForm }) => {
   const loginFormHandler = () => {
     setShowLoginForm(true);
   };

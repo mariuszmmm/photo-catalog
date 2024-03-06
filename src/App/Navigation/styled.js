@@ -1,10 +1,9 @@
 import styled, { css } from "styled-components";
 
 export const Nav = styled.nav`
-  height: 80px;
-  min-width: max-content;
+  min-height: 80px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin: 0;
   gap: 15px;
@@ -34,6 +33,6 @@ export const Input = styled.input`
 
 export const LogInfo = styled.p`
   font-size: 1em ;
-  width: 100%;
+  width: max-content;
   margin: 0;
 `;

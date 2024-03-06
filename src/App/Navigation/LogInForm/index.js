@@ -1,11 +1,12 @@
 // Login.js
 import React, { useEffect, useState } from 'react';
-import { Input } from './styled';
-import Button from '../../common/Button';
-import useFetch from '../api/useFetch';
-import Form from '../../common/Form';
+import { Input } from '../styled';
+import Button from '../../../common/Button';
+import useFetch from '../../api/useFetch';
+import Form from '../../../common/Form';
+import Loader from '../../../common/Loader';
 
-export const LoginForm = ({ setState, setShowLoginForm
+export const LogInForm = ({ setState, setShowLoginForm
 }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -55,28 +56,35 @@ export const LoginForm = ({ setState, setShowLoginForm
 
 
   return (
-    <Form onSubmit={login}>
-      <p>user:</p>
-      <Input
-        type="text"
-        placeholder="user"
-        value={username}
-        autoComplete="username"
-        $incorrect={incorrectLogin}
-        onChange={userChange}
-      />
-      <p>password:</p>
-      <Input
-        type="password"
-        placeholder="password"
-        value={password}
-        $incorrect={incorrectLogin}
-        autoComplete="current-password"
-        onChange={passwordChange}
-      />
-      <Button type="submit" >Login</Button>
-    </Form>
+    <Loader>
+      <Form onSubmit={login}>
+        <div>
+          <p>user:</p>
+          <Input
+            type="text"
+            placeholder="user"
+            value={username}
+            autoComplete="username"
+            $incorrect={incorrectLogin}
+            onChange={userChange}
+          />
+        </div>
+        <div>
+          <p>password:</p>
+          <Input
+            type="password"
+            placeholder="password"
+            value={password}
+            $incorrect={incorrectLogin}
+            autoComplete="current-password"
+            onChange={passwordChange}
+          />
+        </div>
+        <Button type="submit" >Login</Button>
+        <Button type="button" onClick={() => setShowLoginForm(false)} >Anuluj</Button>
+      </Form>
+    </Loader >
   );
 };
 
-export default LoginForm;
+export default LogInForm;

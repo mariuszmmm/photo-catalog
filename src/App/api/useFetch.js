@@ -5,6 +5,14 @@ import { setSessionStorage } from "../sessionStorage";
 
 const useFetch = () => {
 
+  const getFotoListFromBackend = async () => {
+    try {
+      return await (axios.get(`${API_URL}/files`))
+    } catch (err) {
+      alert("error in getFotoListFromBackend: ")
+    }
+  };
+
   const logInToServer = async (username, password) => {
     const response = await axios.post(`${API_URL}/login`, { username, password })
     const { token } = response.data;
@@ -66,6 +74,7 @@ const useFetch = () => {
     deleteItemFromBackEnd,
     deleteItemImageFromBackEnd,
     updateItemInBackEnd,
+    getFotoListFromBackend,
   }
 };
 

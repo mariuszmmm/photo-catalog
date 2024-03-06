@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { API_URL } from "../api/api";
-import Img from "../../common/Img";
-import ImgContainer from "../../common/ImgContainer";
+import Img from "../../common/Image";
+import ImgContainer from "../../common/ImageContainer";
 
 export const Image = ({ item, editedItemId, editImage }) => {
   const [isLoaded, setIsLoaded] = useState(false);

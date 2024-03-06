@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
 export default styled.div`
-margin: 15px;
+  display:flex;
+  margin: 10px;
+  gap: 15px;
+  flex-wrap: wrap;
 `;
+

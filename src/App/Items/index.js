@@ -2,7 +2,6 @@ import Button from "../../common/Button";
 import ItemsContainer from "../../common/ItemsContainer";
 import Textarea from "../../common/Textarea";
 import useItems from "./useItems";
-import ItemContainer from "../../common/ItemContainer";
 import Loader from "../../common/Loader";
 import InputFile from "../../common/InputFile";
 import { Image } from "./Image";
@@ -10,6 +9,8 @@ import FormAddNewItem from "./FormAddNewItem";
 import { API_URL } from "../api/api";
 import DownloadButton from "../../common/DownloadButton";
 import ButtonsContainer from "../../common/ButtonsContainer";
+import SectionItems from "../../common/sectionItems";
+
 
 const Items = ({ state, setState }) => {
   const {
@@ -43,15 +44,12 @@ const Items = ({ state, setState }) => {
           newItemFileChange={newItemFileChange}
           state={state}
         />}
-      {!state.loading && <ItemContainer>
+      {!state.loading && <SectionItems>
         {state.items.map((item) =>
           <ItemsContainer key={item._id}>
             {<Image item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
             {!state.isLoggedIn && <p>{item.content}</p>}
-
-
             {state.isLoggedIn &&
-
               (editedItem.id === item._id ?
                 <>
                   <Textarea
@@ -95,7 +93,7 @@ const Items = ({ state, setState }) => {
             }
           </ItemsContainer>
         )}
-      </ItemContainer>}
+      </SectionItems>}
     </>
   )
 };

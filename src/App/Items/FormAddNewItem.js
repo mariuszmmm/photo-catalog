@@ -1,7 +1,7 @@
 import Button from "../../common/Button";
 import FormContainer from "../../common/FormContainer";
-import Img from "../../common/Img";
-import ImgContainer from "../../common/ImgContainer";
+import Img from "../../common/Image";
+import ImgContainer from "../../common/ImageContainer";
 import InputFile from "../../common/InputFile";
 import Textarea from "../../common/Textarea";
 

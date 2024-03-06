@@ -10,6 +10,7 @@ export default styled.button`
     cursor: pointer;
     flex: 1 0 0;
     margin-right: 5px;
+    font-weight: 700;
 
     &:hover{
       background-color: yellow;

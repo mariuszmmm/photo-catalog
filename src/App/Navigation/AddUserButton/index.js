@@ -1,6 +1,6 @@
-import Button from "../../common/Button"
+import Button from "../../../common/Button"
 
-export const AddUser = ({ setShowAddUserForm }) => {
+export const AddUserButton = ({ setShowAddUserForm }) => {
   const addUserHandler = () => {
     setShowAddUserForm(true);
   };
