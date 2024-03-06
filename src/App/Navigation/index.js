@@ -26,8 +26,8 @@ const Navigation = ({ state, setState }) => {
     <>
       <Nav>
         {isLoggedIn ?
-          <LogInfo>{username}</LogInfo>
-          : <LogInfo>wylogowany</LogInfo>}
+          <LogInfo>zalogowany: {username}</LogInfo>
+          : <LogInfo></LogInfo>}
         <ButtonsContainer>
           {!isLoggedIn && !showLoginForm &&
             <LogInButton setShowLoginForm={setShowLoginForm} />

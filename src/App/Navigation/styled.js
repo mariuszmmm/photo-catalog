@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 export const Nav = styled.nav`
   min-height: 80px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin: 0;
@@ -33,6 +34,6 @@ export const Input = styled.input`
 
 export const LogInfo = styled.p`
   font-size: 1em ;
-  width: max-content;
+  min-width: max-content;
   margin: 0;
 `;
