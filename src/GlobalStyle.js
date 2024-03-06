@@ -5,12 +5,12 @@ const GlobalStyle = createGlobalStyle`
 body{
   background-color: grey;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  margin: 0 auto;
-  min-width: 640px;
+  /* min-width: 300px; */
 }
 
 html{
   box-sizing: border-box;
+  margin: 0 auto;
 }
 
 *, ::after, ::before {

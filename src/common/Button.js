@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export default styled.button`
     min-width: max-content;
-    height: max-content;
     font-size: 1em ;
-    margin: 0 8px 2px 4px;
     padding: 5px 15px;
     border: 1px solid black;
     border-radius: 5px;
-    box-shadow: 2px 2px 2px 2px ;
+    box-shadow: 2px 2px 2px 2px black ;
     cursor: pointer;
+    flex: 1 0 0;
+    margin-right: 5px;
 
     &:hover{
       background-color: yellow;

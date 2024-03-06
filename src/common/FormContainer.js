@@ -5,9 +5,9 @@ export default styled.div`
   justify-content: center;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin: 0 10%;
+  margin: 0 30px;
 
   @media (max-width:760px){
-    grid-template-columns: 80%;
+    grid-template-columns: 100%;
   }
 `;

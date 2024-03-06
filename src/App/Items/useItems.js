@@ -212,11 +212,11 @@ const useItems = (state, setState) => {
   };
 
   useEffect(() => {
-    setState((prevState) =>
-    ({
-      ...prevState,
-      loading: true,
-    }));
+    // setState((prevState) =>
+    // ({
+    //   ...prevState,
+    //   loading: true,
+    // }));
     const fetchData = async () => {
       try {
         const items = await getItemFromBackEnd();

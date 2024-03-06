@@ -1,5 +1,5 @@
 // Login.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from './styled';
 import Button from '../../common/Button';
 import useFetch from '../api/useFetch';
@@ -36,6 +36,7 @@ export const LoginForm = ({ setState, setShowLoginForm
         isLoggedIn: true,
         username: loginData.username,
         isAdmin: loginData.isAdmin,
+        sessionTime: loginData.sessionTime,
       }))
       setShowLoginForm(false);
     } catch (error) {
@@ -51,6 +52,7 @@ export const LoginForm = ({ setState, setShowLoginForm
       };
     }
   };
+
 
   return (
     <Form onSubmit={login}>

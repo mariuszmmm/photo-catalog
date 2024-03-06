@@ -10,5 +10,6 @@ export default styled.textarea`
   border: 1px solid black;
   /* font-size: 2em; */
   font-weight: 700;
-  overflow: hidden;
+  /* overflow: hidden; */
+  /* scroll-behavior: auto; */
 `;

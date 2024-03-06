@@ -7,7 +7,7 @@ export const Nav = styled.nav`
   justify-content: flex-end;
   align-items: center;
   margin: 0;
-  gap: 5px;
+  gap: 15px;
   font-weight: 700;
   border-bottom: 1px solid black;
   padding: 15px;

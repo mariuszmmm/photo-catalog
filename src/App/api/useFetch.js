@@ -10,9 +10,12 @@ const useFetch = () => {
     const { token } = response.data;
     const decodedToken = token && jwtDecode(token);
     setSessionStorage("token", token);
-    return {
-      username: decodedToken && decodedToken.username,
-      isAdmin: decodedToken && decodedToken.isAdmin,
+    if (decodedToken) {
+      return {
+        username: decodedToken.username,
+        isAdmin: decodedToken.isAdmin,
+        sessionTime: decodedToken.exp,
+      }
     };
   };
 

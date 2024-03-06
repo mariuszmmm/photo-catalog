@@ -1,18 +1,50 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navigation from './Navigation';
 import Container from '../common/Container';
 import Header from '../common/Header';
 import Items from './Items';
+import { RemainingTime } from './Navigation/RemainingTime';
 
 const App = () => {
   const [state, setState] = useState({
-    loading: false,
+    loading: true,
     username: undefined,
     isAdmin: false,
     isLoggedIn: false,
-    items: []
+    items: [],
+    sessionTime: undefined,
+    remainingTime: 0,
   });
   // console.log("state: ", state)
+
+  useEffect(() => {
+    const iterval = setInterval(() => {
+      if (state.isLoggedIn) {
+        const time = Math.floor(new Date().getTime() / 1000);
+        const remainingTime = state.sessionTime - time;
+        setState((prevState) => ({ ...prevState, remainingTime }))
+      } else {
+        clearInterval(iterval);
+      }
+    }, 1000)
+
+    return () => clearInterval(iterval);
+  }, [state.isLoggedIn])
+
+  useEffect(() => {
+    if (state.remainingTime <= 0) {
+      sessionStorage.removeItem("token");
+      setState((prevState) => ({
+        ...prevState,
+        // loading: false,
+        isLoggedIn: false,
+        username: undefined,
+        isAdmin: false,
+      }));
+      // setShowLoginForm(false);
+    }
+  }, [state.remainingTime])
+
 
   return (
     <>
@@ -20,8 +52,9 @@ const App = () => {
         state={state}
         setState={setState}
       />
-      <Header>Foto Katalog</Header>
       <Container>
+        <RemainingTime state={state} />
+        <Header>Foto Katalog</Header>
         <Items
           state={state}
           setState={setState}

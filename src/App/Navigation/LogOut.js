@@ -8,12 +8,11 @@ export const LogOut = ({ setState, setShowLoginForm }) => {
       ...prevState,
       loading: false,
       isLoggedIn: false,
-      user: undefined,
+      username: undefined,
       isAdmin: false,
     }));
     setShowLoginForm(false);
   };
 
   return <Button onClick={handleLogout}>Log out</Button>
-
 };
