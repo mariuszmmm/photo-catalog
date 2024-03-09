@@ -1,64 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Nav, LogInfo } from "./styled";
-import { ChangePasswordButton } from "./ChangePasswordButton";
-import { AddUserForm } from "./AddUserForm";
-import { LogInButton } from "./LogInButton";
-import { LogOutButton } from "./LogOutButton";
-import LogInForm from "./LogInForm";
-import ChangePasswordForm from "./ChangePasswordForm";
-import { AddUserButton } from "./AddUserButton";
 import ButtonsContainer from "../../common/ButtonsContainer";
-import DownloadButton from "../../common/DownloadButton";
-import { API_URL } from "../api/api";
+import FilesListLink from "./FilesListLink";
+import Login from "./Login";
+import UserAdd from "./UserAdd";
+import PasswordChange from "./PasswordChange";
+import Logout from "./Logout";
+import UsersListLink from "./UsersListLink";
 
 const Navigation = ({ state, setState }) => {
 
-  const [showLoginForm, setShowLoginForm] = useState(false);
-  const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
-  const [showAddUserForm, setShowAddUserForm] = useState(false);
-  const [showFotoList, setShowFotoList] = useState(false);
-  const [list, setList] = useState([]);
-
-
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showUserAddModal, setShowUserAddModal] = useState(false);
+  const [showPasswordChangeModal, setShowPasswordChangeModal] = useState(false);
   const { isLoggedIn, username } = state;
+
+  useEffect(() => {
+    document.body.style.overflow =
+      (showLoginModal || showPasswordChangeModal || showUserAddModal) ? "hidden" : "auto"
+
+  }, [showLoginModal, showPasswordChangeModal, showUserAddModal])
 
   return (
     <>
       <Nav>
-        {isLoggedIn ?
-          <LogInfo>zalogowany: {username}</LogInfo>
-          : <LogInfo></LogInfo>}
+        {isLoggedIn && <LogInfo>zalogowany: {username}</LogInfo>}
         <ButtonsContainer>
-          {!isLoggedIn && !showLoginForm &&
-            <LogInButton setShowLoginForm={setShowLoginForm} />
+          {!isLoggedIn &&
+            <Login setState={setState} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} />
           }
-          {!isLoggedIn && showLoginForm &&
-            <LogInForm setState={setState} setShowLoginForm={setShowLoginForm}
-            />}
-          {isLoggedIn && !showChangePasswordForm && !showAddUserForm &&
+          {isLoggedIn &&
             <>
-              {state.isAdmin &&
-                <>
-                  <AddUserButton setShowAddUserForm={setShowAddUserForm} />
-                  <DownloadButton href={`${API_URL}/files`} target="_blank">
-                      Files list
-                    </DownloadButton>
-                    <DownloadButton href={`${API_URL}/users`} target="_blank">
-                      Users list
-                    </DownloadButton>
-
-
-
-                </>}
-              <ChangePasswordButton setChangePasswordForm={setShowChangePasswordForm} />
-              <LogOutButton state={state} setState={setState} setShowLoginForm={setShowLoginForm} />
+              <UserAdd showUserAddModal={showUserAddModal} setShowUserAddModal={setShowUserAddModal} />
+              <PasswordChange state={state} showPasswordChangeModal={showPasswordChangeModal} setShowPasswordChangeModal={setShowPasswordChangeModal} />
+              <Logout setState={setState} />
+              <FilesListLink />
+              <UsersListLink />
             </>
           }
-          {isLoggedIn && showChangePasswordForm &&
-            <ChangePasswordForm setShowChangePasswordForm={setShowChangePasswordForm} state={state} setState={setState} />}
-          {isLoggedIn && showAddUserForm && state.isAdmin &&
-            <AddUserForm setShowAddUserForm={setShowAddUserForm} />}
-
         </ButtonsContainer>
       </Nav>
     </>

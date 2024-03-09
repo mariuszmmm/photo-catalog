@@ -4,7 +4,7 @@ export const Nav = styled.nav`
   min-height: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: right;
   align-items: center;
   margin: 0;
   gap: 15px;
@@ -29,6 +29,7 @@ export const Input = styled.input`
 
   ${({ $hidden }) => $hidden && css`
     visibility: hidden;
+    position: absolute;
   `}
 `;
 
@@ -36,4 +37,5 @@ export const LogInfo = styled.p`
   font-size: 1em ;
   min-width: max-content;
   margin: 0;
+  flex: 1 0 auto;
 `;

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import useFetch from "../api/useFetch";
+import { useFetch } from "../api/useFetch";
 
 const useItems = (state, setState) => {
   const areaRef = useRef(null);
@@ -25,11 +25,11 @@ const useItems = (state, setState) => {
   );
 
   const {
-    getItemFromBackEnd,
-    sendItemToBackEnd,
-    updateItemInBackEnd,
-    deleteItemFromBackEnd,
-    deleteItemImageFromBackEnd
+    getItemAPI,
+    sendItemAPI,
+    updateItemAPI,
+    deleteItemAPI,
+    deleteItemImageAPI
   } = useFetch();
 
   const newItemContentChange = ({ target }) => {
@@ -98,7 +98,7 @@ const useItems = (state, setState) => {
   const handleAddNewItem = async () => {
     const formData = createFormData(newItem.file, newItem.content);
     try {
-      const res = await sendItemToBackEnd(formData)
+      const res = await sendItemAPI(formData)
       setState(
         {
           ...state,
@@ -114,7 +114,7 @@ const useItems = (state, setState) => {
   const handleSaveEditedItem = async () => {
     const formData = createFormData(editedItem.file, editedItem.content)
     try {
-      const res = await updateItemInBackEnd(formData, editedItem.id);
+      const res = await updateItemAPI(formData, editedItem.id);
       const newItems = state.items.map((item) => (
         item._id !== res.data._id ? item : res.data
       ));
@@ -179,7 +179,7 @@ const useItems = (state, setState) => {
 
   const deleteItem = async (id) => {
     try {
-      await deleteItemFromBackEnd(id);
+      await deleteItemAPI(id);
       const newItems = state.items.filter((item) => item._id !== id);
       setState(
         {
@@ -195,7 +195,7 @@ const useItems = (state, setState) => {
 
   const deleteImage = async (id) => {
     try {
-      await deleteItemImageFromBackEnd(id)
+      await deleteItemImageAPI(id)
       const newItems = state.items.map((item) => (
         item._id === id ? { ...item, image: null } : item));
 
@@ -219,7 +219,7 @@ const useItems = (state, setState) => {
     // }));
     const fetchData = async () => {
       try {
-        const items = await getItemFromBackEnd();
+        const items = await getItemAPI();
         if (items) {
           setState((prevState) =>
           ({

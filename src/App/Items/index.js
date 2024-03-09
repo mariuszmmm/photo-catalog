@@ -2,7 +2,7 @@ import Button from "../../common/Button";
 import ItemsContainer from "../../common/ItemsContainer";
 import Textarea from "../../common/Textarea";
 import useItems from "./useItems";
-import Loader from "../../common/Loader";
+import Modal from "../../common/Modal";
 import InputFile from "../../common/InputFile";
 import { Image } from "./Image";
 import FormAddNewItem from "./FormAddNewItem";
@@ -33,7 +33,7 @@ const Items = ({ state, setState }) => {
   return (
     <>
       {state.loading &&
-        <Loader>ŁADOWANIE ...</Loader>}
+        <Modal>ŁADOWANIE ...</Modal>}
       {state.isAdmin &&
         <FormAddNewItem
           newItem={newItem}

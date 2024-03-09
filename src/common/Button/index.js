@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default styled.button`
     min-width: max-content;
     font-size: 1em ;
-    padding: 5px 15px;
+    padding: 6px 15px 4px;
     border: 1px solid black;
     border-radius: 5px;
     box-shadow: 2px 2px 2px 2px black ;

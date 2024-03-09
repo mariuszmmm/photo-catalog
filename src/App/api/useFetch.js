@@ -1,81 +1,113 @@
 import axios from "axios";
 import { API_URL } from "./api";
 import { jwtDecode } from "jwt-decode";
-import { setSessionStorage } from "../sessionStorage";
+import { getSessionStorage, setSessionStorage } from "../sessionStorage";
 
-const useFetch = () => {
+export const useFetch = () => {
 
-  const getFotoListFromBackend = async () => {
-    try {
-      return await (axios.get(`${API_URL}/files`))
-    } catch (err) {
-      alert("error in getFotoListFromBackend: ")
-    }
-  };
-
-  const logInToServer = async (username, password) => {
-    const response = await axios.post(`${API_URL}/login`, { username, password })
-    const { token } = response.data;
-    const decodedToken = token && jwtDecode(token);
-    setSessionStorage("token", token);
-    if (decodedToken) {
-      return {
-        username: decodedToken.username,
-        isAdmin: decodedToken.isAdmin,
-        sessionTime: decodedToken.exp,
-      }
-    };
-  };
-
-  const getItemFromBackEnd = async () => {
+  const getItemAPI = async () => {
     try {
       return await (axios.get(`${API_URL}/items`))
     } catch (err) {
-      alert("error in getItemFromBackEnd: ")
+      alert("error in getItemAPI: ")
     }
   };
 
-  const sendItemToBackEnd = async (item) => {
+  const logInAPI = async (username, password) => {
+    try {
+      const response = await axios.post(`${API_URL}/login`, { username, password })
+      const { token } = response.data;
+      const decodedToken = token && jwtDecode(token);
+      if (decodedToken) {
+        setSessionStorage("token", token);
+        return decodedToken
+      };
+    } catch (error) {
+      alert(error.response.data.message);
+    };
+  };
+
+  const userAddAPI = async (username, password) => {
+    try {
+      const token = getSessionStorage("token")
+      const response = await axios.post(
+        `${API_URL}/user/add`,
+        { username, password },
+        { headers: { Authorization: token } }
+      );
+      alert(response.data.message)
+
+      return response;
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  };
+
+  const passwordChangeAPI = async (username, password, newPassword) => {
+    try {
+      const token = getSessionStorage("token")
+      const response = await axios.post(
+        `${API_URL}/user/password`,
+        { username, password, newPassword },
+        { headers: { Authorization: token } }
+      );
+      alert(response.data.message)
+
+      return response
+    } catch (error) {
+      alert(error.response.data.message)
+    }
+  };
+
+  const sendItemAPI = async (item) => {
     try {
       return await axios.post(`${API_URL}/items`, item)
     } catch (err) {
-      alert("error in sendItemToBackEnd: ")
+      alert("error in sendItemAPI: ")
     }
   };
 
-  const updateItemInBackEnd = async (item, id) => {
+  const updateItemAPI = async (item, id) => {
     try {
       return await axios.put(`${API_URL}/items/${id}`, item)
     } catch (err) {
-      alert("error in updateItemInBackEnd: ")
+      alert("error in updateItemAPI: ")
     }
   };
 
-  const deleteItemFromBackEnd = async (id) => {
+  const deleteItemAPI = async (id) => {
     try {
       return await axios.delete(`${API_URL}/items/${id}`);
     } catch (err) {
-      alert("error in deleteItemFromBackEnd: ")
+      alert("error in deleteItemAPI: ")
     }
   };
 
-  const deleteItemImageFromBackEnd = async (id) => {
+  const deleteItemImageAPI = async (id) => {
     try {
       return await axios.put(`${API_URL}/items/${id}/removeImage`);
     } catch (err) {
-      alert("errorr in deleteItemImageFromBackEnd: ")
+      alert("errorr in deleteItemImageAPI: ")
+    }
+  };
+
+  const getFotoListAPI = async () => {
+    try {
+      return await (axios.get(`${API_URL}/files`))
+    } catch (err) {
+      alert("error in getFotoListAPI: ")
     }
   };
 
   return {
-    logInToServer,
-    getItemFromBackEnd,
-    sendItemToBackEnd,
-    deleteItemFromBackEnd,
-    deleteItemImageFromBackEnd,
-    updateItemInBackEnd,
-    getFotoListFromBackend,
+    logInAPI,
+    userAddAPI,
+    passwordChangeAPI,
+    getItemAPI,
+    sendItemAPI,
+    deleteItemAPI,
+    deleteItemImageAPI,
+    updateItemAPI,
+    getFotoListAPI,
   }
 };
-
-export default useFetch;
