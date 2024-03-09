@@ -34,11 +34,11 @@ const Navigation = ({ state, setState }) => {
               {isAdmin &&
                 <>
                   <UserAdd showUserAddModal={showUserAddModal} setShowUserAddModal={setShowUserAddModal} />
-                  <PasswordChange state={state} showPasswordChangeModal={showPasswordChangeModal} setShowPasswordChangeModal={setShowPasswordChangeModal} />
                   <FilesListLink />
                   <UsersListLink />
                 </>
               }
+              <PasswordChange state={state} showPasswordChangeModal={showPasswordChangeModal} setShowPasswordChangeModal={setShowPasswordChangeModal} />
               <Logout setState={setState} />
             </>
           }
