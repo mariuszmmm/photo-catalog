@@ -13,7 +13,7 @@ const Navigation = ({ state, setState }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showUserAddModal, setShowUserAddModal] = useState(false);
   const [showPasswordChangeModal, setShowPasswordChangeModal] = useState(false);
-  const { isLoggedIn, username } = state;
+  const { isLoggedIn, username, isAdmin } = state;
 
   useEffect(() => {
     document.body.style.overflow =
@@ -31,11 +31,15 @@ const Navigation = ({ state, setState }) => {
           }
           {isLoggedIn &&
             <>
-              <UserAdd showUserAddModal={showUserAddModal} setShowUserAddModal={setShowUserAddModal} />
-              <PasswordChange state={state} showPasswordChangeModal={showPasswordChangeModal} setShowPasswordChangeModal={setShowPasswordChangeModal} />
+              {isAdmin &&
+                <>
+                  <UserAdd showUserAddModal={showUserAddModal} setShowUserAddModal={setShowUserAddModal} />
+                  <PasswordChange state={state} showPasswordChangeModal={showPasswordChangeModal} setShowPasswordChangeModal={setShowPasswordChangeModal} />
+                  <FilesListLink />
+                  <UsersListLink />
+                </>
+              }
               <Logout setState={setState} />
-              <FilesListLink />
-              <UsersListLink />
             </>
           }
         </ButtonsContainer>

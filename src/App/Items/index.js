@@ -75,7 +75,7 @@ const Items = ({ state, setState }) => {
 
                   <ButtonsContainer>
 
-                    <DownloadButton href={`${API_URL}/download/${item.image}`}>
+                    <DownloadButton href={`${API_URL}/download/${item.image}`} disabled={!item.image}>
                       Pobierz plik
                     </DownloadButton>
 

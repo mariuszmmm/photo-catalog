@@ -1,9 +1,10 @@
-import axios from "axios";
 import { useState } from "react";
+import { useFetch } from "../../api/useFetch";
 
-const usePasswordChange = ({ state, setShowPasswordChangeModal }) => {
+const usePasswordChange = (state, setShowPasswordChangeModal) => {
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const { passwordChangeAPI } = useFetch();
 
   const setInputChange = ({ target }) => {
     const { name, value } = target;
@@ -14,8 +15,12 @@ const usePasswordChange = ({ state, setShowPasswordChangeModal }) => {
   const passwordChange = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post(state.username, password, newPassword);
-    response && setShowPasswordChangeModal(false);
+    const response = await passwordChangeAPI(state.username, password, newPassword);
+    if (response) {
+      setPassword("");
+      setNewPassword("");
+      setShowPasswordChangeModal(false);
+    };
   };
 
   return {

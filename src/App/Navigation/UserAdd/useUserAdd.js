@@ -15,7 +15,11 @@ export const useUserAdd = (setShowUserAddModal) => {
   const userAdd = async (event) => {
     event.preventDefault();
     const response = await userAddAPI(username, password);
-    response && setShowUserAddModal(false);
+    if (response) {
+      setUsername("");
+      setPassword("");
+      setShowUserAddModal(false);
+    };
   };
 
   return {

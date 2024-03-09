@@ -6,4 +6,6 @@ export default styled(Button).attrs({ as: 'a' })`
   background-color: white;
   text-align: center;
   text-decoration: none;
+
+  /* zrobić disabled na brak zdjęcia w zadaniu */
 `;
