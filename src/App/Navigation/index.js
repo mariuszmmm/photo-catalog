@@ -41,13 +41,13 @@ const Navigation = ({ state, setState }) => {
                   setShowUserAddBackdrop={setShowUserAddBackdrop} />
               }
               <PasswordChange state={state} showPasswordChangeBackdrop={showPasswordChangeBackdrop} setShowPasswordChangeBackdrop={setShowPasswordChangeBackdrop} />
-              <Logout setState={setState} />
               {isAdmin &&
                 <>
                   <FilesListLink />
                   <UsersListLink />
                 </>
               }
+              <Logout setState={setState} />
             </>
           }
         </ButtonsContainer>
