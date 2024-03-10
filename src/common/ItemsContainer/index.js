@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: start;
   gap: 10px;
   padding: 10px;
   border: 1px solid black;
@@ -14,6 +14,6 @@ export default styled.div`
     padding: 10px;
     font-weight:700;
     text-align: justify;
-    flex-grow: 1;
+    flex-grow: 0;
   }
 `;
