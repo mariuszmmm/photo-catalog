@@ -5,7 +5,7 @@ export default styled.div`
   justify-content: right;
   align-items: baseline;
   gap: 10px;
-  margin: 10px 25px;
+  margin: 10px 45px;
   grid-template-columns: minmax(0, 300px) minmax(0, auto) minmax(0, auto);
 
   @media (max-width:600px){
