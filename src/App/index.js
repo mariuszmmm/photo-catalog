@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import Container from '../common/Container';
 import Header from '../common/Header';
 import Items from './Items';
-import { RemainingSessionTime } from './Navigation/RemainingSessionTime';
+import { RemainingSessionTime } from './RemainingSessionTime';
 
 const App = () => {
   const [state, setState] = useState({

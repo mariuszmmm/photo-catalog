@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default styled.form`
+export const Form = styled.form`
   display: grid;
   justify-content: center;
   grid-template-columns: minmax(0, 500px) minmax(0, 500px);;

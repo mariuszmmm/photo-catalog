@@ -10,36 +10,44 @@ import UsersListLink from "./UsersListLink";
 
 const Navigation = ({ state, setState }) => {
 
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showUserAddModal, setShowUserAddModal] = useState(false);
-  const [showPasswordChangeModal, setShowPasswordChangeModal] = useState(false);
+  const [showLoginBackdrop, setShowLoginBackdrop] = useState(false);
+  const [showUserAddBackdrop, setShowUserAddBackdrop] = useState(false);
+  const [showPasswordChangeBackdrop, setShowPasswordChangeBackdrop] = useState(false);
   const { isLoggedIn, username, isAdmin } = state;
 
   useEffect(() => {
     document.body.style.overflow =
-      (showLoginModal || showPasswordChangeModal || showUserAddModal) ? "hidden" : "auto"
+      (showLoginBackdrop || showPasswordChangeBackdrop || showUserAddBackdrop) ? "hidden" : "auto"
 
-  }, [showLoginModal, showPasswordChangeModal, showUserAddModal])
+  }, [showLoginBackdrop, showPasswordChangeBackdrop, showUserAddBackdrop]);
 
   return (
     <>
       <Nav>
-        {isLoggedIn && <LogInfo>zalogowany: {username}</LogInfo>}
+        {isLoggedIn &&
+          <LogInfo>zalogowany: {username}</LogInfo>
+        }
         <ButtonsContainer>
           {!isLoggedIn &&
-            <Login setState={setState} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} />
+            <Login
+              setState={setState}
+              showLoginBackdrop={showLoginBackdrop}
+              setShowLoginBackdrop={setShowLoginBackdrop} />
           }
           {isLoggedIn &&
             <>
               {isAdmin &&
+                <UserAdd showUserAddBackdrop={showUserAddBackdrop}
+                  setShowUserAddBackdrop={setShowUserAddBackdrop} />
+              }
+              <PasswordChange state={state} showPasswordChangeBackdrop={showPasswordChangeBackdrop} setShowPasswordChangeBackdrop={setShowPasswordChangeBackdrop} />
+              <Logout setState={setState} />
+              {isAdmin &&
                 <>
-                  <UserAdd showUserAddModal={showUserAddModal} setShowUserAddModal={setShowUserAddModal} />
                   <FilesListLink />
                   <UsersListLink />
                 </>
               }
-              <PasswordChange state={state} showPasswordChangeModal={showPasswordChangeModal} setShowPasswordChangeModal={setShowPasswordChangeModal} />
-              <Logout setState={setState} />
             </>
           }
         </ButtonsContainer>

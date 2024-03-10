@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useFetch } from "../../api/useFetch";
+import { useFetch } from "../../Fetch/useFetch";
 
-const usePasswordChange = (state, setShowPasswordChangeModal) => {
+const usePasswordChange = (state, setShowPasswordChangeBackdrop) => {
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const { passwordChangeAPI } = useFetch();
@@ -19,7 +19,7 @@ const usePasswordChange = (state, setShowPasswordChangeModal) => {
     if (response) {
       setPassword("");
       setNewPassword("");
-      setShowPasswordChangeModal(false);
+      setShowPasswordChangeBackdrop(false);
     };
   };
 

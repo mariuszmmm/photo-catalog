@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "./api";
+import { API_URL } from "../api";
 import { jwtDecode } from "jwt-decode";
 import { getSessionStorage, setSessionStorage } from "../sessionStorage";
 
@@ -13,7 +13,7 @@ export const useFetch = () => {
     }
   };
 
-  const logInAPI = async (username, password) => {
+  const loginAPI = async (username, password) => {
     try {
       const response = await axios.post(`${API_URL}/login`, { username, password })
       const { token } = response.data;
@@ -100,7 +100,7 @@ export const useFetch = () => {
   };
 
   return {
-    logInAPI,
+    loginAPI,
     userAddAPI,
     passwordChangeAPI,
     getItemAPI,

@@ -1,23 +1,21 @@
 import React from 'react';
-import Form from '../../../common/Form';
-import { Input } from '../styled';
 import Button from '../../../common/Button';
-import Modal from '../../../common/Modal';
+import { Backdrop, Form, Input } from '../../../common/Modal';
 import { useUserAdd } from './useUserAdd';
 
-const UserAdd = ({ showUserAddModal, setShowUserAddModal }) => {
+const UserAdd = ({ showUserAddBackdrop, setShowUserAddBackdrop }) => {
   const {
     username,
     password,
     userAdd,
     setInputChange,
-  } = useUserAdd(setShowUserAddModal);
+  } = useUserAdd(setShowUserAddBackdrop);
 
   return (
     <>
-      <Button onClick={() => setShowUserAddModal(true)}>Dodaj użytkownika</Button>
-      {showUserAddModal &&
-        <Modal>
+      <Button onClick={() => setShowUserAddBackdrop(true)}>Dodaj użytkownika</Button>
+      {showUserAddBackdrop &&
+        <Backdrop>
           <Form onSubmit={userAdd}>
             <div>
               <p>login:</p>
@@ -42,9 +40,9 @@ const UserAdd = ({ showUserAddModal, setShowUserAddModal }) => {
               />
             </div>
             <Button type="submit" >Zapisz</Button>
-            <Button type="button" onClick={() => setShowUserAddModal(false)} >Anuluj</Button>
+            <Button type="button" onClick={() => setShowUserAddBackdrop(false)} >Anuluj</Button>
           </Form>
-        </Modal>}
+        </Backdrop>}
     </>
   );
 };

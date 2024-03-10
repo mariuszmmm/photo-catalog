@@ -1,26 +1,24 @@
 import React from 'react';
-import { Input } from '../styled';
+import { Backdrop, Form, Input } from "../../../common/Modal";
 import Button from '../../../common/Button';
-import Form from '../../../common/Form';
-import Modal from '../../../common/Modal';
 import useLogin from './useLogin';
 
-export const Login = ({ setState, showLoginModal, setShowLoginModal }) => {
+export const Login = ({ setState, showLoginBackdrop, setShowLoginBackdrop }) => {
   const {
     username,
     password,
     onInputChange,
     login,
-  } = useLogin(setState, setShowLoginModal);
+  } = useLogin(setState, setShowLoginBackdrop);
 
   return (
     <>
-      <Button onClick={() => setShowLoginModal(true)}>Logowanie</Button>
-      {showLoginModal &&
-        <Modal>
+      <Button onClick={() => setShowLoginBackdrop(true)}>Logowanie</Button>
+      {showLoginBackdrop &&
+        <Backdrop>
           <Form onSubmit={login}>
             <div>
-              <p>użytkownik:</p>
+              <p>login:</p>
               <Input
                 type="text"
                 placeholder="username"
@@ -42,9 +40,9 @@ export const Login = ({ setState, showLoginModal, setShowLoginModal }) => {
               />
             </div>
             <Button type="submit">Zaloguj</Button>
-            <Button type="button" onClick={() => setShowLoginModal(false)}>Wróć</Button>
+            <Button type="button" onClick={() => setShowLoginBackdrop(false)}>Wróć</Button>
           </Form>
-        </Modal >}
+        </Backdrop >}
     </>
   );
 };

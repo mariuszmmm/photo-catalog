@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useFetch } from "../api/useFetch";
+import { useFetch } from "../Fetch/useFetch";
 
 const useItems = (state, setState) => {
   const areaRef = useRef(null);

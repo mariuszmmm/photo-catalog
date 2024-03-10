@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useFetch } from "../../api/useFetch"
+import { useFetch } from "../../Fetch/useFetch"
 
-const useLogInForm = (setState, setShowLoginModal) => {
+const useLogin = (setState, setShowLoginBackdrop) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { logInAPI } = useFetch();
+  const { loginAPI } = useFetch();
 
 
   const onInputChange = ({ target }) => {
@@ -16,7 +16,7 @@ const useLogInForm = (setState, setShowLoginModal) => {
   const login = async (event) => {
     event.preventDefault();
 
-    const data = await logInAPI(username, password);
+    const data = await loginAPI(username, password);
     if (data) {
       const time = new Date(data.iat).getTime();
       const remainingSessionTime = data.exp - time;
@@ -30,7 +30,7 @@ const useLogInForm = (setState, setShowLoginModal) => {
           remainingSessionTime
         }
       ))
-      setShowLoginModal(false);
+      setShowLoginBackdrop(false);
     };
   };
 
@@ -42,4 +42,4 @@ const useLogInForm = (setState, setShowLoginModal) => {
   };
 };
 
-export default useLogInForm;
+export default useLogin;

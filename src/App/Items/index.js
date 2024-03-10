@@ -2,15 +2,14 @@ import Button from "../../common/Button";
 import ItemsContainer from "../../common/ItemsContainer";
 import Textarea from "../../common/Textarea";
 import useItems from "./useItems";
-import Modal from "../../common/Modal";
+import { Backdrop } from "../../common/Modal";
 import InputFile from "../../common/InputFile";
-import { Image } from "./Image";
-import FormAddNewItem from "./FormAddNewItem";
-import { API_URL } from "../api/api";
+import ImageItem from "./ImageItem";
+import AddNewItem from "../AddNewItem";
+import { API_URL } from "../api";
 import DownloadButton from "../../common/DownloadButton";
 import ButtonsContainer from "../../common/ButtonsContainer";
-import SectionItems from "../../common/sectionItems";
-
+import SectionItems from "../../common/SectionItems";
 
 const Items = ({ state, setState }) => {
   const {
@@ -33,9 +32,9 @@ const Items = ({ state, setState }) => {
   return (
     <>
       {state.loading &&
-        <Modal>ŁADOWANIE ...</Modal>}
+        <Backdrop>ŁADOWANIE ...</Backdrop>}
       {state.isAdmin &&
-        <FormAddNewItem
+        <AddNewItem
           newItem={newItem}
           areaRef={areaRef}
           formRef={formRef}
@@ -47,7 +46,7 @@ const Items = ({ state, setState }) => {
       {!state.loading && <SectionItems>
         {state.items.map((item) =>
           <ItemsContainer key={item._id}>
-            {<Image item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
+            {<ImageItem item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
             {!state.isLoggedIn && <p>{item.content}</p>}
             {state.isLoggedIn &&
               (editedItem.id === item._id ?

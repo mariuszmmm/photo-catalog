@@ -1,24 +1,21 @@
 import Button from "../../../common/Button";
-import Form from "../../../common/Form";
-import Modal from "../../../common/Modal"
-import { Input } from "../styled";
+import { Backdrop, Form, Input } from "../../../common/Modal"
 import usePasswordChange from "./usePasswordChange"
 
 
-const PasswordChange = ({ state, showPasswordChangeModal, setShowPasswordChangeModal }) => {
-
+const PasswordChange = ({ state, showPasswordChangeBackdrop, setShowPasswordChangeBackdrop }) => {
   const {
     password,
     newPassword,
     setInputChange,
     passwordChange,
-  } = usePasswordChange(state, setShowPasswordChangeModal);
+  } = usePasswordChange(state, setShowPasswordChangeBackdrop);
 
   return (
     <>
-      <Button onClick={() => setShowPasswordChangeModal(true)}>Zmień hasło</Button>
-      {showPasswordChangeModal &&
-        <Modal>
+      <Button onClick={() => setShowPasswordChangeBackdrop(true)}>Zmień hasło</Button>
+      {showPasswordChangeBackdrop &&
+        <Backdrop>
           <Form onSubmit={passwordChange}>
             <div>
               <Input
@@ -50,9 +47,9 @@ const PasswordChange = ({ state, showPasswordChangeModal, setShowPasswordChangeM
               />
             </div>
             <Button type="submit">Zapisz</Button>
-            <Button type="button" onClick={() => setShowPasswordChangeModal(false)}>Anuluj</Button>
+            <Button type="button" onClick={() => setShowPasswordChangeBackdrop(false)}>Anuluj</Button>
           </Form>
-        </Modal>
+        </Backdrop>
       }
     </>
   )

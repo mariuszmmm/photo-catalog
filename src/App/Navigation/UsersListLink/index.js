@@ -1,5 +1,5 @@
 import DownloadButton from "../../../common/DownloadButton"
-import { API_URL } from "../../api/api"
+import { API_URL } from "../../api"
 
 const UsersListLink = () => (
   <DownloadButton href={`${API_URL}/users`} target="_blank">
