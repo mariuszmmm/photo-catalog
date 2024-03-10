@@ -1,22 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useFetch } from "../Fetch/useFetch";
+import { convertToBase64 } from "./convertToBase64";
+import { createFormData } from "./createFormData";
 
 const useItems = (state, setState) => {
-  const areaRef = useRef(null);
-  const formRef = useRef(null);
-  const areaEditRef = useRef(null);
-  const [newItem, setNewItem] = useState(
-    {
-      content: "",
-      file: null,
-      image: null,
-      targetImage: null
-    }
-  );
-
+  const headerEditRef = useRef(null);
   const [editedItem, setEditedItem] = useState(
     {
       id: null,
+      header: "",
       content: "",
       file: null,
       image: null,
@@ -26,61 +18,18 @@ const useItems = (state, setState) => {
 
   const {
     getItemAPI,
-    sendItemAPI,
     updateItemAPI,
     deleteItemAPI,
     deleteItemImageAPI
   } = useFetch();
 
-  const newItemContentChange = ({ target }) => {
-    setNewItem({
-      ...newItem,
-      content: target.value,
-    });
-  };
+  const editedItemChange = ({ target }) => {
+    const { name, value } = target;
 
-  const editedItemContentChange = ({ target }) => {
     setEditedItem({
       ...editedItem,
-      content: target.value,
+      [name]: value,
     });
-  };
-
-  const createFormData = (file, content) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('content', content);
-    return formData;
-  }
-
-  //convert to base64encoded (string)
-  const convertToBase64 = (targetFile, item, set) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(targetFile);
-    reader.onload = () => {
-      set((prevState) => (
-        {
-          ...prevState,
-          image: reader.result,
-
-        }
-      ));
-    };
-    reader.onerror = error => {
-      alert("error in convertToBase64: ", error)
-    };
-  };
-
-  const newItemFileChange = (event) => {
-    const targetFile = event.target.files[0];
-    setNewItem(
-      {
-        ...newItem,
-        file: targetFile,
-        targetImage: event.target,
-      }
-    );
-    convertToBase64(targetFile, newItem, setNewItem);
   };
 
   const editedItemFileChange = (event) => {
@@ -92,27 +41,11 @@ const useItems = (state, setState) => {
         targetImage: event.target,
       }
     );
-    convertToBase64(targetFile, editedItem, setEditedItem);
-  };
-
-  const handleAddNewItem = async () => {
-    const formData = createFormData(newItem.file, newItem.content);
-    try {
-      const res = await sendItemAPI(formData)
-      setState(
-        {
-          ...state,
-          items: [...state.items, res.data],
-          //    loading: false,
-        }
-      );
-    } catch (err) {
-      alert("error in handleAddNewItem: ")
-    };
+    convertToBase64(targetFile, setEditedItem);
   };
 
   const handleSaveEditedItem = async () => {
-    const formData = createFormData(editedItem.file, editedItem.content)
+    const formData = createFormData(editedItem.file, editedItem.header, editedItem.content)
     try {
       const res = await updateItemAPI(formData, editedItem.id);
       const newItems = state.items.map((item) => (
@@ -122,12 +55,12 @@ const useItems = (state, setState) => {
         {
           ...state,
           items: newItems,
-          //    loading: false,
         }
       );
       setEditedItem(
         {
           id: null,
+          header: "",
           content: "",
           file: null,
           image: null,
@@ -139,39 +72,16 @@ const useItems = (state, setState) => {
     }
   };
 
-  const addNewItem = (event) => {
-    event.preventDefault();
-    if (newItem.content.trim() === "") {
-      setNewItem(
-        {
-          ...newItem,
-          content: ""
-        }
-      );
-      areaRef.current.focus();
-      return
-    }
-    handleAddNewItem();
-    setNewItem(
-      {
-        content: "",
-        file: null,
-        image: null,
-      }
-    )
-    formRef.current.reset();
-    areaRef.current.focus();
-  };
-
   const saveEditedItem = () => {
-    if (editedItem.content.trim() === "") {
+    if (editedItem.header.trim() === "") {
       setEditedItem(
         {
           ...editedItem,
+          header: "",
           conetnt: "",
         }
       );
-      areaEditRef.current.focus();
+      headerEditRef.current.focus();
       return
     }
     handleSaveEditedItem();
@@ -185,7 +95,6 @@ const useItems = (state, setState) => {
         {
           ...state,
           items: newItems,
-          //    loading: false,
         }
       );
     } catch (err) {
@@ -203,7 +112,6 @@ const useItems = (state, setState) => {
         {
           ...state,
           items: newItems,
-          //    loading: false,
         }
       );
     } catch (err) {
@@ -212,11 +120,6 @@ const useItems = (state, setState) => {
   };
 
   useEffect(() => {
-    // setState((prevState) =>
-    // ({
-    //   ...prevState,
-    //   loading: true,
-    // }));
     const fetchData = async () => {
       try {
         const items = await getItemAPI();
@@ -239,20 +142,13 @@ const useItems = (state, setState) => {
     };
 
     fetchData();
-
     // eslint-disable-next-line
   }, [state.isLoggedIn]);
 
   return {
-    areaRef,
-    formRef,
-    newItem,
-    addNewItem,
-    newItemContentChange,
-    newItemFileChange,
-    areaEditRef,
+    headerEditRef,
     editedItem,
-    editedItemContentChange,
+    editedItemChange,
     editedItemFileChange,
     setEditedItem,
     deleteItem,

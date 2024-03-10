@@ -12,11 +12,14 @@ export const Nav = styled.nav`
   border-bottom: 1px solid black;
   padding: 15px;
   margin-bottom: 20px;
+
+  @media (max-width: 560px){
+    flex-direction: column;
+  }
 `;
 
-export const LogInfo = styled.p`
-  font-size: 1em ;
+export const Info = styled.p`
+  font-size: 1.2em ;
   min-width: max-content;
   margin: 0;
-  flex: 1 0 auto;
 `;

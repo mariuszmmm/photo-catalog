@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Nav, LogInfo } from "./styled";
+import { Nav, Info } from "./styled";
 import ButtonsContainer from "../../common/ButtonsContainer";
 import FilesListLink from "./FilesListLink";
 import Login from "./Login";
@@ -7,6 +7,8 @@ import UserAdd from "./UserAdd";
 import PasswordChange from "./PasswordChange";
 import Logout from "./Logout";
 import UsersListLink from "./UsersListLink";
+import { RemainingSessionTime } from "../RemainingSessionTime";
+import InfoContainer from "../../common/InfoContainer";
 
 const Navigation = ({ state, setState }) => {
 
@@ -25,7 +27,12 @@ const Navigation = ({ state, setState }) => {
     <>
       <Nav>
         {isLoggedIn &&
-          <LogInfo>zalogowany: {username}</LogInfo>
+          <InfoContainer>
+            <Info>zalogowany: {username}</Info>
+            <RemainingSessionTime state={state} setState={setState} />
+            <Info>Ilość elementów: {state.items.length}</Info>
+
+          </InfoContainer>
         }
         <ButtonsContainer>
           {!isLoggedIn &&

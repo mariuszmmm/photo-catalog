@@ -10,7 +10,7 @@ const ImageItem = ({ item, editedItemId, editImage }) => {
     <ImageContainer>
       {editedItemId === item._id ?
         (editImage ?
-          <Image $isLoaded={editImage} src={editImage} alt="aaa" />
+          <Image $isLoaded={editImage} src={editImage} alt="foto" />
           :
           item.image && <Image $isLoaded={item.image} src={`${API_URL}/Images/` + item.image} alt="foto" />)
         :

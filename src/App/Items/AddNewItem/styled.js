@@ -9,5 +9,13 @@ export const Form = styled.form`
 
   @media (max-width:600px){
     grid-template-columns: 100%;
+    margin: 0;
   }
+`;
+
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
 `;

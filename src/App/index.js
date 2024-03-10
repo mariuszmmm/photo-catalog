@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import Container from '../common/Container';
 import Header from '../common/Header';
 import Items from './Items';
-import { RemainingSessionTime } from './RemainingSessionTime';
+import SearchItems from './Items/SearchItems';
 
 const App = () => {
   const [state, setState] = useState({
@@ -14,6 +14,8 @@ const App = () => {
     sessionTime: null,
     remainingSessionTime: 0,
     items: [],
+    filter: false,
+    filteredItems: [],
   });
 
   return (
@@ -22,8 +24,8 @@ const App = () => {
         state={state}
         setState={setState}
       />
+      <SearchItems state={state} setState={setState} />
       <Container>
-        <RemainingSessionTime state={state} setState={setState} />
         <Header>Foto Katalog</Header>
         <Items
           state={state}

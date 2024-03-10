@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Info } from "../Navigation/styled";
 
 export const RemainingSessionTime = ({ state, setState }) => {
   useEffect(() => {
@@ -32,9 +33,9 @@ export const RemainingSessionTime = ({ state, setState }) => {
   const hours = Math.floor(state.remainingSessionTime / 60 / 60).toString().padStart(2, '0');
 
   return (
-    <p>
+    <Info>
       czas do końca sesji{": "}
       {hours}:{minutes}:{seconds}
-    </p>
+    </Info>
   )
 };

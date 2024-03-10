@@ -27,6 +27,6 @@ export default styled.button`
     }
 
     &:disabled:active{
-      box-shadow: 2px 2px 2px 2px ;
+      box-shadow: 2px 2px 2px 2px black ;
     }
 `;

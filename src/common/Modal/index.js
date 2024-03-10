@@ -35,7 +35,7 @@ export const Form = styled.form`
   
   button{
     flex: 0 0 0;
-    width: 250px;
+    width: 80%;
   }
 
   p{
@@ -48,7 +48,7 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   height: 1rem;
-  width: 150px;
+  width: 200px;
   padding: 15px;
   border: 1px solid black;
   border-radius: 5px;

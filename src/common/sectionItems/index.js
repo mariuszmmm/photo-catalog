@@ -6,8 +6,8 @@ export default styled.div`
   gap: 10px;
   margin: 30px;
 
-  @media (max-width:550px){
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  @media (max-width:600px){
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
       margin: 0;
   }
 `;

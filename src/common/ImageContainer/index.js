@@ -5,4 +5,5 @@ export default styled.div`
   border: 1px solid black;
   position: relative;
   aspect-ratio: 16/9; 
+  border-radius: 5px;
 `;
