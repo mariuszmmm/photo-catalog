@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import Container from '../common/Container';
 import Header from '../common/Header';
 import Items from './Items';
-import SearchItems from './Items/SearchItems';
+import FilterItems from './Items/FilterItems';
 
 const App = () => {
   const [state, setState] = useState({
@@ -24,7 +24,7 @@ const App = () => {
         state={state}
         setState={setState}
       />
-      <SearchItems state={state} setState={setState} />
+      <FilterItems state={state} setState={setState} />
       <Container>
         <Header>Foto Katalog</Header>
         <Items

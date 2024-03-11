@@ -10,11 +10,13 @@ export const Nav = styled.nav`
   gap: 15px;
   font-weight: 700;
   border-bottom: 1px solid black;
-  padding: 15px 35px;
-  margin-bottom: 20px;
+  padding: 15px 15px;
 
   @media (max-width: 600px){
     flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+
   }
 `;
 

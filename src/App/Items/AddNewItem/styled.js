@@ -5,11 +5,11 @@ export const Form = styled.form`
   justify-content: center;
   grid-template-columns: minmax(0, 500px) minmax(0, 500px);;
   gap: 10px;
-  margin: 0 30px;
+  margin: 30px;
 
   @media (max-width:600px){
     grid-template-columns: 100%;
-    margin: 0;
+    margin: 30px 0;
   }
 `;
 

@@ -44,7 +44,7 @@ const Items = ({ state, setState }) => {
                 {<ImageItem item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
                 {!state.isLoggedIn &&
                   <>
-                    <Info>{index + 1}. {item.header}</Info>
+                    <h2>{index + 1}. {item.header}</h2>
                     <p>{item.content}</p>
                   </>}
                 {state.isLoggedIn &&
@@ -76,7 +76,7 @@ const Items = ({ state, setState }) => {
                     </>
                     :
                     <>
-                      <Info>{index + 1}. {item.header}</Info>
+                      <h2>{index + 1}. {item.header}</h2>
                       <p>{item.content}</p>
                       <ButtonsContainer>
                         <DownloadButton href={item.image && `${API_URL}/download/${item.image}`} disabled={!item.image}>

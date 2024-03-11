@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useSearchItem = (state, setState) => {
+const useFilterItem = (state, setState) => {
   const [filterValue, setFilterValue] = useState("");
 
   const setFilterValueChange = ({ target }) => {
@@ -37,4 +37,4 @@ const useSearchItem = (state, setState) => {
   }
 };
 
-export default useSearchItem;
+export default useFilterItem;
