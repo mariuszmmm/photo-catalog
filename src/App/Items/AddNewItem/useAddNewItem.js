@@ -17,7 +17,7 @@ const useAddNewItem = (state, setState) => {
   );
   const { sendItemAPI } = useFetch();
 
-  const newItemChange = ({ target }) => {
+  const onNewItemChange = ({ target }) => {
     const { name, value } = target;
 
     setNewItem({
@@ -26,7 +26,7 @@ const useAddNewItem = (state, setState) => {
     });
   };
 
-  const newItemFileChange = (event) => {
+  const onNewItemFileChange = (event) => {
     const targetFile = event.target.files[0];
     setNewItem(
       {
@@ -53,7 +53,7 @@ const useAddNewItem = (state, setState) => {
     };
   };
 
-  const addNewItem = (event) => {
+  const onAddNewItemSubmit = (event) => {
     event.preventDefault();
     if (newItem.header.trim() === "") {
       setNewItem(
@@ -82,9 +82,9 @@ const useAddNewItem = (state, setState) => {
     newItem,
     headerRef,
     formRef,
-    addNewItem,
-    newItemChange,
-    newItemFileChange,
+    onAddNewItemSubmit,
+    onNewItemChange,
+    onNewItemFileChange,
   }
 };
 

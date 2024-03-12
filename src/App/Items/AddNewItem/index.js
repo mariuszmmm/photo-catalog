@@ -13,18 +13,18 @@ const AddNewItem = ({ state, setState }) => {
     newItem,
     headerRef,
     formRef,
-    addNewItem,
-    newItemChange,
-    newItemFileChange,
+    onAddNewItemSubmit,
+    onNewItemChange,
+    onNewItemFileChange,
   } = useAddNewItem(state, setState);
 
   return (
-    <Form ref={formRef} onSubmit={addNewItem}  >
+    <Form ref={formRef} onSubmit={onAddNewItemSubmit}  >
       <ContentContainer>
         <ImageContainer>
           {newItem.image && <Image $isLoaded={newItem.image} src={newItem.image} alt="foto" />}
         </ImageContainer>
-        <InputFile type="file" onChange={newItemFileChange} />
+        <InputFile type="file" onChange={onNewItemFileChange} />
       </ContentContainer>
       <ContentContainer>
         <Input
@@ -34,14 +34,14 @@ const AddNewItem = ({ state, setState }) => {
           name="header"
           value={newItem.header}
           placeholder="tytuł"
-          onChange={newItemChange}
+          onChange={onNewItemChange}
         />
         <Textarea
           type="text"
           name="content"
           value={newItem.content}
           placeholder="opis"
-          onChange={newItemChange}
+          onChange={onNewItemChange}
         />
         <Button type="onSumbit">Dodaj</Button>
       </ContentContainer>

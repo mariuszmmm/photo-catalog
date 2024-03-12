@@ -16,12 +16,12 @@ const Items = ({ state, setState }) => {
   const {
     headerEditRef,
     editedItem,
-    editedItemChange,
-    editedItemFileChange,
-    editClickHandler,
-    deleteItem,
-    deleteImage,
-    saveEditedItem,
+    onEditedItemChange,
+    onEditedItemFileChange,
+    onEditItemClick,
+    onDeleteItemClick,
+    onDeleteItemImageClick,
+    onSaveEditedItemClick,
   } = useItems(state, setState);
 
   const items = state.filter ? state.filteredItems : state.items;
@@ -54,21 +54,21 @@ const Items = ({ state, setState }) => {
                         type="text"
                         name="header"
                         value={editedItem.header}
-                        onChange={editedItemChange}
+                        onChange={onEditedItemChange}
                       />
                       <Textarea
                         type="text"
                         name="content"
                         value={editedItem.content}
-                        onChange={editedItemChange}
+                        onChange={onEditedItemChange}
                         $edited
                       />
-                      <InputFile type="file" onChange={(event) => editedItemFileChange(event, item._id)} />
+                      <InputFile type="file" onChange={(event) => onEditedItemFileChange(event, item._id)} />
                       <ButtonsContainer>
-                        <Button type="button" onClick={() => deleteImage(item._id)}>
+                        <Button type="button" onClick={() => onDeleteItemImageClick(item._id)}>
                           Usuń zdjęcie
                         </Button>
-                        <Button type="button" onClick={() => saveEditedItem(item._id)}>
+                        <Button type="button" onClick={() => onSaveEditedItemClick(item._id)}>
                           Zapisz
                         </Button>
                       </ButtonsContainer>
@@ -81,10 +81,10 @@ const Items = ({ state, setState }) => {
                         <ButtonLink href={item.image && `${API_URL}/download/${item.image}`} disabled={!item.image}>
                           Pobierz plik
                         </ButtonLink>
-                        <Button type="button" onClick={() => editClickHandler(item._id, item.header, item.content, index)} disabled={editedItem.id}>
+                        <Button type="button" onClick={() => onEditItemClick(item._id, item.header, item.content, index)} disabled={editedItem.id}>
                           Edytuj
                         </Button>
-                        <Button type="button" onClick={() => deleteItem(item._id)} disabled={editedItem.id}>
+                        <Button type="button" onClick={() => onDeleteItemClick(item._id)} disabled={editedItem.id}>
                           Usuń zadanie
                         </Button>
                       </ButtonsContainer>

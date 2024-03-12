@@ -67,11 +67,11 @@ export const useFetch = () => {
     }
   };
 
-  const updateItemAPI = async (item, id) => {
+  const saveEditedItemAPI = async (item, id) => {
     try {
       return await axios.put(`${API_URL}/items/${id}`, item)
     } catch (err) {
-      alert("error in updateItemAPI: ")
+      alert("error in saveEditedItemAPI: ")
     }
   };
 
@@ -107,7 +107,7 @@ export const useFetch = () => {
     sendItemAPI,
     deleteItemAPI,
     deleteItemImageAPI,
-    updateItemAPI,
+    saveEditedItemAPI,
     getFotoListAPI,
   }
 };

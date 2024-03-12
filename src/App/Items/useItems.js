@@ -18,12 +18,18 @@ const useItems = (state, setState) => {
 
   const {
     getItemAPI,
-    updateItemAPI,
+    saveEditedItemAPI,
     deleteItemAPI,
     deleteItemImageAPI
   } = useFetch();
 
-  const editedItemChange = ({ target }) => {
+  const onEditItemClick = (id, header, content, index) => {
+    setEditedItem({
+      ...editedItem, id, header, content
+    });
+  };
+
+  const onEditedItemChange = ({ target }) => {
     const { name, value } = target;
 
     setEditedItem({
@@ -32,7 +38,7 @@ const useItems = (state, setState) => {
     });
   };
 
-  const editedItemFileChange = (event) => {
+  const onEditedItemFileChange = (event) => {
     const targetFile = event.target.files[0]
     setEditedItem(
       {
@@ -44,10 +50,10 @@ const useItems = (state, setState) => {
     convertToBase64(targetFile, setEditedItem);
   };
 
-  const handleSaveEditedItem = async () => {
+  const saveEditedItem = async () => {
     const formData = createFormData(editedItem.file, editedItem.header, editedItem.content)
     try {
-      const res = await updateItemAPI(formData, editedItem.id);
+      const res = await saveEditedItemAPI(formData, editedItem.id);
       const newItems = state.items.map((item) => (
         item._id !== res.data._id ? item : res.data
       ));
@@ -68,11 +74,11 @@ const useItems = (state, setState) => {
         }
       );
     } catch (err) {
-      alert("error in handleSaveEditedItem: ")
+      alert("error in saveEditedItem: ")
     }
   };
 
-  const saveEditedItem = () => {
+  const onSaveEditedItemClick = () => {
     if (editedItem.header.trim() === "") {
       setEditedItem(
         {
@@ -84,10 +90,10 @@ const useItems = (state, setState) => {
       headerEditRef.current.focus();
       return
     }
-    handleSaveEditedItem();
+    saveEditedItem();
   };
 
-  const deleteItem = async (id) => {
+  const onDeleteItemClick = async (id) => {
     try {
       await deleteItemAPI(id);
       const newItems = state.items.filter((item) => item._id !== id);
@@ -98,11 +104,11 @@ const useItems = (state, setState) => {
         }
       );
     } catch (err) {
-      alert("error in deleteItem: ")
+      alert("error in onDeleteItemClick: ")
     }
   };
 
-  const deleteImage = async (id) => {
+  const onDeleteItemImageClick = async (id) => {
     try {
       await deleteItemImageAPI(id)
       const newItems = state.items.map((item) => (
@@ -115,7 +121,7 @@ const useItems = (state, setState) => {
         }
       );
     } catch (err) {
-      alert("error in deleteImage: ")
+      alert("error in onDeleteItemImageClick: ")
     }
   };
 
@@ -148,12 +154,12 @@ const useItems = (state, setState) => {
   return {
     headerEditRef,
     editedItem,
-    editedItemChange,
-    editedItemFileChange,
-    setEditedItem,
-    deleteItem,
-    deleteImage,
-    saveEditedItem
+    onEditedItemChange,
+    onEditedItemFileChange,
+    onEditItemClick,
+    onDeleteItemClick,
+    onDeleteItemImageClick,
+    onSaveEditedItemClick
   };
 };
 
