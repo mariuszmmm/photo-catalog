@@ -1,10 +1,10 @@
 import { API_URL } from "../../api";
-import DownloadButton from "../../../common/DownloadButton"
+import ButtonLink from "../../../common/ButtonLink"
 
 const FilesListLinkButton = () => (
-  <DownloadButton href={`${API_URL}/files`} target="_blank">
+  <ButtonLink href={`${API_URL}/files`} target="_blank">
     Lista plików
-  </DownloadButton>
+  </ButtonLink>
 );
 
 export default FilesListLinkButton;

@@ -1,5 +1,5 @@
 import Button from "../../common/Button";
-import ItemsContainer from "../../common/ItemsContainer";
+import ItemContainer from "../../common/ItemContainer";
 import Textarea from "../../common/Textarea";
 import useItems from "./useItems";
 import { Backdrop } from "../../common/Modal";
@@ -7,11 +7,10 @@ import InputFile from "../../common/InputFile";
 import ImageItem from "./ImageItem";
 import AddNewItem from "./AddNewItem";
 import { API_URL } from "../api";
-import DownloadButton from "../../common/DownloadButton";
+import ButtonLink from "../../common/ButtonLink";
 import ButtonsContainer from "../../common/ButtonsContainer";
 import SectionItems from "../../common/SectionItems";
 import Input from "../../common/Input";
-import { Info } from "../Navigation/styled";
 
 const Items = ({ state, setState }) => {
   const {
@@ -19,7 +18,7 @@ const Items = ({ state, setState }) => {
     editedItem,
     editedItemChange,
     editedItemFileChange,
-    setEditedItem,
+    editClickHandler,
     deleteItem,
     deleteImage,
     saveEditedItem,
@@ -40,12 +39,12 @@ const Items = ({ state, setState }) => {
         <>
           <SectionItems>
             {items.map((item, index) =>
-              <ItemsContainer key={item._id}>
+              <ItemContainer key={item._id}>
                 {<ImageItem item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
                 {!state.isLoggedIn &&
                   <>
                     <h2>{index + 1}. {item.header}</h2>
-                    <p>{item.content}</p>
+                    <p>{item.content}</p>s
                   </>}
                 {state.isLoggedIn &&
                   (editedItem.id === item._id ?
@@ -66,10 +65,10 @@ const Items = ({ state, setState }) => {
                       />
                       <InputFile type="file" onChange={(event) => editedItemFileChange(event, item._id)} />
                       <ButtonsContainer>
-                        <Button type="button" onClick={() => deleteImage(item._id)} disabled={(editedItem.id !== item._id) || !item.image}>
+                        <Button type="button" onClick={() => deleteImage(item._id)}>
                           Usuń zdjęcie
                         </Button>
-                        <Button type="button" onClick={() => saveEditedItem(item._id)} disabled={editedItem.id !== item._id}>
+                        <Button type="button" onClick={() => saveEditedItem(item._id)}>
                           Zapisz
                         </Button>
                       </ButtonsContainer>
@@ -79,13 +78,10 @@ const Items = ({ state, setState }) => {
                       <h2>{index + 1}. {item.header}</h2>
                       <p>{item.content}</p>
                       <ButtonsContainer>
-                        <DownloadButton href={item.image && `${API_URL}/download/${item.image}`} disabled={!item.image}>
+                        <ButtonLink href={item.image && `${API_URL}/download/${item.image}`} disabled={!item.image}>
                           Pobierz plik
-                        </DownloadButton>
-
-                        <Button type="button" onClick={() => setEditedItem({
-                          ...editedItem, id: item._id, header: item.header, content: item.content
-                        })} disabled={editedItem.id}>
+                        </ButtonLink>
+                        <Button type="button" onClick={() => editClickHandler(item._id, item.header, item.content, index)} disabled={editedItem.id}>
                           Edytuj
                         </Button>
                         <Button type="button" onClick={() => deleteItem(item._id)} disabled={editedItem.id}>
@@ -95,7 +91,7 @@ const Items = ({ state, setState }) => {
                     </>
                   )
                 }
-              </ItemsContainer>
+              </ItemContainer>
             )}
           </SectionItems>
         </>
