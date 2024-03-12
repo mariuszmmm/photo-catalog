@@ -6,6 +6,7 @@ import ButtonsContainer from "../../../common/ButtonsContainer";
 
 const FilterItems = ({ state, setState }) => {
   const {
+    inputRef,
     filterValue,
     setFilterValueChange,
     filterHeandler,
@@ -13,17 +14,18 @@ const FilterItems = ({ state, setState }) => {
   } = useFilterItems(state, setState);
 
   return (
-    <FilterContainer>
+    <FilterContainer onSubmit={filterHeandler}>
       <ButtonsContainer>
         <Input
+          ref={inputRef}
           type="text"
           value={filterValue}
           onChange={setFilterValueChange}
         />
       </ButtonsContainer>
       <ButtonsContainer>
-        <Button onClick={filterHeandler}>Szukaj</Button>
-        <Button onClick={resetHeandler}>Reset</Button>
+        <Button type="submit">Szukaj</Button>
+        <Button type="button" onClick={resetHeandler}>Reset</Button>
       </ButtonsContainer>
     </FilterContainer>
   )

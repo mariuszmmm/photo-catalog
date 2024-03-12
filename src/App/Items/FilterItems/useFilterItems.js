@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const useFilterItem = (state, setState) => {
   const [filterValue, setFilterValue] = useState("");
+  const inputRef = useRef();
 
   const setFilterValueChange = ({ target }) => {
     setFilterValue(target.value)
   };
 
-  const filterHeandler = () => {
-    const filteredItems = state.items.filter(item => item.header.includes(filterValue))
+  const filterHeandler = (event) => {
+    event.preventDefault();
+
+    if (filterValue.trim() === "") {
+      setFilterValue("");
+      inputRef.current.focus();
+      return
+    };
+
+    const filteredItems = state.items.filter(item => item.header.toUpperCase().includes(filterValue.toUpperCase()))
 
     setState(
       {
@@ -27,9 +36,11 @@ const useFilterItem = (state, setState) => {
         filteredItems: []
       }
     );
+    setFilterValue("");
   };
 
   return {
+    inputRef,
     filterValue,
     setFilterValueChange,
     filterHeandler,
