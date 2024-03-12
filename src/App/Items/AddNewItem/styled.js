@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Form = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-columns: minmax(0, 500px) minmax(0, 500px);;
+  grid-template-columns: minmax(0, 500px) minmax(0, 500px);
   gap: 10px;
   margin: 30px;
 
