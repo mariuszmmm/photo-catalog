@@ -23,10 +23,11 @@ const useItems = (state, setState) => {
     deleteItemImageAPI
   } = useFetch();
 
-  const onEditItemClick = (id, header, content, index) => {
+  const onEditItemClick = (id, header, content) => {
     setEditedItem({
       ...editedItem, id, header, content
     });
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: "nearest" });
   };
 
   const onEditedItemChange = ({ target }) => {

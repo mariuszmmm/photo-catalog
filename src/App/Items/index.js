@@ -39,7 +39,7 @@ const Items = ({ state, setState }) => {
         <>
           <SectionItems>
             {items.map((item, index) =>
-              <ItemContainer key={item._id}>
+              <ItemContainer key={item._id} id={item._id}>
                 {<ImageItem item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
                 {!state.isLoggedIn &&
                   <>
