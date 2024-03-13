@@ -44,7 +44,7 @@ const Items = ({ state, setState }) => {
                 {!state.isLoggedIn &&
                   <>
                     <h2>{index + 1}. {item.header}</h2>
-                    <p>{item.content}</p>s
+                    <p>{item.content}</p>
                   </>}
                 {state.isLoggedIn &&
                   (editedItem.id === item._id ?

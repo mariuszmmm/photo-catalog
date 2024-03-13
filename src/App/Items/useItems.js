@@ -27,8 +27,14 @@ const useItems = (state, setState) => {
     setEditedItem({
       ...editedItem, id, header, content
     });
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: "nearest" });
+
   };
+
+  useEffect(() => {
+    const id = editedItem.id;
+    id && document.getElementById(id)
+      .scrollIntoView({ behavior: 'smooth', block: "nearest" });
+  }, [editedItem])
 
   const onEditedItemChange = ({ target }) => {
     const { name, value } = target;
