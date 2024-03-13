@@ -30,12 +30,6 @@ const useItems = (state, setState) => {
 
   };
 
-  useEffect(() => {
-    const id = editedItem.id;
-    id && document.getElementById(id)
-      .scrollIntoView({ behavior: 'smooth', block: "nearest" });
-  }, [editedItem])
-
   const onEditedItemChange = ({ target }) => {
     const { name, value } = target;
 
@@ -131,6 +125,12 @@ const useItems = (state, setState) => {
       alert("error in onDeleteItemImageClick: ")
     }
   };
+
+  useEffect(() => {
+    const id = editedItem.id;
+    id && document.getElementById(id)
+      .scrollIntoView({ behavior: 'smooth', block: "nearest" });
+  }, [editedItem])
 
   useEffect(() => {
     const fetchData = async () => {
