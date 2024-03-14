@@ -17,23 +17,27 @@ const useSearchItem = (state, setState) => {
       return
     };
 
-    const filteredItems = state.items.filter(item => item.header.toUpperCase().includes(searchValue.toUpperCase()))
+    const filteredItems = state.items.map((item) => (
+      {
+        ...item,
+        filteredOut: !(item.header.toUpperCase().includes(searchValue.trim().toUpperCase())),
+      }
+    ));
 
     setState(
       {
         ...state,
-        filter: true,
-        filteredItems: [...filteredItems]
+        items: filteredItems,
       }
     );
   };
 
   const onResetClick = () => {
+    const resetItems = state.items.map((item) => ({ ...item, filteredOut: false }));
     setState(
       {
         ...state,
-        filter: false,
-        filteredItems: []
+        items: resetItems,
       }
     );
     setSearchValue("");
@@ -45,7 +49,7 @@ const useSearchItem = (state, setState) => {
     setSearchValueChange,
     onSearchSubmit,
     onResetClick,
-  }
+  };
 };
 
 export default useSearchItem;
