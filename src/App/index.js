@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import Container from '../common/Container';
 import Header from '../common/Header';
 import Items from './Items';
-import SearchItems from './Items/SearchItems';
+import SearchItems from './SearchItems';
 
 const App = () => {
   const [state, setState] = useState({
