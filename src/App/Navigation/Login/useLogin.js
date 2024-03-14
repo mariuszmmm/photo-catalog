@@ -18,16 +18,19 @@ const useLogin = (setState, setShowLoginBackdrop) => {
 
     const data = await loginAPI(username, password);
     if (data) {
-      const time = new Date(data.iat).getTime();
-      const remainingSessionTime = data.exp - time;
+      const remaining = data.exp - data.iat;
       setState(prevState => (
         {
           ...prevState,
-          isLoggedIn: true,
-          username: data.username,
-          isAdmin: data.isAdmin,
-          sessionTime: data.exp,
-          remainingSessionTime
+          user: {
+            isLoggedIn: true,
+            username: data.username,
+            isAdmin: data.isAdmin,
+          },
+          sessionTime: {
+            end: data.exp,
+            remaining,
+          },
         }
       ))
       setShowLoginBackdrop(false);
