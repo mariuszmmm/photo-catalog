@@ -15,7 +15,7 @@ const usePasswordChange = (state, setShowPasswordChangeBackdrop) => {
   const passwordChange = async (event) => {
     event.preventDefault();
 
-    const response = await passwordChangeAPI(state.username, password, newPassword);
+    const response = await passwordChangeAPI(state.user.username, password, newPassword);
     if (response) {
       setPassword("");
       setNewPassword("");

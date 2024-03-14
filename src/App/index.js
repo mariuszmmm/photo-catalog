@@ -7,15 +7,10 @@ import SearchItems from './Items/SearchItems';
 
 const App = () => {
   const [state, setState] = useState({
-    loading: true,
-    username: null,
-    isAdmin: false,
-    isLoggedIn: false,
-    sessionTime: null,
-    remainingSessionTime: 0,
+    loading: null,
+    user: {},
+    sessionTime: {},
     items: [],
-    filter: false,
-    filteredItems: [],
   });
 
   return (

@@ -15,7 +15,7 @@ const Navigation = ({ state, setState }) => {
   const [showLoginBackdrop, setShowLoginBackdrop] = useState(false);
   const [showUserAddBackdrop, setShowUserAddBackdrop] = useState(false);
   const [showPasswordChangeBackdrop, setShowPasswordChangeBackdrop] = useState(false);
-  const { isLoggedIn, username, isAdmin } = state;
+  const { isLoggedIn, username, isAdmin } = state.user;
 
   useEffect(() => {
     document.body.style.overflow =
