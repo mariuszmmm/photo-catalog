@@ -1,5 +1,4 @@
 import Button from "../../../common/Button";
-import ButtonsContainer from "../../../common/ButtonsContainer";
 import { Backdrop, Form } from "../../../common/Modal";
 
 const Confirmation = ({ confirmation, setConfirmation }) => {
@@ -16,13 +15,11 @@ const Confirmation = ({ confirmation, setConfirmation }) => {
 
   return (
     <Backdrop>
-      <ButtonsContainer>
         <Form onSubmit={onConfirmationSubmit}>
           <h2>Napewno usunąć ?</h2>
           <Button type="submit">Tak</Button>
           <Button type="button" onClick={onCancelClick}>Anuluj</Button>
         </Form>
-      </ButtonsContainer>
     </Backdrop>
   )
 };

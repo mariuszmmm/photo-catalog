@@ -29,7 +29,6 @@ const usePasswordChange = (state, setShowPasswordChangeBackdrop) => {
     setInputChange,
     passwordChange,
   }
-
-}
+};
 
 export default usePasswordChange;

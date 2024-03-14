@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '../../../common/Button';
 import { Backdrop, Form, Input } from '../../../common/Modal';
 import { useUserAdd } from './useUserAdd';

@@ -1,8 +1,8 @@
-import Button from "../../../common/Button"
+import Button from "../../common/Button"
 import SearchContainer from "./styled";
-import Input from "../../../common/Input"
+import Input from "../../common/Input"
 import useSearchItems from "./useSearchItems";
-import ButtonsContainer from "../../../common/ButtonsContainer";
+import ButtonsContainer from "../../common/ButtonsContainer";
 
 const SearchItems = ({ state, setState }) => {
   const {
@@ -15,14 +15,12 @@ const SearchItems = ({ state, setState }) => {
 
   return (
     <SearchContainer onSubmit={onSearchSubmit}>
-      <ButtonsContainer>
         <Input
           ref={inputRef}
           type="text"
           value={searchValue}
           onChange={setSearchValueChange}
         />
-      </ButtonsContainer>
       <ButtonsContainer>
         <Button type="submit">Szukaj</Button>
         <Button type="button" onClick={onResetClick}>Reset</Button>

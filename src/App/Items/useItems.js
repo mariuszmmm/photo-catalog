@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useFetch } from "../Fetch/useFetch";
-import { convertToBase64 } from "./convertToBase64";
-import { createFormData } from "./createFormData";
+import { convertToBase64 } from "../utils/convertToBase64";
+import { createFormData } from "../utils/createFormData";
 
 const useItems = (state, setState, confirmation, setConfirmation) => {
   const headerEditRef = useRef(null);
@@ -15,7 +15,6 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
       targetImage: null
     }
   );
-
   const {
     getItemAPI,
     saveEditedItemAPI,
@@ -23,12 +22,10 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
     deleteItemImageAPI
   } = useFetch();
 
-
   const onEditItemClick = (id, header, content) => {
     setEditedItem({
       ...editedItem, id, header, content
     });
-
   };
 
   const onEditedItemChange = ({ target }) => {

@@ -8,6 +8,6 @@ export default styled.div`
 
   @media (max-width:600px){
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      margin: 0;
+    margin: 0;
   }
 `;

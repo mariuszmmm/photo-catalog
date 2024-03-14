@@ -5,7 +5,7 @@ import useItems from "./useItems";
 import { Backdrop } from "../../common/Modal";
 import InputFile from "../../common/InputFile";
 import ImageItem from "./ImageItem";
-import AddNewItem from "./AddNewItem";
+import AddNewItem from "../AddNewItem";
 import { API_URL } from "../api";
 import ButtonLink from "../../common/ButtonLink";
 import ButtonsContainer from "../../common/ButtonsContainer";
@@ -43,13 +43,23 @@ const Items = ({ state, setState }) => {
         <>
           <SectionItems>
             {state.items.map((item, index) =>
-              <ItemContainer key={item._id} id={item._id} $filteredOut={item.filteredOut}>
-                {<ImageItem item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
+              <ItemContainer
+                key={item._id}
+                id={item._id}
+                $filteredOut={item.filteredOut}
+              >
+                {<ImageItem
+                  item={item}
+                  editedItemId={editedItem.id}
+                  editImage={editedItem.image}
+                />
+                }
                 {!isLoggedIn &&
                   <>
                     <h2>{index + 1}. {item.header}</h2>
                     <p>{item.content}</p>
-                  </>}
+                  </>
+                }
                 {isLoggedIn &&
                   (editedItem.id === item._id ?
                     <>

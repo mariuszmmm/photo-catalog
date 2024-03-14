@@ -6,4 +6,3 @@ export default styled.input`
   padding: 4px 5px;
   cursor: pointer;
 `;
-

@@ -6,7 +6,6 @@ const useLogin = (setState, setShowLoginBackdrop) => {
   const [password, setPassword] = useState('');
   const { loginAPI } = useFetch();
 
-
   const onInputChange = ({ target }) => {
     const { name, value } = target;
     name === "username" && setUsername(value);

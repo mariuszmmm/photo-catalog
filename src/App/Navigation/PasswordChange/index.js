@@ -2,7 +2,6 @@ import Button from "../../../common/Button";
 import { Backdrop, Form, Input } from "../../../common/Modal"
 import usePasswordChange from "./usePasswordChange"
 
-
 const PasswordChange = ({ state, showPasswordChangeBackdrop, setShowPasswordChangeBackdrop }) => {
   const {
     password,

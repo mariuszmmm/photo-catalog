@@ -24,42 +24,46 @@ const Navigation = ({ state, setState }) => {
   }, [showLoginBackdrop, showPasswordChangeBackdrop, showUserAddBackdrop]);
 
   return (
-    <>
-      <Nav>
-        {isLoggedIn &&
-          <InfoContainer>
-            <Info>zalogowany: {username}</Info>
-            <RemainingSessionTime state={state} setState={setState} />
-            <Info>Ilość elementów: {state.items.length}</Info>
-
-          </InfoContainer>
+    <Nav>
+      {isLoggedIn &&
+        <InfoContainer>
+          <RemainingSessionTime state={state} setState={setState} />
+          <Info>zalogowano: {username}</Info>
+          <Info>Ilość elementów: {state.items.length}</Info>
+        </InfoContainer>
+      }
+      <ButtonsContainer>
+        {!isLoggedIn &&
+          <Login
+            setState={setState}
+            showLoginBackdrop={showLoginBackdrop}
+            setShowLoginBackdrop={setShowLoginBackdrop}
+          />
         }
-        <ButtonsContainer>
-          {!isLoggedIn &&
-            <Login
-              setState={setState}
-              showLoginBackdrop={showLoginBackdrop}
-              setShowLoginBackdrop={setShowLoginBackdrop} />
-          }
-          {isLoggedIn &&
-            <>
-              {isAdmin &&
-                <UserAdd showUserAddBackdrop={showUserAddBackdrop}
-                  setShowUserAddBackdrop={setShowUserAddBackdrop} />
-              }
-              <PasswordChange state={state} showPasswordChangeBackdrop={showPasswordChangeBackdrop} setShowPasswordChangeBackdrop={setShowPasswordChangeBackdrop} />
-              {isAdmin &&
-                <>
-                  <FilesListLink />
-                  <UsersListLink />
-                </>
-              }
-              <Logout setState={setState} />
-            </>
-          }
-        </ButtonsContainer>
-      </Nav>
-    </>
+        {isLoggedIn &&
+          <>
+            {isAdmin &&
+              <UserAdd
+                showUserAddBackdrop={showUserAddBackdrop}
+                setShowUserAddBackdrop={setShowUserAddBackdrop}
+              />
+            }
+            <PasswordChange
+              state={state}
+              showPasswordChangeBackdrop={showPasswordChangeBackdrop}
+              setShowPasswordChangeBackdrop={setShowPasswordChangeBackdrop}
+            />
+            {isAdmin &&
+              <>
+                <FilesListLink />
+                <UsersListLink />
+              </>
+            }
+            <Logout setState={setState} />
+          </>
+        }
+      </ButtonsContainer>
+    </Nav>
   )
 };
 
