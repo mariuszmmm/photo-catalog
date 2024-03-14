@@ -3,7 +3,7 @@ import { useFetch } from "../Fetch/useFetch";
 import { convertToBase64 } from "./convertToBase64";
 import { createFormData } from "./createFormData";
 
-const useItems = (state, setState) => {
+const useItems = (state, setState, confirmation, setConfirmation) => {
   const headerEditRef = useRef(null);
   const [editedItem, setEditedItem] = useState(
     {
@@ -22,6 +22,7 @@ const useItems = (state, setState) => {
     deleteItemAPI,
     deleteItemImageAPI
   } = useFetch();
+
 
   const onEditItemClick = (id, header, content) => {
     setEditedItem({
@@ -126,6 +127,12 @@ const useItems = (state, setState) => {
     }
   };
 
+  const confirm = (calback, id) => {
+    if (confirmation.state === null) {
+      setConfirmation({ state: false, calback, id });
+    }
+  };
+
   useEffect(() => {
     const id = editedItem.id;
     id && document.getElementById(id)
@@ -166,7 +173,8 @@ const useItems = (state, setState) => {
     onEditItemClick,
     onDeleteItemClick,
     onDeleteItemImageClick,
-    onSaveEditedItemClick
+    onSaveEditedItemClick,
+    confirm,
   };
 };
 

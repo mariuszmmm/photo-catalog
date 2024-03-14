@@ -11,8 +11,11 @@ import ButtonLink from "../../common/ButtonLink";
 import ButtonsContainer from "../../common/ButtonsContainer";
 import SectionItems from "../../common/SectionItems";
 import Input from "../../common/Input";
+import { useState } from "react";
+import Confirmation from "./Confirmation";
 
 const Items = ({ state, setState }) => {
+  const [confirmation, setConfirmation] = useState({ state: null });
   const {
     headerEditRef,
     editedItem,
@@ -22,31 +25,32 @@ const Items = ({ state, setState }) => {
     onDeleteItemClick,
     onDeleteItemImageClick,
     onSaveEditedItemClick,
-  } = useItems(state, setState);
-
-  const items = state.filter ? state.filteredItems : state.items;
+    confirm,
+  } = useItems(state, setState, confirmation, setConfirmation);
+  const { loading, isLoggedIn, isAdmin } = state.user;
 
   return (
     <>
-      {state.loading &&
+      {loading &&
         <Backdrop>ŁADOWANIE ...</Backdrop>}
-      {state.isAdmin &&
+      {confirmation.state === false && <Confirmation confirmation={confirmation} setConfirmation={setConfirmation} />}
+      {isAdmin &&
         <AddNewItem
           state={state}
           setState={setState}
         />}
-      {!state.loading &&
+      {!loading &&
         <>
           <SectionItems>
-            {items.map((item, index) =>
-              <ItemContainer key={item._id} id={item._id}>
+            {state.items.map((item, index) =>
+              <ItemContainer key={item._id} id={item._id} $filteredOut={item.filteredOut}>
                 {<ImageItem item={item} editedItemId={editedItem.id} editImage={editedItem.image} />}
-                {!state.isLoggedIn &&
+                {!isLoggedIn &&
                   <>
                     <h2>{index + 1}. {item.header}</h2>
                     <p>{item.content}</p>
                   </>}
-                {state.isLoggedIn &&
+                {isLoggedIn &&
                   (editedItem.id === item._id ?
                     <>
                       <Input
@@ -65,7 +69,7 @@ const Items = ({ state, setState }) => {
                       />
                       <InputFile type="file" onChange={(event) => onEditedItemFileChange(event, item._id)} />
                       <ButtonsContainer>
-                        <Button type="button" onClick={() => onDeleteItemImageClick(item._id)}>
+                        <Button type="button" onClick={() => confirm(onDeleteItemImageClick, item._id)} disabled={!item.image}>
                           Usuń zdjęcie
                         </Button>
                         <Button type="button" onClick={() => onSaveEditedItemClick(item._id)}>
@@ -84,7 +88,7 @@ const Items = ({ state, setState }) => {
                         <Button type="button" onClick={() => onEditItemClick(item._id, item.header, item.content, index)} disabled={editedItem.id}>
                           Edytuj
                         </Button>
-                        <Button type="button" onClick={() => onDeleteItemClick(item._id)} disabled={editedItem.id}>
+                        <Button type="button" onClick={() => confirm(onDeleteItemClick, item._id)} disabled={editedItem.id}>
                           Usuń zadanie
                         </Button>
                       </ButtonsContainer>
