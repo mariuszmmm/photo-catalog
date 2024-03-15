@@ -92,7 +92,8 @@ const Items = ({ state, setState }) => {
                       <h2>{index + 1}. {item.header}</h2>
                       <p>{item.content}</p>
                       <ButtonsContainer>
-                        <ButtonLink href={item.image && `${API_URL}/items/${item.image}`} disabled={!item.image}>
+                        <ButtonLink href={item.image && `${API_URL}/items/${item.image}`} disabled={!item.image} download={file}
+                        >
                           Pobierz plik
                         </ButtonLink>
                         <Button type="button" onClick={() => onEditItemClick(item._id, item.header, item.content, index)} disabled={editedItem.id}>
