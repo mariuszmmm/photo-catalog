@@ -2,18 +2,18 @@ import Button from "../../../common/Button";
 import { Backdrop, Form, Input } from "../../../common/Modal"
 import usePasswordChange from "./usePasswordChange"
 
-const PasswordChange = ({ state, showPasswordChangeBackdrop, setShowPasswordChangeBackdrop }) => {
+const PasswordChange = ({ state, showBackdrop, setShowBackdrop }) => {
   const {
     password,
     newPassword,
     setInputChange,
     passwordChange,
-  } = usePasswordChange(state, setShowPasswordChangeBackdrop);
+  } = usePasswordChange(state, setShowBackdrop);
 
   return (
     <>
-      <Button onClick={() => setShowPasswordChangeBackdrop(true)}>Zmień hasło</Button>
-      {showPasswordChangeBackdrop &&
+      <Button onClick={() => setShowBackdrop("passwordChange")}>Zmień hasło</Button>
+      {showBackdrop === "passwordChange" &&
         <Backdrop>
           <Form onSubmit={passwordChange}>
             <div>
@@ -46,7 +46,7 @@ const PasswordChange = ({ state, showPasswordChangeBackdrop, setShowPasswordChan
               />
             </div>
             <Button type="submit">Zapisz</Button>
-            <Button type="button" onClick={() => setShowPasswordChangeBackdrop(false)}>Anuluj</Button>
+            <Button type="button" onClick={() => setShowBackdrop(null)}>Anuluj</Button>
           </Form>
         </Backdrop>
       }

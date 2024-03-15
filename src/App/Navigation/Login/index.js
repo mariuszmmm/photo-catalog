@@ -3,18 +3,18 @@ import { Backdrop, Form, Input } from "../../../common/Modal";
 import Button from '../../../common/Button';
 import useLogin from './useLogin';
 
-export const Login = ({ setState, showLoginBackdrop, setShowLoginBackdrop }) => {
+export const Login = ({ setState, showBackdrop, setShowBackdrop }) => {
   const {
     username,
     password,
     onInputChange,
     login,
-  } = useLogin(setState, setShowLoginBackdrop);
+  } = useLogin(setState, setShowBackdrop);
 
   return (
     <>
-      <Button onClick={() => setShowLoginBackdrop(true)}>Logowanie</Button>
-      {showLoginBackdrop &&
+      <Button onClick={() => setShowBackdrop("login")}>Logowanie</Button>
+      {showBackdrop === "login" &&
         <Backdrop>
           <Form onSubmit={login}>
             <div>
@@ -40,7 +40,7 @@ export const Login = ({ setState, showLoginBackdrop, setShowLoginBackdrop }) => 
               />
             </div>
             <Button type="submit">Zaloguj</Button>
-            <Button type="button" onClick={() => setShowLoginBackdrop(false)}>Wróć</Button>
+            <Button type="button" onClick={() => setShowBackdrop(null)}>Wróć</Button>
           </Form>
         </Backdrop >}
     </>

@@ -1,27 +1,23 @@
 import { useEffect, useState } from "react";
 import { Nav, Info } from "./styled";
 import ButtonsContainer from "../../common/ButtonsContainer";
-import FilesListLink from "./FilesListLink";
+import FilesList from "./FilesList";
 import Login from "./Login";
 import UserAdd from "./UserAdd";
 import PasswordChange from "./PasswordChange";
 import Logout from "./Logout";
-import UsersListLink from "./UsersListLink";
+import UsersList from "./UsersList";
 import { RemainingSessionTime } from "../RemainingSessionTime";
 import InfoContainer from "../../common/InfoContainer";
 
 const Navigation = ({ state, setState }) => {
-
-  const [showLoginBackdrop, setShowLoginBackdrop] = useState(false);
-  const [showUserAddBackdrop, setShowUserAddBackdrop] = useState(false);
-  const [showPasswordChangeBackdrop, setShowPasswordChangeBackdrop] = useState(false);
+  const [showBackdrop, setShowBackdrop] = useState(null);
   const { isLoggedIn, username, isAdmin } = state.user;
 
   useEffect(() => {
     document.body.style.overflow =
-      (showLoginBackdrop || showPasswordChangeBackdrop || showUserAddBackdrop) ? "hidden" : "auto"
-
-  }, [showLoginBackdrop, showPasswordChangeBackdrop, showUserAddBackdrop]);
+      showBackdrop ? "hidden" : "auto";
+  }, [showBackdrop]);
 
   return (
     <Nav>
@@ -36,27 +32,27 @@ const Navigation = ({ state, setState }) => {
         {!isLoggedIn &&
           <Login
             setState={setState}
-            showLoginBackdrop={showLoginBackdrop}
-            setShowLoginBackdrop={setShowLoginBackdrop}
+            showBackdrop={showBackdrop}
+            setShowBackdrop={setShowBackdrop}
           />
         }
         {isLoggedIn &&
           <>
             {isAdmin &&
               <UserAdd
-                showUserAddBackdrop={showUserAddBackdrop}
-                setShowUserAddBackdrop={setShowUserAddBackdrop}
+                showBackdrop={showBackdrop}
+                setShowBackdrop={setShowBackdrop}
               />
             }
             <PasswordChange
               state={state}
-              showPasswordChangeBackdrop={showPasswordChangeBackdrop}
-              setShowPasswordChangeBackdrop={setShowPasswordChangeBackdrop}
+              showBackdrop={showBackdrop}
+              setShowBackdrop={setShowBackdrop}
             />
             {isAdmin &&
               <>
-                <FilesListLink />
-                <UsersListLink />
+                <FilesList showBackdrop={showBackdrop} setShowBackdrop={setShowBackdrop} />
+                <UsersList showBackdrop={showBackdrop} setShowBackdrop={setShowBackdrop} />
               </>
             }
             <Logout setState={setState} />

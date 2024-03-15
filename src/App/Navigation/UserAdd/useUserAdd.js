@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFetch } from "../../Fetch/useFetch";
 
-export const useUserAdd = (setShowUserAddBackdrop) => {
+export const useUserAdd = (setShowBackdrop) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { userAddAPI } = useFetch();
@@ -18,7 +18,7 @@ export const useUserAdd = (setShowUserAddBackdrop) => {
     if (response) {
       setUsername("");
       setPassword("");
-      setShowUserAddBackdrop(false);
+      setShowBackdrop("userAdd");
     };
   };
 

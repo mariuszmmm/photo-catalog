@@ -16,7 +16,6 @@ export const Nav = styled.nav`
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-
   }
 `;
 

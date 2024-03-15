@@ -2,18 +2,18 @@ import Button from '../../../common/Button';
 import { Backdrop, Form, Input } from '../../../common/Modal';
 import { useUserAdd } from './useUserAdd';
 
-const UserAdd = ({ showUserAddBackdrop, setShowUserAddBackdrop }) => {
+const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
   const {
     username,
     password,
     userAdd,
     setInputChange,
-  } = useUserAdd(setShowUserAddBackdrop);
+  } = useUserAdd(setShowBackdrop);
 
   return (
     <>
-      <Button onClick={() => setShowUserAddBackdrop(true)}>Dodaj użytkownika</Button>
-      {showUserAddBackdrop &&
+      <Button onClick={() => setShowBackdrop("userAdd")}>Dodaj użytkownika</Button>
+      {showBackdrop === "userAdd" &&
         <Backdrop>
           <Form onSubmit={userAdd}>
             <div>
@@ -39,7 +39,7 @@ const UserAdd = ({ showUserAddBackdrop, setShowUserAddBackdrop }) => {
               />
             </div>
             <Button type="submit" >Zapisz</Button>
-            <Button type="button" onClick={() => setShowUserAddBackdrop(false)} >Anuluj</Button>
+            <Button type="button" onClick={() => setShowBackdrop(null)} >Anuluj</Button>
           </Form>
         </Backdrop>}
     </>

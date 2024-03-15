@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFetch } from "../../Fetch/useFetch"
 
-const useLogin = (setState, setShowLoginBackdrop) => {
+const useLogin = (setState, setShowBackdrop) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { loginAPI } = useFetch();
@@ -32,7 +32,7 @@ const useLogin = (setState, setShowLoginBackdrop) => {
           },
         }
       ))
-      setShowLoginBackdrop(false);
+      setShowBackdrop(null);
     };
   };
 

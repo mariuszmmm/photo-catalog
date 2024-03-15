@@ -91,11 +91,21 @@ export const useFetch = () => {
     }
   };
 
-  const getFotoListAPI = async () => {
+  const getFilesListAPI = async () => {
     try {
       return await (axios.get(`${API_URL}/files`))
     } catch (err) {
-      alert("error in getFotoListAPI: ")
+      alert("error in getFilesListAPI: ")
+    }
+  };
+
+  const getUsersListAPI = async () => {
+    try {
+      const response = await (axios.get(`${API_URL}/users`))
+      const users = response.data.map((item) => item.username);
+      return users;
+    } catch (err) {
+      alert("error in getUsersListAPI: ")
     }
   };
 
@@ -108,6 +118,7 @@ export const useFetch = () => {
     deleteItemAPI,
     deleteItemImageAPI,
     saveEditedItemAPI,
-    getFotoListAPI,
+    getFilesListAPI,
+    getUsersListAPI,
   }
 };
