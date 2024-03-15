@@ -22,7 +22,7 @@ const FilesList = ({ showBackdrop, setShowBackdrop }) => {
               <ol>
                 {files.map((file) =>
                 (<li key={file}>{file}{" "}
-                  <a href={file && `${API_URL}/files/download${file}`}
+                  <a href={file && `${API_URL}/files/download/${file}`}
                     disabled={!file}
                     download={file}
                   >

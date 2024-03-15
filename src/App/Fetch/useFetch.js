@@ -105,7 +105,7 @@ export const useFetch = () => {
       const users = response.data.map((item) => item.username);
       return users;
     } catch (err) {
-      alert("error in getUsersListAPI: ")
+      alert("error: Brak połączenia z serwerem.")
     }
   };
 
