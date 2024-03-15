@@ -99,7 +99,7 @@ const Items = ({ state, setState }) => {
                           Edytuj
                         </Button>
                         <Button type="button" onClick={() => confirm(onDeleteItemClick, item._id)} disabled={editedItem.id}>
-                          Usuń zadanie
+                          Usuń
                         </Button>
                       </ButtonsContainer>
                     </>

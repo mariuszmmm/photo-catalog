@@ -9,7 +9,7 @@ export const useFetch = () => {
     try {
       return await (axios.get(`${API_URL}/items`))
     } catch (err) {
-      alert("error in getItemAPI: ")
+      alert("error: Brak połączenia z serwerem.")
     }
   };
 
@@ -105,7 +105,7 @@ export const useFetch = () => {
       const users = response.data.map((item) => item.username);
       return users;
     } catch (err) {
-      alert("error: Brak połączenia z serwerem.")
+      alert("error in getUsersListAPI: ")
     }
   };
 

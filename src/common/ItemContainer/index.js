@@ -16,7 +16,6 @@ export default styled.div`
   h2{
     margin: 10px;
     font-weight:700;
-    text-align: justify;
     flex-grow: 0;
   }
 
