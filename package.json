@@ -2,7 +2,7 @@
   "name": "photocatalog",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mariuszmmm.github.io/todoapp",
+  "homepage": "https://mariuszmmm.github.io/photoCatalog-frontend",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
