@@ -9,7 +9,7 @@ import AddNewItem from "../AddNewItem";
 import { API_URL } from "../api";
 import ButtonLink from "../../common/ButtonLink";
 import ButtonsContainer from "../../common/ButtonsContainer";
-import SectionItems from "../../common/SectionItems";
+import SectionItems from "../../common/SectionItems/index.js";
 import Input from "../../common/Input";
 import { useState } from "react";
 import Confirmation from "./Confirmation";
