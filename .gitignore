@@ -18,14 +18,13 @@
 .env.test.local
 .env.production.local
 .env.production
-.env
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 # Dodane
-.env  # Ignoruj główny plik .env
+# .env  # Ignoruj główny plik .env
 *.log  # Ignoruj wszystkie pliki .log
 .idea  # Ignoruj folder konfiguracji IDE JetBrains
 .vscode  # Ignoruj folder konfiguracji Visual Studio Code
