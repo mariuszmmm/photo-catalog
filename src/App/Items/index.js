@@ -13,8 +13,9 @@ import SectionItems from "../../common/SectionItems";
 import Input from "../../common/Input";
 import { useState } from "react";
 import Confirmation from "./Confirmation";
+import ExampleItems from "./ExampleItems";
 
-const Items = ({ state, setState }) => {
+const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
   const [confirmation, setConfirmation] = useState({ state: null });
   const {
     headerEditRef,
@@ -27,7 +28,8 @@ const Items = ({ state, setState }) => {
     onSaveEditedItemClick,
     confirm,
   } = useItems(state, setState, confirmation, setConfirmation);
-  const { loading, isLoggedIn, isAdmin } = state.user;
+  const { loading } = state;
+  const { isLoggedIn, isAdmin } = state.user;
 
   return (
     <>
@@ -39,7 +41,7 @@ const Items = ({ state, setState }) => {
           state={state}
           setState={setState}
         />}
-      {!loading &&
+      {!loading && state?.items.length > 0 &&
         <>
           <SectionItems>
             {state.items.map((item, index) =>
@@ -110,6 +112,14 @@ const Items = ({ state, setState }) => {
             )}
           </SectionItems>
         </>
+      }
+      {isLoggedIn &&
+        <ExampleItems
+          state={state}
+          setState={setState}
+          showBackdrop={showBackdrop}
+          setShowBackdrop={setShowBackdrop}
+        />
       }
     </>
   )

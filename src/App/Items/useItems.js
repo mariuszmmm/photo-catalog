@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFetch } from "../Fetch/useFetch";
 import { convertToBase64 } from "../utils/convertToBase64";
 import { createFormData } from "../utils/createFormData";
+import { fetchData } from "./fetchData"
 
 const useItems = (state, setState, confirmation, setConfirmation) => {
   const headerEditRef = useRef(null);
@@ -137,30 +138,10 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
   }, [editedItem])
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const items = await getItemAPI();
-        if (items) {
-          setState((prevState) =>
-          ({
-            ...prevState,
-            items: [...items.data],
-          }));
-        };
-      } catch (err) {
-        alert("error in fetchData: ")
-      } finally {
-        setState((prevState) =>
-        ({
-          ...prevState,
-          loading: false,
-        }));
-      }
-    };
+    fetchData(setState, getItemAPI);
 
-    fetchData();
     // eslint-disable-next-line
-  }, [state.isLoggedIn]);
+  }, []);
 
   return {
     headerEditRef,

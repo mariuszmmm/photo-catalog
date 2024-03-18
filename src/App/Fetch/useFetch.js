@@ -13,6 +13,14 @@ export const useFetch = () => {
     }
   };
 
+  const exampleItemsAPI = async () => {
+    try {
+      await (axios.get(`${API_URL}/example`))
+    } catch (err) {
+      alert("error in exampleItemsAPI:")
+    }
+  };
+
   const loginAPI = async (username, password) => {
     try {
       const response = await axios.post(`${API_URL}/login`, { username, password })
@@ -114,6 +122,7 @@ export const useFetch = () => {
     userAddAPI,
     passwordChangeAPI,
     getItemAPI,
+    exampleItemsAPI,
     sendItemAPI,
     deleteItemAPI,
     deleteItemImageAPI,

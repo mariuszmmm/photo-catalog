@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Nav, Info } from "./styled";
 import ButtonsContainer from "../../common/ButtonsContainer";
 import FilesList from "./FilesList";
@@ -10,14 +9,8 @@ import UsersList from "./UsersList";
 import { RemainingSessionTime } from "../RemainingSessionTime";
 import InfoContainer from "../../common/InfoContainer";
 
-const Navigation = ({ state, setState }) => {
-  const [showBackdrop, setShowBackdrop] = useState(null);
+const Navigation = ({ state, setState, showBackdrop, setShowBackdrop }) => {
   const { isLoggedIn, username, isAdmin } = state.user;
-
-  useEffect(() => {
-    document.body.style.overflow =
-      showBackdrop ? "hidden" : "auto";
-  }, [showBackdrop]);
 
   return (
     <Nav>

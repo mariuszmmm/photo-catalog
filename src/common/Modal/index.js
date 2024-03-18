@@ -32,6 +32,7 @@ export const Form = styled.form`
   align-items: center;
   gap: 20px;
   user-select: auto;
+  padding: 20px;
   
   button{
     flex: 0 0 0;
@@ -43,6 +44,10 @@ export const Form = styled.form`
     width: 120px;
     text-align: right;
     margin-right: 10px;
+  }
+
+  h2{
+    text-align: center;
   }
 `;
 

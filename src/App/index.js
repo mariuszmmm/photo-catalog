@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navigation from './Navigation';
 import Container from '../common/Container';
 import Header from '../common/Header';
@@ -12,12 +12,20 @@ const App = () => {
     sessionTime: {},
     items: [],
   });
+  const [showBackdrop, setShowBackdrop] = useState(null);
+
+  useEffect(() => {
+    document.body.style.overflow =
+      showBackdrop ? "hidden" : "auto";
+  }, [showBackdrop]);
 
   return (
     <>
       <Navigation
         state={state}
         setState={setState}
+        showBackdrop={showBackdrop}
+        setShowBackdrop={setShowBackdrop}
       />
       <SearchItems state={state} setState={setState} />
       <Container>
@@ -25,6 +33,8 @@ const App = () => {
         <Items
           state={state}
           setState={setState}
+          showBackdrop={showBackdrop}
+          setShowBackdrop={setShowBackdrop}
         />
       </Container>
     </>
