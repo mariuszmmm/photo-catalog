@@ -9,8 +9,8 @@ const useExampleItems = (state, setState, setShowBackdrop) => {
     event.preventDefault();
 
     await exampleItemsAPI();
-    await fetchData(setState, getItemAPI);
     setShowBackdrop(null)
+    await fetchData(setState, getItemAPI);
   };
 
   useEffect(() => {
