@@ -6,13 +6,14 @@ import Items from './Items';
 import SearchItems from './SearchItems';
 
 const App = () => {
+  const [showBackdrop, setShowBackdrop] = useState(null);
   const [state, setState] = useState({
     loading: null,
     user: {},
     sessionTime: {},
     items: [],
+    visitCount: undefined,
   });
-  const [showBackdrop, setShowBackdrop] = useState(null);
 
   useEffect(() => {
     document.body.style.overflow =

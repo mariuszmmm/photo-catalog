@@ -17,26 +17,25 @@ export default styled.a`
   text-decoration: none;
 
   ${({ disabled }) => disabled && css`
-    background-color: inherit;
+    background-color: lightgray;
     color: gray;
     cursor: auto;
     user-select: none;
   `};
 
     &:hover{
-      background-color: yellow;
+      background-color: #ff9000cc;
 
       ${({ disabled }) => disabled && css`
-        background-color: inherit;
+        background-color: lightgray;
       `};
     }
 
     &:active{
       box-shadow: none ;
-      background-color: green;
 
       ${({ disabled }) => disabled && css`
-        background-color: inherit;
+        background-color: lightgray;
         box-shadow: 2px 2px 2px 2px black ;
       `};
     }

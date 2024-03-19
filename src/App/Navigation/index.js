@@ -18,7 +18,7 @@ const Navigation = ({ state, setState, showBackdrop, setShowBackdrop }) => {
         <InfoContainer>
           <RemainingSessionTime state={state} setState={setState} />
           <Info>zalogowano: {username}</Info>
-          <Info>Ilość elementów: {state.items.length}</Info>
+          <Info>ilość wejść: {state.visitCount}</Info>
         </InfoContainer>
       }
       <ButtonsContainer>

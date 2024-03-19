@@ -24,11 +24,12 @@ export const useFetch = () => {
   const loginAPI = async (username, password) => {
     try {
       const response = await axios.post(`${API_URL}/login`, { username, password })
-      const { token } = response.data;
+      const { token, visitCount } = response.data;
       const decodedToken = token && jwtDecode(token);
       if (decodedToken) {
         setSessionStorage("token", token);
-        return decodedToken
+
+        return { decodedToken, visitCount }
       };
     } catch (error) {
       alert(error.response.data.message);

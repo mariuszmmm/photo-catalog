@@ -14,22 +14,23 @@ const useLogin = (setState, setShowBackdrop) => {
 
   const login = async (event) => {
     event.preventDefault();
+    const {decodedToken , visitCount} = await loginAPI(username, password);
 
-    const data = await loginAPI(username, password);
-    if (data) {
-      const remaining = data.exp - data.iat;
+    if (decodedToken) {
+      const remaining = decodedToken.exp - decodedToken.iat;
       setState(prevState => (
         {
           ...prevState,
           user: {
             isLoggedIn: true,
-            username: data.username,
-            isAdmin: data.isAdmin,
+            username: decodedToken.username,
+            isAdmin: decodedToken.isAdmin,
           },
           sessionTime: {
-            end: data.exp,
+            end: decodedToken.exp,
             remaining,
           },
+          visitCount
         }
       ))
       setShowBackdrop(null);

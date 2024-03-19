@@ -11,18 +11,19 @@ export default styled.button`
     flex: 1 0 0;
     margin-right: 5px;
     font-weight: 700;
+    transition: 0.1s ease;
+    background-color: white;
 
     &:hover{
-      background-color: yellow;
+      background-color: #ff9000cc;
     }
 
     &:active{
       box-shadow: none ;
-      background-color: green;
     }
 
     &:disabled{
-      background-color: inherit;
+      background-color: #d9c3a700;
       cursor: auto;
     }
 

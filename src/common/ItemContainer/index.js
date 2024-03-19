@@ -22,6 +22,6 @@ export default styled.div`
   p{
     margin:0 10px;
     text-align: justify;
-    flex-grow: 0;
+    flex-grow: 1;
   }
 `;

@@ -12,7 +12,7 @@ export const Backdrop = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  color:  rgba(255,255,255,0.8);;
+  color: rgba(255,255,255,0.8);;
   background-color: rgba(0,0,0,0.8);
   backdrop-filter: blur(5px);
   z-index: 1;
@@ -20,9 +20,9 @@ export const Backdrop = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 400px;
+  width: 450px;
   height: 300px;
-  background-color: silver;
+  background-color: #dba764cc;
   text-shadow: none;
   font-size: 1rem;
   color:  black;
@@ -33,6 +33,8 @@ export const Form = styled.form`
   gap: 20px;
   user-select: auto;
   padding: 20px;
+  line-height: 1.5rem;
+  border: solid 1px black;
   
   button{
     flex: 0 0 0;
@@ -44,10 +46,13 @@ export const Form = styled.form`
     width: 120px;
     text-align: right;
     margin-right: 10px;
+    font-weight: 700;
+    margin: 5px;
   }
 
   h2{
     text-align: center;
+    margin: 5px;
   }
 `;
 

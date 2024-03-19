@@ -8,7 +8,9 @@ export default styled.textarea`
   padding: 10px;
   outline: none;
   border: 1px solid black;
+  border-radius: 5px;
   font-weight: 700;
+  flex-grow: 1;
 
   ${({ $edited }) => $edited && css`
     height: auto;
