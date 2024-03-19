@@ -4,7 +4,7 @@ export const Backdrop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  text-shadow: 10px 5px 15px teal;
+  text-shadow: 10px 5px 15px #dba764cc;
   font-size: 50px;
   font-weight: 500;
   position: fixed;
