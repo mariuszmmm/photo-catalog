@@ -14,7 +14,9 @@ const ImageItem = ({ item, editedItemId, editImage }) => {
           :
           item.image && <Image $isLoaded={item.image} src={`${API_URL}/Images/` + item.image} alt="foto" />)
         :
-        item.image && <Image $isLoaded={isLoaded} onLoad={() => setIsLoaded(true)} src={`${API_URL}/Images/` + item.image} alt="foto" />}
+        item.image && <a href={`${API_URL}/Images/` + item.image} target="_blank">
+          <Image $isLoaded={isLoaded} onLoad={() => setIsLoaded(true)} src={`${API_URL}/Images/` + item.image} alt="foto" />
+        </a>}
     </ImageContainer>
   )
 };
