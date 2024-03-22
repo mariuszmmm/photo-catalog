@@ -93,6 +93,19 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
     saveEditedItem();
   };
 
+  const onCancelEditedItemClick = () => {
+    setEditedItem(
+      {
+        id: null,
+        header: "",
+        content: "",
+        file: null,
+        image: null,
+        targetImage: null
+      }
+    )
+  };
+
   const onDeleteItemClick = async (id) => {
     try {
       await deleteItemAPI(id);
@@ -152,6 +165,7 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
     onDeleteItemClick,
     onDeleteItemImageClick,
     onSaveEditedItemClick,
+    onCancelEditedItemClick,
     confirm,
   };
 };

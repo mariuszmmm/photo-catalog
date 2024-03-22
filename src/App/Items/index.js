@@ -26,6 +26,7 @@ const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
     onDeleteItemClick,
     onDeleteItemImageClick,
     onSaveEditedItemClick,
+    onCancelEditedItemClick,
     confirm,
   } = useItems(state, setState, confirmation, setConfirmation);
   const { loading } = state;
@@ -86,6 +87,9 @@ const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
                         </Button>
                         <Button type="button" onClick={() => onSaveEditedItemClick(item._id)}>
                           Zapisz
+                        </Button>
+                        <Button type="button" onClick={() => onCancelEditedItemClick(item._id)}>
+                          Anuluj
                         </Button>
                       </ButtonsContainer>
                     </>
