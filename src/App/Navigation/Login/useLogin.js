@@ -16,9 +16,9 @@ const useLogin = (setState, setShowBackdrop) => {
     event.preventDefault();
 
     const data = await loginAPI(username, password);
-    const { decodedToken, visitCount } = data;
 
-    if (decodedToken) {
+    if (data) {
+      const { decodedToken, visitCount } = data;
       const remaining = decodedToken.exp - decodedToken.iat;
       setState(prevState => (
         {
