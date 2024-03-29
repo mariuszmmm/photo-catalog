@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 export default styled.a`
   min-width: max-content;
   font-size: 1em ;
-  padding: 6px 15px 4px;
+  padding: 6px 15px;
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 2px black ;
@@ -15,6 +15,7 @@ export default styled.a`
   background-color: white;
   text-align: center;
   text-decoration: none;
+  line-height: 1rem;
 
   ${({ disabled }) => disabled && css`
     background-color: lightgray;

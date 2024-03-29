@@ -1,6 +1,8 @@
 import Button from "../../../common/Button";
-import { Backdrop, Form, Input } from "../../../common/Modal"
-import usePasswordChange from "./usePasswordChange"
+import { Container, Form, Input, Label } from "../../../common/Modal";
+import ButtonsContainer from "../../../common/ButtonsContainer"
+import { Backdrop } from "../../../common/Backdrop";
+import usePasswordChange from "./usePasswordChange";
 
 const PasswordChange = ({ state, showBackdrop, setShowBackdrop }) => {
   const {
@@ -16,15 +18,15 @@ const PasswordChange = ({ state, showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "passwordChange" &&
         <Backdrop>
           <Form onSubmit={passwordChange}>
-            <div>
+            <Container>
               <Input
                 $hidden
                 type="text"
                 autoComplete="username"
               />
-            </div>
-            <div>
-              <p>hasło:</p>
+            </Container>
+            <Container>
+              <Label>hasło:</Label>
               <Input
                 type="password"
                 placeholder="password"
@@ -33,9 +35,9 @@ const PasswordChange = ({ state, showBackdrop, setShowBackdrop }) => {
                 autoComplete="current-password"
                 onChange={setInputChange}
               />
-            </div>
-            <div>
-              <p>nowe hasło:</p>
+            </Container>
+            <Container>
+              <Label>nowe hasło:</Label>
               <Input
                 type="password"
                 placeholder="new password"
@@ -44,9 +46,11 @@ const PasswordChange = ({ state, showBackdrop, setShowBackdrop }) => {
                 autoComplete="new-password"
                 onChange={setInputChange}
               />
-            </div>
-            <Button type="submit">Zapisz</Button>
-            <Button type="button" onClick={() => setShowBackdrop(null)}>Anuluj</Button>
+            </Container>
+            <ButtonsContainer>
+              <Button type="submit">Zapisz</Button>
+              <Button type="button" onClick={() => setShowBackdrop(null)}>Anuluj</Button>
+            </ButtonsContainer>
           </Form>
         </Backdrop>
       }

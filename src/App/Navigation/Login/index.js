@@ -1,7 +1,10 @@
 import React from 'react';
-import { Backdrop, Form, Input } from "../../../common/Modal";
+import { Form, Input } from "../../../common/Modal";
+import { Backdrop } from "../../../common/Backdrop";
 import Button from '../../../common/Button';
 import useLogin from './useLogin';
+import { Container, Label } from '../../../common/Modal';
+import ButtonsContainer from '../../../common/ButtonsContainer';
 
 export const Login = ({ setState, showBackdrop, setShowBackdrop }) => {
   const {
@@ -17,8 +20,8 @@ export const Login = ({ setState, showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "login" &&
         <Backdrop>
           <Form onSubmit={login}>
-            <div>
-              <p>login:</p>
+            <Container>
+              <Label>login:</Label>
               <Input
                 type="text"
                 placeholder="username"
@@ -27,9 +30,9 @@ export const Login = ({ setState, showBackdrop, setShowBackdrop }) => {
                 autoComplete="username"
                 onChange={onInputChange}
               />
-            </div>
-            <div>
-              <p>hasło:</p>
+            </Container>
+            <Container>
+              <Label>hasło:</Label>
               <Input
                 type="password"
                 placeholder="password"
@@ -38,9 +41,11 @@ export const Login = ({ setState, showBackdrop, setShowBackdrop }) => {
                 autoComplete="current-password"
                 onChange={onInputChange}
               />
-            </div>
-            <Button type="submit">Zaloguj</Button>
-            <Button type="button" onClick={() => setShowBackdrop(null)}>Wróć</Button>
+            </Container>
+            <ButtonsContainer>
+              <Button type="submit">Zaloguj</Button>
+              <Button type="button" onClick={() => setShowBackdrop(null)}>Wróć</Button>
+            </ButtonsContainer>
           </Form>
         </Backdrop >}
     </>

@@ -13,6 +13,7 @@ export default styled.button`
     font-weight: 700;
     transition: 0.1s ease;
     background-color: white;
+    height: fit-content;
 
     &:hover{
       background-color: #ff9000cc;

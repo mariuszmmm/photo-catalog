@@ -1,6 +1,7 @@
 import ButtonsContainer from "../../../common/ButtonsContainer";
 import Button from "../../../common/Button";
-import { Backdrop, Form } from '../../../common/Modal';
+import { Form } from '../../../common/Modal';
+import { Backdrop } from "../../../common/Backdrop";
 import { useUsersList } from "./useUsersList";
 import { useState } from "react";
 import ListContainer from "../../../common/ListContainer";

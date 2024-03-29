@@ -1,6 +1,8 @@
 import Button from '../../../common/Button';
-import { Backdrop, Form, Input } from '../../../common/Modal';
+import { Container, Form, Input, Label } from '../../../common/Modal';
+import { Backdrop } from "../../../common/Backdrop";
 import { useUserAdd } from './useUserAdd';
+import ButtonsContainer from '../../../common/ButtonsContainer';
 
 const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
   const {
@@ -16,8 +18,8 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "userAdd" &&
         <Backdrop>
           <Form onSubmit={userAdd}>
-            <div>
-              <p>login:</p>
+            <Container>
+              <Label>login:</Label>
               <Input
                 type="text"
                 placeholder="username"
@@ -26,9 +28,9 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
                 autoComplete="username"
                 onChange={setInputChange}
               />
-            </div>
-            <div>
-              <p>hasło:</p>
+            </Container>
+            <Container>
+              <Label>hasło:</Label>
               <Input
                 type="password"
                 placeholder="password"
@@ -37,9 +39,11 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
                 autoComplete="current-password"
                 onChange={setInputChange}
               />
-            </div>
-            <Button type="submit" >Zapisz</Button>
-            <Button type="button" onClick={() => setShowBackdrop(null)} >Anuluj</Button>
+            </Container>
+            <ButtonsContainer>
+              <Button type="submit" >Zapisz</Button>
+              <Button type="button" onClick={() => setShowBackdrop(null)} >Anuluj</Button>
+            </ButtonsContainer>
           </Form>
         </Backdrop>}
     </>

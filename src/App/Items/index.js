@@ -2,7 +2,7 @@ import Button from "../../common/Button";
 import ItemContainer from "../../common/ItemContainer";
 import Textarea from "../../common/Textarea";
 import useItems from "./useItems";
-import { Backdrop } from "../../common/Modal";
+import { Backdrop } from "../../common/Backdrop";
 import InputFile from "../../common/InputFile";
 import ImageItem from "./ImageItem";
 import AddNewItem from "../AddNewItem";

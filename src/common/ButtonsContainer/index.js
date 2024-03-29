@@ -5,4 +5,3 @@ export default styled.div`
   gap: 15px;
   flex-wrap: wrap;
 `;
-

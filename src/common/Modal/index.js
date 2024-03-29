@@ -1,44 +1,25 @@
 import styled, { css } from "styled-components";
 
-export const Backdrop = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-shadow: 10px 5px 15px #dba764cc;
-  font-size: 50px;
-  font-weight: 500;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: rgba(255,255,255,0.8);;
-  background-color: rgba(0,0,0,0.8);
-  backdrop-filter: blur(5px);
-  z-index: 1;
-  user-select: none;
-`;
-
 export const Form = styled.form`
   width: 450px;
   height: 300px;
   background-color: #dba764cc;
   text-shadow: none;
   font-size: 1rem;
-  color:  black;
+  color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   user-select: auto;
-  padding: 20px;
   line-height: 1.5rem;
-  border: solid 1px black;
+  border: solid 3px black;
+  border-radius: 20px;
+  box-shadow: 15px 15px 20px black;
   
   button{
-    flex: 0 0 0;
-    width: 80%;
+    width: 120px;
   }
 
   p{
@@ -56,6 +37,19 @@ export const Form = styled.form`
   }
 `;
 
+export const Label = styled.label`
+  margin-left: -55px;
+  width: 100px;
+  text-align: right;
+`
+
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+`;
+
 export const Input = styled.input`
   height: 1rem;
   width: 200px;
@@ -63,7 +57,6 @@ export const Input = styled.input`
   border: 1px solid black;
   border-radius: 5px;
   font-size: 1em;
-  margin: 0 12px 0 3px;
 
   ${({ $incorrect }) => $incorrect && css`
     background-color: #ff0000;

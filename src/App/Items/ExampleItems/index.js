@@ -1,5 +1,6 @@
 import Button from "../../../common/Button";
-import { Backdrop, Form } from "../../../common/Modal";
+import { Form } from "../../../common/Modal";
+import { Backdrop } from "../../../common/Backdrop";
 import useExampleItems from "./useExampleItems";
 
 const ExampleItems = ({ state, setState, showBackdrop, setShowBackdrop }) => {
