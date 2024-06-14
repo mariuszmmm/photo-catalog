@@ -1,36 +1,48 @@
-# Photo Catalog - Frontend
+# 📸 Photo Catalog - Frontend
 
-*The "Photo Catalog" application is my first project where I created both frontend and backend. The frontend was built using React.*
+## Description
+"Photo Catalog" is an application that allows you to browse, filter, and manage a catalog of photos. The application was built using React with state managed by `useState`.
 
-**Application Components:**
+## Features
+- 🔍 **Browse the photo catalog** without logging in
+- 🔄 **Filter catalog items**
+- 🔐 **User login** using tokens and hashed passwords
+- ✏️ **Edit items** by logged-in users
+- 🛠️ **Full catalog management** by administrators
+- 📥 **Automatic loading of sample items** if all current items are deleted
 
-**Frontend:** React, using useState for state management.
-
-## Features:
-- **Without Logging In:** Ability to browse the catalog and filter items.
-- **Logged-In User:** Ability to edit items.
-- **Administrator:** Full access to all features.
-- **Sample Items:** The application suggests loading sample items if all existing ones are deleted.
-
-## ⚙ Setup
-To run the program from the 'photo-catalog' repository on your local computer, you can follow these steps:
-
-1. **Downloading the source code:**
-   Clone the repository from the GitHub page to your local computer using the command:
-   ```commandline
-   git clone https://github.com/mariuszmmm/photo-catalog.git
+## Installation
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/mariuszmmm/photo-catalog
    ```
-
-2. **Dependency Installation:**
-   Navigate to the project directory, then install all required dependencies using a package manager like npm:
-   ```commandline
+2. **Navigate to the project directory:**
+   ```bash
    cd photo-catalog
+   ```
+3. **Install dependencies:**
+   ```bash
    npm install
    ```
-
-3. **Launching the Application:**
-   After installing the dependencies, you can run the application locally. Use the command:
-   ```commandline
+4. **Start the application:**
+   ```bash
    npm start
    ```
-   This command will start the application in developer mode, opening it in a browser at [http://localhost:3000](http://localhost:3000).
+
+## Requirements
+- Node.js
+- npm
+
+## Demo
+The application is available at: [https://mariuszmmm.github.io/photo-catalog/](https://mariuszmmm.github.io/photo-catalog/)
+
+## Login Details
+- **Administrator**
+  - login: `admin`
+  - password: `admin#`
+- **Sample user**
+  - login: `user`
+  - password: `user#`
+
+## Backend Repository
+The backend of the application is in a separate repository: [https://github.com/mariuszmmm/photo-catalog-backend](https://github.com/mariuszmmm/photo-catalog-backend)
