@@ -14,7 +14,6 @@ const App = () => {
     items: [],
     visitCount: undefined,
   });
-  console.log("It`s running!");
 
   useEffect(() => {
     document.body.style.overflow =
