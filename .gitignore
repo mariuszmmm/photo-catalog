@@ -30,3 +30,6 @@ yarn-error.log*
 .idea  # Ignoruj folder konfiguracji IDE JetBrains
 .vscode  # Ignoruj folder konfiguracji Visual Studio Code
 *.bak  # Ignoruj pliki backupowe
+
+# Local Netlify folder
+.netlify

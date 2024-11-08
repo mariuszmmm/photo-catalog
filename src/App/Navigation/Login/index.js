@@ -6,13 +6,13 @@ import useLogin from './useLogin';
 import { Container, Label } from '../../../common/Modal';
 import ButtonsContainer from '../../../common/ButtonsContainer';
 
-export const Login = ({ setState, showBackdrop, setShowBackdrop }) => {
+export const Login = ({ setState, setSession, showBackdrop, setShowBackdrop }) => {
   const {
     username,
     password,
     onInputChange,
     login,
-  } = useLogin(setState, setShowBackdrop);
+  } = useLogin(setState, setSession, setShowBackdrop);
 
   return (
     <>
@@ -20,6 +20,7 @@ export const Login = ({ setState, showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "login" &&
         <Backdrop>
           <Form onSubmit={login}>
+            <h1>Zaloguj się</h1>
             <Container>
               <Label>login:</Label>
               <Input

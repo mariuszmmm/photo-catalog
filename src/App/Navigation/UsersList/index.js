@@ -16,12 +16,16 @@ const UsersList = ({ showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "usersList" &&
         <Backdrop>
           <Form>
-            <b>Lista użytkowników</b>
+            <h1>Lista użytkowników</h1>
             <ListContainer>
-              <ol>
-                {users.map((user) =>
-                  <li key={user}>{user}</li>)}
-              </ol>
+              {users.length === 0 ?
+                <p>Ładowanie&nbsp;listy&nbsp;...</p>
+                :
+                <ol>
+                  {users.map((user, index) =>
+                    <li key={user}>{index + 1}. {user}</li>)}
+                </ol>
+              }
             </ListContainer>
             <ButtonsContainer>
               <Button type="button" onClick={() => setShowBackdrop(null)} >Wróć</Button>

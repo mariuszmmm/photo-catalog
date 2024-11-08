@@ -1,21 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { useFetch } from "../Fetch/useFetch";
 import { convertToBase64 } from "../utils/convertToBase64";
-import { createFormData } from "../utils/createFormData";
 import { fetchData } from "./fetchData"
+import { sendImageToCloudinary } from "../utils/sendImageToCloudinary";
 
 const useItems = (state, setState, confirmation, setConfirmation) => {
   const headerEditRef = useRef(null);
-  const [editedItem, setEditedItem] = useState(
-    {
-      id: null,
-      header: "",
-      content: "",
-      file: null,
-      image: null,
-      targetImage: null
-    }
-  );
+  const initState = {
+    id: null,
+    header: "",
+    content: "",
+    file: null,
+    image: null,
+    targetImage: null,
+    url: null,
+    downloadUrl: null,
+  };
+  const [editedItem, setEditedItem] = useState({ ...initState });
   const {
     getItemAPI,
     saveEditedItemAPI,
@@ -25,17 +26,20 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
 
   const onEditItemClick = (id, header, content) => {
     setEditedItem({
-      ...editedItem, id, header, content
+      ...editedItem,
+      id,
+      header,
+      content
     });
   };
 
   const onEditedItemChange = ({ target }) => {
     const { name, value } = target;
 
-    setEditedItem({
-      ...editedItem,
+    setEditedItem((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const onEditedItemFileChange = (event) => {
@@ -51,9 +55,30 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
   };
 
   const saveEditedItem = async () => {
-    const formData = createFormData(editedItem.file, editedItem.header, editedItem.content)
+    let jsonData = {};
+    if (editedItem.file) {
+      await deleteItemImageAPI({ id: editedItem.id });
+
+      const response = await sendImageToCloudinary(editedItem.file)
+
+      jsonData = {
+        image: response?.imageId || null,
+        url: response?.url || null,
+        downloadUrl: response?.downloadUrl || null,
+        header: editedItem.header,
+        content: editedItem.content,
+        id: editedItem.id
+      };
+    } else {
+      jsonData = {
+        header: editedItem.header,
+        content: editedItem.content,
+        id: editedItem.id
+      };
+    }
+
     try {
-      const res = await saveEditedItemAPI(formData, editedItem.id);
+      const res = await saveEditedItemAPI(jsonData);
       const newItems = state.items.map((item) => (
         item._id !== res.data._id ? item : res.data
       ));
@@ -63,16 +88,7 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
           items: newItems,
         }
       );
-      setEditedItem(
-        {
-          id: null,
-          header: "",
-          content: "",
-          file: null,
-          image: null,
-          targetImage: null
-        }
-      );
+      setEditedItem({ ...initState });
     } catch (err) {
       alert("error in saveEditedItem: ")
     }
@@ -94,21 +110,13 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
   };
 
   const onCancelEditedItemClick = () => {
-    setEditedItem(
-      {
-        id: null,
-        header: "",
-        content: "",
-        file: null,
-        image: null,
-        targetImage: null
-      }
-    )
+    setEditedItem({ ...initState })
   };
 
   const onDeleteItemClick = async (id) => {
+    const jsonData = { data: { id } };
     try {
-      await deleteItemAPI(id);
+      await deleteItemAPI(jsonData);
       const newItems = state.items.filter((item) => item._id !== id);
       setState(
         {
@@ -122,8 +130,9 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
   };
 
   const onDeleteItemImageClick = async (id) => {
+    const jsonData = { id };
     try {
-      await deleteItemImageAPI(id)
+      await deleteItemImageAPI(jsonData)
       const newItems = state.items.map((item) => (
         item._id === id ? { ...item, image: null } : item));
 

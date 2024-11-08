@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFetch } from "../../Fetch/useFetch"
 
-const useLogin = (setState, setShowBackdrop) => {
+const useLogin = (setState, setSession, setShowBackdrop) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { loginAPI } = useFetch();
@@ -20,6 +20,9 @@ const useLogin = (setState, setShowBackdrop) => {
     if (data) {
       const { decodedToken, visitCount } = data;
       const remaining = decodedToken.exp - decodedToken.iat;
+      setSession({
+        sessionTime: { end: decodedToken.exp, remaining }
+      });
       setState(prevState => (
         {
           ...prevState,
@@ -27,10 +30,6 @@ const useLogin = (setState, setShowBackdrop) => {
             isLoggedIn: true,
             username: decodedToken.username,
             isAdmin: decodedToken.isAdmin,
-          },
-          sessionTime: {
-            end: decodedToken.exp,
-            remaining,
           },
           visitCount
         }

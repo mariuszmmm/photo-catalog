@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { createFormData } from "../utils/createFormData";
 import { useFetch } from "../Fetch/useFetch";
 import { convertToBase64 } from "../utils/convertToBase64";
+import { sendImageToCloudinary } from "../utils/sendImageToCloudinary";
 
 const useAddNewItem = (state, setState) => {
   const headerRef = useRef(null);
@@ -12,7 +12,9 @@ const useAddNewItem = (state, setState) => {
       content: "",
       file: null,
       image: null,
-      targetImage: null
+      targetImage: null,
+      url: null,
+      downloadUrl: null,
     }
   );
   const { sendItemAPI } = useFetch();
@@ -27,21 +29,29 @@ const useAddNewItem = (state, setState) => {
   };
 
   const onNewItemFileChange = (event) => {
-    const targetFile = event.target.files[0];
+    const file = event.target.files[0];
     setNewItem(
       {
         ...newItem,
-        file: targetFile,
+        file,
         targetImage: event.target,
       }
     );
-    convertToBase64(targetFile, setNewItem);
+    convertToBase64(file, setNewItem);
   };
 
   const handleAddNewItem = async () => {
-    const formData = createFormData(newItem.file, newItem.header, newItem.content);
     try {
-      const res = await sendItemAPI(formData)
+      const { imageId, url, downloadUrl } = await sendImageToCloudinary(newItem.file)
+      const jsonData = {
+        header: newItem.header,
+        content: newItem.content,
+        image: imageId,
+        url,
+        downloadUrl,
+      };
+
+      const res = await sendItemAPI(jsonData);
       setState(
         {
           ...state,
@@ -72,6 +82,8 @@ const useAddNewItem = (state, setState) => {
         content: "",
         file: null,
         image: null,
+        url: null,
+        downloadUrl: null,
       }
     )
     formRef.current.reset();

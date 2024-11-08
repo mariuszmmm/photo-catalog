@@ -9,7 +9,7 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
     username,
     password,
     userAdd,
-    setInputChange,
+    setInputChange
   } = useUserAdd(setShowBackdrop);
 
   return (
@@ -18,6 +18,7 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "userAdd" &&
         <Backdrop>
           <Form onSubmit={userAdd}>
+            <h1>Dodaj użytkownika</h1>
             <Container>
               <Label>login:</Label>
               <Input
@@ -25,7 +26,6 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
                 placeholder="username"
                 name="username"
                 value={username}
-                autoComplete="username"
                 onChange={setInputChange}
               />
             </Container>
@@ -36,13 +36,12 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
                 placeholder="password"
                 name="password"
                 value={password}
-                autoComplete="current-password"
                 onChange={setInputChange}
               />
             </Container>
             <ButtonsContainer>
-              <Button type="submit" >Zapisz</Button>
-              <Button type="button" onClick={() => setShowBackdrop(null)} >Anuluj</Button>
+              <Button type="submit">Zapisz</Button>
+              <Button type="button" onClick={() => setShowBackdrop(null)}>Anuluj</Button>
             </ButtonsContainer>
           </Form>
         </Backdrop>}

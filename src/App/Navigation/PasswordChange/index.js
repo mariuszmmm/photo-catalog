@@ -18,14 +18,13 @@ const PasswordChange = ({ state, showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "passwordChange" &&
         <Backdrop>
           <Form onSubmit={passwordChange}>
+            <h1>Zmiana hasła</h1>
             <Container>
               <Input
                 $hidden
                 type="text"
                 autoComplete="username"
               />
-            </Container>
-            <Container>
               <Label>hasło:</Label>
               <Input
                 type="password"

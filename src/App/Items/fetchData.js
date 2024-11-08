@@ -9,7 +9,7 @@ export const fetchData = async (setState, getItemAPI) => {
       setState((prevState) =>
       ({
         ...prevState,
-        items: [...items.data],
+        items: [...items],
       }));
     };
   } catch (err) {

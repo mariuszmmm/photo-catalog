@@ -1,15 +1,15 @@
 import axios from "axios";
-import { API_URL } from "../api";
+import { API_URL } from "../../api";
 import { jwtDecode } from "jwt-decode";
 import { getSessionStorage, setSessionStorage } from "../utils/sessionStorage";
 
 export const useFetch = () => {
-
   const getItemAPI = async () => {
     try {
-      return await (axios.get(`${API_URL}/items`))
+      const response = await axios.get(`${API_URL}/items`);
+      return response.data;
     } catch (err) {
-      alert("error: Brak połączenia z serwerem.")
+      alert("error: Brak połączenia z serwerem.");
     }
   };
 
@@ -17,13 +17,13 @@ export const useFetch = () => {
     try {
       await (axios.get(`${API_URL}/example`))
     } catch (err) {
-      alert("error in exampleItemsAPI:")
+      alert("error in exampleItemsAPI")
     }
   };
 
   const loginAPI = async (username, password) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, { username, password })
+      const response = await axios.post(`${API_URL}/login`, { username, password });
       const { token, visitCount } = response.data;
       const decodedToken = token && jwtDecode(token);
       if (decodedToken) {
@@ -68,33 +68,33 @@ export const useFetch = () => {
     }
   };
 
-  const sendItemAPI = async (item) => {
+  const sendItemAPI = async (jsonData) => {
     try {
-      return await axios.post(`${API_URL}/items`, item)
+      return await axios.post(`${API_URL}/items/add`, jsonData)
     } catch (err) {
       alert("error in sendItemAPI: ")
     }
   };
 
-  const saveEditedItemAPI = async (item, id) => {
+  const saveEditedItemAPI = async (jsonData) => {
     try {
-      return await axios.put(`${API_URL}/items/${id}`, item)
+      return await axios.put(`${API_URL}/items/edit`, jsonData)
     } catch (err) {
       alert("error in saveEditedItemAPI: ")
     }
   };
 
-  const deleteItemAPI = async (id) => {
+  const deleteItemAPI = async (jsonData) => {
     try {
-      return await axios.delete(`${API_URL}/items/${id}`);
+      return await axios.delete(`${API_URL}/items/delete`, jsonData);
     } catch (err) {
       alert("error in deleteItemAPI: ")
     }
   };
 
-  const deleteItemImageAPI = async (id) => {
+  const deleteItemImageAPI = async (jsonData) => {
     try {
-      return await axios.put(`${API_URL}/items/${id}/removeImage`);
+      return await axios.put(`${API_URL}/items/deleteImage`, jsonData);
     } catch (err) {
       alert("errorr in deleteItemImageAPI: ")
     }
@@ -102,7 +102,8 @@ export const useFetch = () => {
 
   const getFilesListAPI = async () => {
     try {
-      return await (axios.get(`${API_URL}/files`))
+      const response = await (axios.get(`${API_URL}/files`));
+      return response.data;
     } catch (err) {
       alert("error in getFilesListAPI: ")
     }

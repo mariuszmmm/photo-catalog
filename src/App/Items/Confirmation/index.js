@@ -20,6 +20,7 @@ const Confirmation = ({ confirmation, setConfirmation }) => {
     <Backdrop>
       <Form onSubmit={onConfirmationSubmit}>
         <h2>Napewno usunąć ?</h2>
+        <br />
         <ButtonsContainer>
           <Button type="submit">Tak</Button>
           <Button type="button" onClick={onCancelClick}>Nie</Button>

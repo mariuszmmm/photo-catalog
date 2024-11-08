@@ -7,7 +7,7 @@ export const useFilesList = (setFiles, setShowBackdrop) => {
     setShowBackdrop("filesList")
     const response = await getFilesListAPI();
     if (response) {
-      setFiles([...response.data])
+      setFiles({ ...response })
     };
   };
 

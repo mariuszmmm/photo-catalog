@@ -18,7 +18,7 @@ export const useUserAdd = (setShowBackdrop) => {
     if (response) {
       setUsername("");
       setPassword("");
-      setShowBackdrop("userAdd");
+      response.status === 201 && setShowBackdrop(null);
     };
   };
 
@@ -27,5 +27,7 @@ export const useUserAdd = (setShowBackdrop) => {
     password,
     userAdd,
     setInputChange,
+    setUsername,
+    setPassword,
   }
 };

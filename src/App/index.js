@@ -10,11 +10,9 @@ const App = () => {
   const [state, setState] = useState({
     loading: null,
     user: {},
-    sessionTime: {},
     items: [],
     visitCount: undefined,
   });
-  console.log("It`s working");
 
   useEffect(() => {
     document.body.style.overflow =

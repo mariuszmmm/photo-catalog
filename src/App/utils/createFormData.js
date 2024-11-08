@@ -1,7 +1,11 @@
-export const createFormData = (file, header, content) => {
+export const createFormData = ({ file, image, header, content }) => {
   const formData = new FormData();
-  formData.append('file', file);
-  formData.append('header', header);
-  formData.append('content', content);
+  file && formData.append('file', file);
+  file && formData.append("upload_preset", "PhotoCatalog");
+  image && formData.append('image', image);
+  header && formData.append('header', header);
+  content && formData.append('content', content);
+
   return formData;
 };
+

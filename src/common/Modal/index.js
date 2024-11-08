@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const Form = styled.form`
-  width: 450px;
-  height: 300px;
+  min-width: max-content;
   background-color: #dba764cc;
   text-shadow: none;
   font-size: 1rem;
@@ -11,12 +10,13 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   user-select: auto;
   line-height: 1.5rem;
   border: solid 3px black;
   border-radius: 20px;
   box-shadow: 15px 15px 20px black;
+  padding: 30px 60px;
   
   button{
     width: 120px;
@@ -47,7 +47,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 export const Input = styled.input`

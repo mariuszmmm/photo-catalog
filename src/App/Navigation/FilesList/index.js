@@ -1,4 +1,3 @@
-import { API_URL } from "../../api";
 import ButtonLink from "../../../common/ButtonLink";
 import ButtonsContainer from "../../../common/ButtonsContainer";
 import Button from "../../../common/Button";
@@ -9,7 +8,7 @@ import { useState } from "react";
 import ListContainer from "../../../common/ListContainer";
 
 const FilesList = ({ showBackdrop, setShowBackdrop }) => {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState({ images: [] });
   const { filesList } = useFilesList(setFiles, setShowBackdrop);
 
   return (
@@ -18,22 +17,25 @@ const FilesList = ({ showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "filesList" &&
         <Backdrop>
           <Form>
-            <b>Lista plików</b>
+            <h1>Lista obrazów</h1>
             <ListContainer>
-              <ol>
-                {files.map((file) =>
-                (<li key={file}>{file}{" "}
-                  <a href={file && `${API_URL}/files/download/${file}`}
-                    disabled={!file}
-                    download={file}
-                  >
-                    Pobierz plik
-                  </a>
-                </li>))}
-              </ol>
+              {files.images.length === 0 ?
+                <p>Ładowanie&nbsp;listy&nbsp;...</p>
+                :
+                <ul>
+                  {files.images?.map((file, index) => (
+                    <li key={file.public_id}>
+                      <span>{`${index + 1}. ${file.name}`}</span>
+                      <a href={file.downloadUrl} download={file.name} >
+                        Pobierz plik
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              }
             </ListContainer>
             <ButtonsContainer>
-              <ButtonLink type="button" href={`${API_URL}/files/download/`}>
+              <ButtonLink href={files.zipUrl}>
                 Zapisz wszystkie
               </ButtonLink>
               <Button type="button" onClick={() => setShowBackdrop(null)} >Wróć</Button>

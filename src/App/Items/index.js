@@ -6,7 +6,6 @@ import { Backdrop } from "../../common/Backdrop";
 import InputFile from "../../common/InputFile";
 import ImageItem from "./ImageItem";
 import AddNewItem from "../AddNewItem";
-import { API_URL } from "../api";
 import ButtonLink from "../../common/ButtonLink";
 import ButtonsContainer from "../../common/ButtonsContainer";
 import SectionItems from "../../common/SectionItems";
@@ -98,8 +97,7 @@ const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
                       <h2>{index + 1}. {item.header}</h2>
                       <p>{item.content}</p>
                       <ButtonsContainer>
-                        <ButtonLink href={item.image && `${API_URL}/files/download/${item.image}`} disabled={!item.image} download={item.image}
-                        >
+                        <ButtonLink href={item.downloadUrl} disabled={!item.image}>
                           Pobierz plik
                         </ButtonLink>
                         <Button type="button" onClick={() => onEditItemClick(item._id, item.header, item.content, index)} disabled={editedItem.id}>

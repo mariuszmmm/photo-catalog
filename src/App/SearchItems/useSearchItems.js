@@ -23,7 +23,6 @@ const useSearchItem = (state, setState) => {
         filteredOut: !(item.header.toUpperCase().includes(searchValue.trim().toUpperCase())),
       }
     ));
-
     setState(
       {
         ...state,

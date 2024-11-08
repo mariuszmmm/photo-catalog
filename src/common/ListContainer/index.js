@@ -7,7 +7,19 @@ export default styled.div`
   padding: 0 10px;
   margin: 0;
 
-  li{
+  ul {
+    padding: 0 ;
+  }
+
+  li {
     padding: 2px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+    
+  a {
+    min-width: max-content
   }
 `;
