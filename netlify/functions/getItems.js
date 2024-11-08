@@ -3,6 +3,7 @@ const cloudinary = require("./config/cloudinaryConfig");
 const Item = require("./models/Item");
 const Visit = require("./models/Visit");
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+const cloudFolder = process.env.CLOUDINARY_FOLDER;
 
 const handler = async (event) => {
   if (event.httpMethod !== 'GET') {
@@ -13,7 +14,7 @@ const handler = async (event) => {
   }
 
   try {
-    const resources = await cloudinary.api.resources_by_asset_folder('PhotoCatalog', {
+    const resources = await cloudinary.api.resources_by_asset_folder(cloudFolder, {
       tags: true,
       metadata: true,
       context: true,

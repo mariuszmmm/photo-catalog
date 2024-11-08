@@ -1,6 +1,7 @@
 const cloudinary = require("./config/cloudinaryConfig");
 const Item = require("./models/Item");
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+const cloudFolder = process.env.CLOUDINARY_FOLDER;
 
 const handler = async () => {
   try {
@@ -9,12 +10,13 @@ const handler = async () => {
     for (const resource of resourcesFromArchive.resources) {
       await cloudinary.uploader.upload(resource.secure_url, {
         upload_preset: 'PhotoCatalog',
-        folder: 'PhotoCatalog',
+        folder: cloudFolder,
         context: `caption=${resource?.context?.custom?.caption || ''} | alt=${resource?.context?.custom?.alt || ''}`,
       });
     };
 
-    const resources = await cloudinary.api.resources_by_asset_folder('PhotoCatalog');
+    const resources = await cloudinary.api.resources_by_asset_folder(cloudFolder);
+    console.log(cloudFolder)
 
     for (const resource of resources.resources) {
       const itemData = {
