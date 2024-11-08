@@ -35,7 +35,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "env-cmd -f .env.dev netlify dev"
+    "dev": "env-cmd -f .env.dev netlify dev",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
