@@ -3,10 +3,10 @@ import { auto } from '@cloudinary/url-gen/actions/resize';
 import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
 import { lazyload, responsive } from '@cloudinary/react';
 import { StyledAdvancedImage } from './styled';
-import { CLOUDINARY_CLOUD_NAME } from "../../api";
 
 const CldImage = ({ public_id }) => {
-  const cld = new Cloudinary({ cloud: { cloudName: CLOUDINARY_CLOUD_NAME } });
+  const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const cld = new Cloudinary({ cloud: { cloudName } });
   const img = cld
     .image(public_id)
     .format('auto')

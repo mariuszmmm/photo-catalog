@@ -1,12 +1,11 @@
 import axios from "axios";
-import { API_URL } from "../../api";
 import { jwtDecode } from "jwt-decode";
 import { getSessionStorage, setSessionStorage } from "../utils/sessionStorage";
 
 export const useFetch = () => {
   const getItemAPI = async () => {
     try {
-      const response = await axios.get(`${API_URL}/items`);
+      const response = await axios.get("/items");
       return response.data;
     } catch (err) {
       alert("error: Brak połączenia z serwerem.");
@@ -15,7 +14,7 @@ export const useFetch = () => {
 
   const exampleItemsAPI = async () => {
     try {
-      await (axios.get(`${API_URL}/example`))
+      await (axios.get("/example"))
     } catch (err) {
       alert("error in exampleItemsAPI")
     }
@@ -23,7 +22,7 @@ export const useFetch = () => {
 
   const loginAPI = async (username, password) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, { username, password });
+      const response = await axios.post("/login", { username, password });
       const { token, visitCount } = response.data;
       const decodedToken = token && jwtDecode(token);
       if (decodedToken) {
@@ -40,7 +39,7 @@ export const useFetch = () => {
     try {
       const token = getSessionStorage("token")
       const response = await axios.post(
-        `${API_URL}/user/add`,
+        "/user/add",
         { username, password },
         { headers: { Authorization: token } }
       );
@@ -56,7 +55,7 @@ export const useFetch = () => {
     try {
       const token = getSessionStorage("token")
       const response = await axios.post(
-        `${API_URL}/user/password`,
+        "/user/password",
         { username, password, newPassword },
         { headers: { Authorization: token } }
       );
@@ -70,7 +69,7 @@ export const useFetch = () => {
 
   const sendItemAPI = async (jsonData) => {
     try {
-      return await axios.post(`${API_URL}/items/add`, jsonData)
+      return await axios.post("/items/add", jsonData)
     } catch (err) {
       alert("error in sendItemAPI: ")
     }
@@ -78,7 +77,7 @@ export const useFetch = () => {
 
   const saveEditedItemAPI = async (jsonData) => {
     try {
-      return await axios.put(`${API_URL}/items/edit`, jsonData)
+      return await axios.put("/items/edit", jsonData)
     } catch (err) {
       alert("error in saveEditedItemAPI: ")
     }
@@ -86,7 +85,7 @@ export const useFetch = () => {
 
   const deleteItemAPI = async (jsonData) => {
     try {
-      return await axios.delete(`${API_URL}/items/delete`, jsonData);
+      return await axios.delete("/items/delete", jsonData);
     } catch (err) {
       alert("error in deleteItemAPI: ")
     }
@@ -94,7 +93,7 @@ export const useFetch = () => {
 
   const deleteItemImageAPI = async (jsonData) => {
     try {
-      return await axios.put(`${API_URL}/items/deleteImage`, jsonData);
+      return await axios.put("/items/deleteImage", jsonData);
     } catch (err) {
       alert("errorr in deleteItemImageAPI: ")
     }
@@ -102,7 +101,7 @@ export const useFetch = () => {
 
   const getFilesListAPI = async () => {
     try {
-      const response = await (axios.get(`${API_URL}/files`));
+      const response = await (axios.get("/files"));
       return response.data;
     } catch (err) {
       alert("error in getFilesListAPI: ")
@@ -111,7 +110,7 @@ export const useFetch = () => {
 
   const getUsersListAPI = async () => {
     try {
-      const response = await (axios.get(`${API_URL}/users`))
+      const response = await (axios.get("/users"))
       const users = response.data.map((item) => item.username);
       return users;
     } catch (err) {

@@ -1,6 +1,6 @@
 const cloudinary = require("./config/cloudinaryConfig");
 const Item = require("./models/Item");
-const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
 
 const handler = async () => {
   try {
