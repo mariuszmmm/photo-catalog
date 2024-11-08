@@ -42,13 +42,21 @@ const useAddNewItem = (state, setState) => {
 
   const handleAddNewItem = async () => {
     try {
-      const { imageId, url, downloadUrl } = await sendImageToCloudinary(newItem.file)
-      const jsonData = {
-        header: newItem.header,
-        content: newItem.content,
-        image: imageId,
-        url,
-        downloadUrl,
+      let jsonData = {};
+      if (newItem.file) {
+        const { imageId, url, downloadUrl } = await sendImageToCloudinary(newItem.file)
+        jsonData = {
+          header: newItem.header,
+          content: newItem.content,
+          image: imageId,
+          url,
+          downloadUrl,
+        };
+      } else {
+        jsonData = {
+          header: newItem.header,
+          content: newItem.content,
+        };
       };
 
       const res = await sendItemAPI(jsonData);

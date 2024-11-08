@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const sendImageToCloudinary = async (file) => {
-  const cloudName = process.env.process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
   const preset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
   const formData = new FormData();
-  formData.append('file', file);
-  formData.append("upload_preset", preset);
+  file && formData.append('file', file);
+  preset && formData.append("upload_preset", preset);
 
   try {
     const response = await axios.post(
