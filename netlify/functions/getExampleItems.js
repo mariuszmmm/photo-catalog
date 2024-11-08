@@ -4,7 +4,7 @@ const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
 
 const handler = async () => {
   try {
-    const resourcesFromArchive = await cloudinary.api.resources_by_asset_folder('PhotoCatalogArchive_');
+    const resourcesFromArchive = await cloudinary.api.resources_by_asset_folder('PhotoCatalogArchive');
 
     for (const resource of resourcesFromArchive.resources) {
       await cloudinary.uploader.upload(resource.secure_url, {
