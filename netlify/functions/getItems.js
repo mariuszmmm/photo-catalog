@@ -14,11 +14,12 @@ const handler = async (event) => {
   }
 
   try {
+    const preset = process.env.CLOUDINARY_UPLOAD_PRESET;
     const resources = await cloudinary.api.resources_by_asset_folder(cloudFolder, {
       tags: true,
       metadata: true,
       context: true,
-      upload_preset: "PhotoCatalog"
+      upload_preset: preset
     });
 
     const CloudinaryUrls = {};

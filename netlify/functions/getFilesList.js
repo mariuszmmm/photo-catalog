@@ -11,17 +11,19 @@ const handler = async (event) => {
   }
 
   try {
+    const folder = process.env.CLOUDINARY_FOLDER;
+
     const archiveResponse = cloudinary.utils.download_zip_url({
       resource_type: "image",
       type: "upload",
       target_format: "zip",
-      prefixes: "PhotoCatalog/",
+      prefixes: `${folder}/`,
       target_public_id: "images",
     });
 
     const response = await cloudinary.api.resources({
       type: 'upload',
-      prefix: 'PhotoCatalog/'
+      prefix: `${folder}/`
     });
 
     const images = response.resources.map((resource) => {

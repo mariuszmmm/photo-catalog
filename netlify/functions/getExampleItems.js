@@ -5,11 +5,11 @@ const cloudFolder = process.env.CLOUDINARY_FOLDER;
 
 const handler = async () => {
   try {
-    const resourcesFromArchive = await cloudinary.api.resources_by_asset_folder('PhotoCatalogArchive');
-
+    const resourcesFromArchive = await cloudinary.api.resources_by_asset_folder('test');
+    const preset = process.env.CLOUDINARY_UPLOAD_PRESET;
     for (const resource of resourcesFromArchive.resources) {
       await cloudinary.uploader.upload(resource.secure_url, {
-        upload_preset: 'PhotoCatalog',
+        upload_preset: preset,
         folder: cloudFolder,
         context: `caption=${resource?.context?.custom?.caption || ''} | alt=${resource?.context?.custom?.alt || ''}`,
       });
