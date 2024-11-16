@@ -5,24 +5,27 @@ import { Form } from '../../../common/Modal';
 import { Backdrop } from "../../../common/Backdrop";
 import { useFilesList } from "./useFilesList";
 import { useState } from "react";
-import ListContainer from "../../../common/ListContainer";
+import { ListContainer } from "../../../common/ListContainer";
+import { Loader } from "../../../common/Loader";
 
 const FilesList = ({ showBackdrop, setShowBackdrop }) => {
   const [files, setFiles] = useState({ images: [] });
-  const { filesList } = useFilesList(setFiles, setShowBackdrop);
+  const [loading, setLoading] = useState(true);
+  const { getFilesList } = useFilesList(setFiles, setLoading, setShowBackdrop);
 
   return (
     <>
-      <Button onClick={() => filesList()}>Lista plików</Button>
+      <Button onClick={() => getFilesList()}>Lista plików</Button>
       {showBackdrop === "filesList" &&
         <Backdrop>
           <Form>
-            <h1>Lista obrazów</h1>
+            <Loader loading={loading} />
+            <h1>Lista plików</h1>
             <ListContainer>
               {files.images.length === 0 ?
-                <p>Ładowanie&nbsp;listy&nbsp;...</p>
+                loading ? <p>Ładowanie&nbsp;...</p> : <span>Brak plików</span>
                 :
-                <ul>
+                !loading && <ul>
                   {files.images?.map((file, index) => (
                     <li key={file.public_id}>
                       <span>{`${index + 1}. ${file.name}`}</span>
@@ -35,9 +38,10 @@ const FilesList = ({ showBackdrop, setShowBackdrop }) => {
               }
             </ListContainer>
             <ButtonsContainer>
-              <ButtonLink href={files.zipUrl}>
+              {files.images.length > 0 && !loading && <ButtonLink href={files.zipUrl}
+              >
                 Zapisz wszystkie
-              </ButtonLink>
+              </ButtonLink>}
               <Button type="button" onClick={() => setShowBackdrop(null)} >Wróć</Button>
             </ButtonsContainer>
           </Form>

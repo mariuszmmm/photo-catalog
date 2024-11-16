@@ -1,15 +1,22 @@
 import { useFetch } from "../../Fetch/useFetch";
 
-export const useFilesList = (setFiles, setShowBackdrop) => {
+export const useFilesList = (setFiles, setLoading, setShowBackdrop) => {
   const { getFilesListAPI } = useFetch();
 
-  const filesList = async () => {
+  const getFilesList = async () => {
     setShowBackdrop("filesList")
-    const response = await getFilesListAPI();
-    if (response) {
-      setFiles({ ...response })
+    try {
+      setLoading(true);
+      const response = await getFilesListAPI();
+      if (response) {
+        setFiles({ ...response })
+      };
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     };
   };
 
-  return { filesList }
+  return { getFilesList }
 };

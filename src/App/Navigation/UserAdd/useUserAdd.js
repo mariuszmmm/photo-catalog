@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFetch } from "../../Fetch/useFetch";
 
-export const useUserAdd = (setShowBackdrop) => {
+export const useUserAdd = (setLoading, setShowBackdrop) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { userAddAPI } = useFetch();
@@ -14,13 +14,21 @@ export const useUserAdd = (setShowBackdrop) => {
 
   const userAdd = async (event) => {
     event.preventDefault();
-    const response = await userAddAPI(username, password);
-    if (response) {
-      setUsername("");
-      setPassword("");
-      response.status === 201 && setShowBackdrop(null);
+    try {
+      setLoading(true);
+      const response = await userAddAPI(username, password);
+      if (response) {
+        setUsername("");
+        setPassword("");
+        response.status === 201 && setShowBackdrop(null);
+      };
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     };
   };
+
 
   return {
     username,

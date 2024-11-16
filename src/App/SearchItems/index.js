@@ -10,7 +10,7 @@ const SearchItems = ({ state, setState }) => {
   const {
     inputRef,
     searchValue,
-    setSearchValueChange,
+    setSearchValue,
     onSearchSubmit,
     onResetClick,
   } = useSearchItems(state, setState);
@@ -18,14 +18,15 @@ const SearchItems = ({ state, setState }) => {
   return (
     <Container>
       <InfoContainer>
-        <Info>Ilość elementów: {state.items.length}</Info>
+        <Info>Wszystkich elementy: {state.items.length}  </Info>
+        {state.search && <Info>Znalezione elementy: {state.filteredItems.length}</Info>}
       </InfoContainer>
       <SearchContainer onSubmit={onSearchSubmit}>
         <Input
           ref={inputRef}
           type="text"
           value={searchValue}
-          onChange={setSearchValueChange}
+          onChange={({ target }) => setSearchValue(target.value)}
         />
         <ButtonsContainer>
           <Button type="submit">Szukaj</Button>

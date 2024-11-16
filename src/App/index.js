@@ -11,6 +11,8 @@ const App = () => {
     loading: null,
     user: {},
     items: [],
+    search: false,
+    filteredItems: [],
     visitCount: undefined,
   });
 
@@ -27,7 +29,10 @@ const App = () => {
         showBackdrop={showBackdrop}
         setShowBackdrop={setShowBackdrop}
       />
-      <SearchItems state={state} setState={setState} />
+      <SearchItems
+        state={state}
+        setState={setState}
+      />
       <Container>
         <Header>Foto Katalog</Header>
         <Items

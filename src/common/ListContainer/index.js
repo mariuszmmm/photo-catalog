@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
-export default styled.div`
+export const ListContainer = styled.div`
   height: 50%;
   width: 100%;
   overflow-y: auto;
   padding: 0 10px;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 
   ul {
     padding: 0 ;
@@ -17,6 +20,7 @@ export default styled.div`
     justify-content: space-between;
     gap: 10px;
     flex-wrap: wrap;
+    font-weight: bold;
   }
     
   a {

@@ -20,7 +20,7 @@ export default styled.a`
   ${({ disabled }) => disabled && css`
     background-color: lightgray;
     color: gray;
-    cursor: auto;
+    cursor: not-allowed;
     user-select: none;
   `};
 
@@ -40,5 +40,4 @@ export default styled.a`
         box-shadow: 2px 2px 2px 2px black ;
       `};
     }
-
 `;

@@ -17,6 +17,7 @@ export const Form = styled.form`
   border-radius: 20px;
   box-shadow: 15px 15px 20px black;
   padding: 30px 60px;
+  position: relative;
   
   button{
     width: 120px;

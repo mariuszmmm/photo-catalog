@@ -1,13 +1,20 @@
 import { useFetch } from "../../Fetch/useFetch";
 
-export const useUsersList = (setUsers, setShowBackdrop) => {
+export const useUsersList = (setUsers, setLoading, setShowBackdrop) => {
   const { getUsersListAPI } = useFetch();
 
   const usersList = async () => {
     setShowBackdrop("usersList")
-    const users = await getUsersListAPI();
-    if (users) {
-      setUsers([...users])
+    try {
+      setLoading(true);
+      const users = await getUsersListAPI();
+      if (users) {
+        setUsers([...users])
+      };
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     };
   };
 
