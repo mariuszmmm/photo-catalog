@@ -5,18 +5,18 @@ import CldImage from "../../../common/CldImage";
 const ImageItem = ({ item, editedItemId, editImage }) => {
 
   return (
-    <ImageContainer  >
+    <ImageContainer>
       {editedItemId === item._id ?
         (editImage ?
           <Image src={editImage} alt="foto" />
           :
           item.image &&
-          <CldImage public_id={item.image} alt="foto" />
+          <CldImage public_id={item.image} alt={item.header} />
         )
         :
         item.image &&
         <a href={item.url} target="_blank" rel="noreferrer">
-          <CldImage public_id={item.image} alt="foto" />
+          <CldImage public_id={item.image} alt={item.header} />
         </a>}
     </ImageContainer>
   );

@@ -1,8 +1,8 @@
 import { Cloudinary } from '@cloudinary/url-gen';
-import { lazyload, responsive } from '@cloudinary/react';
-import { ImageWarapper, StyledAdvancedImage } from './styled';
+import { lazyload, placeholder, responsive } from '@cloudinary/react';
+import { StyledAdvancedImage } from './styled';
 
-const CldImage = ({ public_id, showImage }) => {
+const CldImage = ({ public_id, alt }) => {
   const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
   const cld = new Cloudinary({ cloud: { cloudName } });
 
@@ -11,16 +11,18 @@ const CldImage = ({ public_id, showImage }) => {
     .quality('auto')
 
   return (
-    <ImageWarapper>
+    <div>
       <StyledAdvancedImage
         cldImg={img}
+        alt={alt}
         plugins={[
-          lazyload({ rootMargin: '150px' }),
+          lazyload({ rootMargin: '200px' }),
+          placeholder('grayscale'),
           responsive({ steps: 20 })
         ]}
       />
-    </ImageWarapper >
-  );
+    </div >
+  )
 };
 
 export default CldImage
