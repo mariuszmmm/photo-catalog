@@ -17,7 +17,7 @@ const CldImage = ({ public_id, alt }) => {
         alt={alt}
         plugins={[
           lazyload({ rootMargin: '200px' }),
-          placeholder('grayscale'),
+          placeholder({ mode: 'blur' }),
           responsive({ steps: 20 })
         ]}
       />
