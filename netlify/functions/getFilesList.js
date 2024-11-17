@@ -4,6 +4,7 @@ const cloudName = process.env.CLOUDINARY_CLOUD_NAME
 const handler = async (event) => {
 
   if (event.httpMethod !== 'GET') {
+    console.error('Method Not Allowed');
     return {
       statusCode: 405,
       body: 'Method Not Allowed',
@@ -40,7 +41,7 @@ const handler = async (event) => {
       body: JSON.stringify({ images, zipUrl: archiveResponse }),
     }
   } catch (error) {
-    console.error("Error fetching images from Cloudinary:", error);
+    console.error("Error fetching images from Cloudinary:", error); // console.error w języku angielskim
     return {
       statusCode: 500,
       body: JSON.stringify({ message: error.toString() }),

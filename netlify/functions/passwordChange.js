@@ -4,24 +4,28 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 
 const handler = async (event) => {
-
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
+    console.error("Method Not Allowed");
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ message: "Metoda nie jest dozwolona" })
+    };
   }
-  const { username, password, newPassword } = JSON.parse(event.body);
 
+  const { username, password, newPassword } = JSON.parse(event.body);
   if (!(password && newPassword)) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: "WPROWADŹ HASŁA" }),
+      body: JSON.stringify({ message: "Wprowadź stare i nowe hasło" }),
     }
   }
 
   const token = event.headers.authorization;
   if (!token) {
+    console.error('No token');
     return {
       statusCode: 401,
-      body: JSON.stringify({ message: "BRAK TOKENU" }),
+      body: JSON.stringify({ message: "Brak tokenu" }),
     }
   }
 
@@ -30,37 +34,57 @@ const handler = async (event) => {
     if (decoded.isAdmin) {
       return {
         statusCode: 403,
-        body: JSON.stringify({ message: "ZABRONIONA ZMIANA HASŁA ADMINISTORA" }),
+        body: JSON.stringify({ message: "Zabroniona zmiana hasła administratora" }),
       }
     }
   } catch (err) {
     console.error('Błąd weryfikacji tokena:', err);
-    return
+    return {
+      statusCode: 401,
+      body: JSON.stringify({ message: "Błąd weryfikacji tokena " }),
+    };
   }
 
   const user = await User.findOne({ username });
   if (!user) {
+    console.error('User not found');
     return {
       statusCode: 401,
-      body: JSON.stringify({ message: "BRAK UŻYTKOWNIKA" }),
+      body: JSON.stringify({ message: "Brak użytkownika" }),
     };
   }
 
-  const isPasswordCorrect = await bcrypt.compare(password, user.password);
-  if (!isPasswordCorrect) {
+  try {
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return {
+        statusCode: 401,
+        body: JSON.stringify({ message: "Hasło niepoprawne" }),
+      };
+    }
+  } catch (err) {
+    console.error('Error comparing passwords:', err);
     return {
-      statusCode: 401,
-      body: JSON.stringify({ message: "HASŁO NIEPOPRAWNE" }),
+      statusCode: 500,
+      body: JSON.stringify({ message: "Błąd porównania hasła" }),
     };
   }
 
-  const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-  user.password = hashedNewPassword;
-  await user.save();
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: "HASŁO ZMIENIONO POMYŚLNIE" }),
-  };
+  try {
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
+    await user.save();
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "Hasło zostało zmienione" }),
+    };
+  } catch (err) {
+    console.error('Error changing password:', err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: "Błąd zmiany hasła" }),
+    };
+  }
 };
 
 module.exports = { handler };

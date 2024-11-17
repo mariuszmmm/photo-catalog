@@ -26,15 +26,13 @@ export const sendImageToCloudinary = async (file) => {
       formData
     );
 
-    const version = response.data.version;
-    const imageId = response.data.public_id;
-    const format = response.data.format;
-    const url = response.data.url;
+    const { version, public_id: imageId, format, url } = response.data;
     const downloadUrl = `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment/v${version}/${imageId}.${format}`;
 
     return { imageId, url, downloadUrl };
   } catch (err) {
-    alert("error in sendImageToCloudinary: ", err)
+    console.error("Error in sendImageToCloudinary:", err);
+    alert("Wystąpił błąd podczas wysyłania pliku na Cloudinary. Spróbuj ponownie.");
     return null;
   };
 };

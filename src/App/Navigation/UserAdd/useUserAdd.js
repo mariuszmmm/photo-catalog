@@ -23,7 +23,8 @@ export const useUserAdd = (setLoading, setShowBackdrop) => {
         response.status === 201 && setShowBackdrop(null);
       };
     } catch (error) {
-      console.error(error);
+      console.error("Error adding user:", error);
+      alert("Wystąpił błąd podczas dodawania użytkownika. Spróbuj ponownie.");
     } finally {
       setLoading(false);
     };

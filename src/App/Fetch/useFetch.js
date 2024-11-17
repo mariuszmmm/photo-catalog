@@ -8,15 +8,17 @@ export const useFetch = () => {
       const response = await axios.get("/items");
       return response.data;
     } catch (err) {
-      alert("error: Brak połączenia z serwerem.");
+      alert("Błąd: Brak połączenia z serwerem.");
+      console.error("Error fetching items:", err);
     }
   };
 
   const exampleItemsAPI = async () => {
     try {
-      await (axios.get("/example"))
+      await axios.get("/example")
     } catch (err) {
-      alert("error in exampleItemsAPI")
+      alert("Błąd w exampleItemsAPI: Brak połączenia.");
+      console.error("Error in exampleItemsAPI:", err);
     }
   };
 
@@ -31,7 +33,8 @@ export const useFetch = () => {
         return { decodedToken, visitCount }
       };
     } catch (error) {
-      alert(error.response.data.message);
+      alert(`Błąd logowania: ${error.response.data.message}`);
+      console.error("Login error:", error);
     };
   };
 
@@ -44,10 +47,10 @@ export const useFetch = () => {
         { headers: { Authorization: token } }
       );
       alert(response.data.message)
-
       return response;
     } catch (error) {
-      alert(error.response.data.message);
+      alert(`Błąd przy dodawaniu użytkownika: ${error.response.data.message}`);
+      console.error("Error adding user:", error);
     }
   };
 
@@ -63,7 +66,8 @@ export const useFetch = () => {
 
       return response
     } catch (error) {
-      alert(error.response.data.message)
+      alert(`Błąd przy zmianie hasła: ${error.response.data.message}`);
+      console.error("Error changing password:", error);
     }
   };
 
@@ -71,7 +75,8 @@ export const useFetch = () => {
     try {
       return await axios.post("/items/add", jsonData)
     } catch (err) {
-      alert("error in sendItemAPI: ")
+      alert("Błąd przy dodawaniu elementu.");
+      console.error("Error adding item:", err);
     }
   };
 
@@ -79,7 +84,8 @@ export const useFetch = () => {
     try {
       return await axios.put("/items/edit", jsonData)
     } catch (err) {
-      alert("error in saveEditedItemAPI: ")
+      alert("Błąd przy zapisie edytowanego elementu.");
+      console.error("Error saving edited item:", err);
     }
   };
 
@@ -87,7 +93,8 @@ export const useFetch = () => {
     try {
       return await axios.delete("/items/delete", jsonData);
     } catch (err) {
-      alert("error in deleteItemAPI: ")
+      alert("Błąd przy usuwaniu elementu.");
+      console.error("Error deleting item:", err);
     }
   };
 
@@ -95,7 +102,8 @@ export const useFetch = () => {
     try {
       return await axios.put("/items/deleteImage", jsonData);
     } catch (err) {
-      alert("errorr in deleteItemImageAPI: ")
+      alert("Błąd przy usuwaniu obrazu elementu.");
+      console.error("Error deleting item image:", err);
     }
   };
 
@@ -104,7 +112,8 @@ export const useFetch = () => {
       const response = await (axios.get("/files"));
       return response.data;
     } catch (err) {
-      alert("error in getFilesListAPI: ")
+      alert("Błąd przy pobieraniu listy plików.");
+      console.error("Error fetching files list:", err);
     }
   };
 
@@ -114,7 +123,8 @@ export const useFetch = () => {
       const users = response.data.map((item) => item.username);
       return users;
     } catch (err) {
-      alert("error in getUsersListAPI: ")
+      alert("Błąd przy pobieraniu listy użytkowników.");
+      console.error("Error fetching users list:", err);
     }
   };
 

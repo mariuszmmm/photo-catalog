@@ -7,6 +7,7 @@ const cloudFolder = process.env.CLOUDINARY_FOLDER;
 
 const handler = async (event) => {
   if (event.httpMethod !== 'GET') {
+    console.error('Method Not Allowed');
     return {
       statusCode: 405,
       body: 'Method Not Allowed',
@@ -31,7 +32,9 @@ const handler = async (event) => {
     const ipAddress = event.headers['x-forwarded-for'];
     await Visit.create({ ipAddress: ipAddress })
       .then(() => console.log('Adres IP zapisany pomyślnie.'))
-      .catch(err => console.error('Błąd podczas zapisywania adresu IP:', err))
+      .catch(err => {
+        console.error('Error saving IP address:', err);
+      });
 
     const results = await Item.find()
     const items = results.map((item) => ({
@@ -48,6 +51,7 @@ const handler = async (event) => {
       body: JSON.stringify(items),
     }
   } catch (error) {
+    console.error('Error fetching data:', error);
     return {
       statusCode: 500,
       body: error.toString()

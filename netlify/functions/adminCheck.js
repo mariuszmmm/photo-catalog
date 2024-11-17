@@ -20,10 +20,12 @@ async function adminCheck() {
       });
 
       await newAdmin.save();
-      console.log('Utworzono konto administratora');
+      console.log('Konto administratora zostało utworzone pomyślnie.');
+    } else {
+      console.log('Konto administratora już istnieje.');
     }
   } catch (err) {
-    console.error('Błąd podczas sprawdzania lub tworzenia konta administratora:', err);
+    console.error('Błąd podczas sprawdzania lub tworzenia konta administratora:', err.message);
   }
 }
 

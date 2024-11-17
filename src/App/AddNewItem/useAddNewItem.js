@@ -67,7 +67,8 @@ const useAddNewItem = (state, setState) => {
         }
       );
     } catch (err) {
-      alert("error in handleAddNewItem: ")
+      alert("Wystąpił błąd podczas dodawania nowego elementu.");
+      console.error("An error occurred while adding a new item:", err);
     };
   };
 
@@ -81,6 +82,7 @@ const useAddNewItem = (state, setState) => {
         }
       );
       headerRef.current.focus();
+      alert("Proszę podać tytuł.");
       return
     }
     handleAddNewItem();

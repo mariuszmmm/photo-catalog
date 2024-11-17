@@ -24,10 +24,11 @@ const usePasswordChange = (state, setLoading, setShowBackdrop) => {
         setShowBackdrop(null);
       };
     } catch (error) {
-      console.error(error);
+      console.error("Error changing password:", error);
+      alert("Wystąpił błąd podczas zmiany hasła. Spróbuj ponownie później.");
     } finally {
       setLoading(false);
-    };
+    }
   };
 
   return {

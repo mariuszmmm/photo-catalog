@@ -42,8 +42,14 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
     }));
   };
 
-  const onEditedItemFileChange = (event) => {
+  const onEditedItemFileChange = (event, InputFileRef) => {
     const targetFile = event.target.files[0]
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/bmp"];
+    if (!allowedMimeTypes.includes(targetFile.type)) {
+      alert("Nieprawidłowy format pliku. Dozwolone formaty: JPEG, PNG, GIF, WebP, BMP.")
+      InputFileRef.current.value = "";
+      return
+    }
     setEditedItem(
       {
         ...editedItem,
@@ -55,27 +61,27 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
   };
 
   const saveEditedItem = async () => {
-    let jsonData = {};
+    let response = null;
     if (editedItem.file) {
-      await deleteItemImageAPI({ id: editedItem.id });
-
-      const response = await sendImageToCloudinary(editedItem.file)
-
-      jsonData = {
+      try {
+        await deleteItemImageAPI({ id: editedItem.id });
+        response = await sendImageToCloudinary(editedItem.file);
+      } catch (err) {
+        console.error("Error deleting or uploading image:", err);
+        alert("Wystąpił błąd podczas obsługi obrazu.");
+        return;
+      }
+    }
+    const jsonData = {
+      header: editedItem.header,
+      content: editedItem.content,
+      id: editedItem.id,
+      ...(response && {
         image: response?.imageId || null,
         url: response?.url || null,
         downloadUrl: response?.downloadUrl || null,
-        header: editedItem.header,
-        content: editedItem.content,
-        id: editedItem.id
-      };
-    } else {
-      jsonData = {
-        header: editedItem.header,
-        content: editedItem.content,
-        id: editedItem.id
-      };
-    }
+      })
+    };
 
     try {
       const res = await saveEditedItemAPI(jsonData);
@@ -90,7 +96,8 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
       );
       setEditedItem({ ...initState });
     } catch (err) {
-      alert("error in saveEditedItem: ")
+      console.error("Error in saveEditedItem:", err);
+      alert("Błąd podczas zapisywania zmienionego elementu.");
     }
   };
 
@@ -125,7 +132,8 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
         }
       );
     } catch (err) {
-      alert("error in onDeleteItemClick: ")
+      console.error("Error in onDeleteItemClick:", err);
+      alert("Błąd podczas usuwania elementu.");
     }
   };
 
@@ -143,7 +151,8 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
         }
       );
     } catch (err) {
-      alert("error in onDeleteItemImageClick: ")
+      console.error("Error in onDeleteItemImageClick:", err);
+      alert("Błąd podczas usuwania obrazu elementu.");
     }
   };
 

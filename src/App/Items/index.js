@@ -10,12 +10,13 @@ import ButtonLink from "../../common/ButtonLink";
 import ButtonsContainer from "../../common/ButtonsContainer";
 import SectionItems from "../../common/SectionItems";
 import Input from "../../common/Input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Confirmation from "./Confirmation";
 import ExampleItems from "./ExampleItems";
 
 const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
   const [confirmation, setConfirmation] = useState({ state: null });
+  const InputFileRef = useRef(null);
   const {
     headerEditRef,
     editedItem,
@@ -79,7 +80,7 @@ const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
                       onChange={onEditedItemChange}
                       $edited
                     />
-                    <InputFile type="file" onChange={(event) => onEditedItemFileChange(event, item._id)} />
+                    <InputFile type="file" ref={InputFileRef} onChange={(event) => onEditedItemFileChange(event, InputFileRef)} />
                     <ButtonsContainer>
                       <Button type="button" onClick={() => confirm(onDeleteItemImageClick, item._id)} disabled={!item.image}>
                         Usuń zdjęcie

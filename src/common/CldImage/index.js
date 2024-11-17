@@ -1,11 +1,12 @@
+import React from 'react';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { lazyload, placeholder, responsive } from '@cloudinary/react';
 import { StyledAdvancedImage } from './styled';
 
-const CldImage = ({ public_id, alt }) => {
+const CldImage = React.memo(({ public_id, alt }) => {
   const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
   const cld = new Cloudinary({ cloud: { cloudName } });
-
+  console.log("test")
   const img = cld.image(public_id)
     .format('auto')
     .quality('auto')
@@ -23,6 +24,6 @@ const CldImage = ({ public_id, alt }) => {
       />
     </div >
   )
-};
+});
 
 export default CldImage

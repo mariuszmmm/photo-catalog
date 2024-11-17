@@ -12,7 +12,8 @@ export const useFilesList = (setFiles, setLoading, setShowBackdrop) => {
         setFiles({ ...response })
       };
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching files list:", error);
+      alert("Wystąpił błąd podczas próby pobrania listy plików. Spróbuj ponownie później.");
     } finally {
       setLoading(false);
     };

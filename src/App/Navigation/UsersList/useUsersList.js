@@ -12,7 +12,8 @@ export const useUsersList = (setUsers, setLoading, setShowBackdrop) => {
         setUsers([...users])
       };
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching users list:", error);
+      alert("Wystąpił błąd podczas pobierania listy użytkowników. Spróbuj ponownie.");
     } finally {
       setLoading(false);
     };

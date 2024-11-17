@@ -2,6 +2,7 @@ const User = require('./models/User')
 
 const handler = async (event) => {
   if (event.httpMethod !== 'GET') {
+    console.error('Method Not Allowed');
     return {
       statusCode: 405,
       body: 'Method Not Allowed',

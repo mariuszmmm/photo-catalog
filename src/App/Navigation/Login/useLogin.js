@@ -38,10 +38,11 @@ const useLogin = (setState, setSession, setLoading, setShowBackdrop) => {
         setShowBackdrop(null);
       };
     } catch (error) {
-      console.error(error);
+      console.error("Error during login:", error);
+      alert("Wystąpił błąd podczas logowania. Sprawdź swoje dane logowania i spróbuj ponownie.");
     } finally {
       setLoading(false);
-    };
+    }
   };
 
   return {

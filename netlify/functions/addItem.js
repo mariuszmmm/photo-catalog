@@ -4,6 +4,7 @@ const Item = require("./models/Item");
 const handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') {
+      console.error("HTTP method not allowed. Expected POST.");
       return {
         statusCode: 405,
         body: JSON.stringify({ message: 'Method Not Allowed' }),
@@ -25,7 +26,7 @@ const handler = async (event) => {
       body: JSON.stringify(newItem),
     };
   } catch (error) {
-    console.error("Błąd przy dodawaniu nowego elementu: ", error);
+    console.error("Error while adding a new item: ", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: 'Internal Server Error' }),
