@@ -60,14 +60,15 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
     convertToBase64(targetFile, setEditedItem);
   };
 
-  const saveEditedItem = async () => {
+  const saveEditedItem = async (setItemSaving) => {
+    setItemSaving(true);
     let response = null;
     if (editedItem.file) {
       try {
         await deleteItemImageAPI({ id: editedItem.id });
         response = await sendImageToCloudinary(editedItem.file);
       } catch (err) {
-        console.error("Error deleting or uploading image:", err);
+        console.error("Error itemDeleting or uploading image:", err);
         alert("Wystąpił błąd podczas obsługi obrazu.");
         return;
       }
@@ -88,20 +89,17 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
       const newItems = state.items.map((item) => (
         item._id !== res.data._id ? item : res.data
       ));
-      setState(
-        {
-          ...state,
-          items: newItems,
-        }
-      );
+      setState({ ...state, items: newItems });
       setEditedItem({ ...initState });
     } catch (err) {
       console.error("Error in saveEditedItem:", err);
       alert("Błąd podczas zapisywania zmienionego elementu.");
+    } finally {
+      setItemSaving(false);
     }
   };
 
-  const onSaveEditedItemClick = () => {
+  const onSaveEditedItemClick = (setItemSaving) => {
     if (editedItem.header.trim() === "") {
       setEditedItem(
         {
@@ -113,14 +111,15 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
       headerEditRef.current.focus();
       return
     }
-    saveEditedItem();
+    saveEditedItem(setItemSaving);
   };
 
   const onCancelEditedItemClick = () => {
     setEditedItem({ ...initState })
   };
 
-  const onDeleteItemClick = async (id) => {
+  const onDeleteItemClick = async (id, setStatus) => {
+    setStatus(true);
     const jsonData = { data: { id } };
     try {
       await deleteItemAPI(jsonData);
@@ -134,13 +133,15 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
     } catch (err) {
       console.error("Error in onDeleteItemClick:", err);
       alert("Błąd podczas usuwania elementu.");
+    } finally {
+      setStatus(false);
     }
   };
 
-  const onDeleteItemImageClick = async (id) => {
-    const jsonData = { id };
+  const onDeleteItemImageClick = async (id, setImageDeleting) => {
+    setImageDeleting(true);
     try {
-      await deleteItemImageAPI(jsonData)
+      await deleteItemImageAPI({ id })
       const newItems = state.items.map((item) => (
         item._id === id ? { ...item, image: null } : item));
 
@@ -153,12 +154,14 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
     } catch (err) {
       console.error("Error in onDeleteItemImageClick:", err);
       alert("Błąd podczas usuwania obrazu elementu.");
+    } finally {
+      setImageDeleting(false);
     }
   };
 
-  const confirm = (calback, id) => {
-    if (confirmation.state === null) {
-      setConfirmation({ state: false, calback, id });
+  const confirm = (calback, id, setStatus) => {
+    if (confirmation.state === false) {
+      setConfirmation({ state: false, calback, id, setStatus });
     }
   };
 

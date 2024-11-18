@@ -25,7 +25,7 @@ export default styled.button`
 
     &:disabled{
       background-color: #d9c3a700;
-      cursor: auto;
+      cursor: not-allowed;
     }
 
     &:disabled:active{

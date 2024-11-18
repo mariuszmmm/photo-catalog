@@ -3,7 +3,7 @@ import ItemContainer from "../../common/ItemContainer";
 import Textarea from "../../common/Textarea";
 import useItems from "./useItems";
 import { Backdrop } from "../../common/Backdrop";
-import InputFile from "../../common/InputFile";
+import InputFile, { InputFileWrapper } from "../../common/InputFile";
 import ImageItem from "./ImageItem";
 import AddNewItem from "../AddNewItem";
 import ButtonLink from "../../common/ButtonLink";
@@ -13,10 +13,14 @@ import Input from "../../common/Input";
 import { useRef, useState } from "react";
 import Confirmation from "./Confirmation";
 import ExampleItems from "./ExampleItems";
+import { Loader } from "../../common/Loader";
 
 const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
-  const [confirmation, setConfirmation] = useState({ state: null });
+  const [confirmation, setConfirmation] = useState({ state: false });
   const InputFileRef = useRef(null);
+  const [itemSaving, setItemSaving] = useState(false);
+  const [itemDeleting, setItemDeleting] = useState(false);
+  const [imageDeleting, setImageDeleting] = useState(false);
   const {
     headerEditRef,
     editedItem,
@@ -32,12 +36,16 @@ const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
   const { loading } = state;
   const { isLoggedIn, isAdmin } = state.user;
   const items = state.search ? state.filteredItems : state.items;
-
   return (
     <>
       {loading &&
         <Backdrop>ŁADOWANIE ...</Backdrop>}
-      {confirmation.state === false && <Confirmation confirmation={confirmation} setConfirmation={setConfirmation} />}
+      {confirmation.calback &&
+        <Confirmation
+          query="Napewno usunąć ?"
+          confirmation={confirmation}
+          setConfirmation={setConfirmation}
+        />}
       {isAdmin &&
         <AddNewItem
           state={state}
@@ -71,24 +79,46 @@ const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
                       type="text"
                       name="header"
                       value={editedItem.header}
+                      disabled={itemSaving || imageDeleting}
                       onChange={onEditedItemChange}
                     />
                     <Textarea
                       type="text"
                       name="content"
                       value={editedItem.content}
+                      disabled={itemSaving || imageDeleting}
                       onChange={onEditedItemChange}
                       $edited
                     />
-                    <InputFile type="file" ref={InputFileRef} onChange={(event) => onEditedItemFileChange(event, InputFileRef)} />
+                    <InputFileWrapper>
+                      <InputFile
+                        type="file"
+                        ref={InputFileRef}
+                        disabled={itemSaving || imageDeleting}
+                        onChange={(event) => onEditedItemFileChange(event, InputFileRef)}
+                      />
+                      <Loader loading={itemSaving || imageDeleting} />
+                    </InputFileWrapper>
                     <ButtonsContainer>
-                      <Button type="button" onClick={() => confirm(onDeleteItemImageClick, item._id)} disabled={!item.image}>
+                      <Button
+                        type="button"
+                        disabled={!item.image || itemSaving || imageDeleting}
+                        onClick={() => confirm(onDeleteItemImageClick, item._id, setImageDeleting)}
+                      >
                         Usuń zdjęcie
                       </Button>
-                      <Button type="button" onClick={() => onSaveEditedItemClick(item._id)}>
+                      <Button
+                        type="button"
+                        disabled={itemSaving || imageDeleting}
+                        onClick={() => onSaveEditedItemClick(setItemSaving)}
+                      >
                         Zapisz
                       </Button>
-                      <Button type="button" onClick={() => onCancelEditedItemClick(item._id)}>
+                      <Button
+                        type="button"
+                        disabled={itemSaving || imageDeleting}
+                        onClick={() => onCancelEditedItemClick()}
+                      >
                         Anuluj
                       </Button>
                     </ButtonsContainer>
@@ -98,13 +128,24 @@ const Items = ({ state, setState, showBackdrop, setShowBackdrop }) => {
                     <h2>{index + 1}. {item.header}</h2>
                     <p>{item.content}</p>
                     <ButtonsContainer>
-                      <ButtonLink href={item.downloadUrl} disabled={!item.image}>
+                      <ButtonLink
+                        href={item.downloadUrl}
+                        disabled={!item.image || itemDeleting}
+                      >
                         Pobierz plik
                       </ButtonLink>
-                      <Button type="button" onClick={() => onEditItemClick(item._id, item.header, item.content, index)} disabled={editedItem.id}>
+                      <Button
+                        type="button"
+                        disabled={editedItem.id || itemDeleting}
+                        onClick={() => onEditItemClick(item._id, item.header, item.content, index)}
+                      >
                         Edytuj
                       </Button>
-                      <Button type="button" onClick={() => confirm(onDeleteItemClick, item._id)} disabled={editedItem.id}>
+                      <Button
+                        type="button"
+                        disabled={editedItem.id || itemDeleting}
+                        onClick={() => confirm(onDeleteItemClick, item._id, setItemDeleting)}
+                      >
                         Usuń
                       </Button>
                     </ButtonsContainer>

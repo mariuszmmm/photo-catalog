@@ -85,7 +85,7 @@ export const useFetch = () => {
       return await axios.put("/items/edit", jsonData)
     } catch (err) {
       alert("Błąd przy zapisie edytowanego elementu.");
-      console.error("Error saving edited item:", err);
+      console.error("Error itemSaving edited item:", err);
     }
   };
 
@@ -94,7 +94,7 @@ export const useFetch = () => {
       return await axios.delete("/items/delete", jsonData);
     } catch (err) {
       alert("Błąd przy usuwaniu elementu.");
-      console.error("Error deleting item:", err);
+      console.error("Error itemDeleting item:", err);
     }
   };
 
@@ -103,7 +103,7 @@ export const useFetch = () => {
       return await axios.put("/items/deleteImage", jsonData);
     } catch (err) {
       alert("Błąd przy usuwaniu obrazu elementu.");
-      console.error("Error deleting item image:", err);
+      console.error("Error itemDeleting item image:", err);
     }
   };
 

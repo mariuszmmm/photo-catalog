@@ -27,7 +27,7 @@ const handler = async (event) => {
       if (destroyResult.result === 'not found') {
         console.error("No image found to delete");
       } else if (destroyResult.result !== 'ok') {
-        console.error("Error while deleting image: ", destroyResult);
+        console.error("Error while itemDeleting image: ", destroyResult);
       };
     };
 
@@ -48,7 +48,7 @@ const handler = async (event) => {
     };
 
   } catch (error) {
-    console.error("Error while deleting the item: ", error);
+    console.error("Error while itemDeleting the item: ", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: 'Błąd w usuwaniu elementu' }),

@@ -31,7 +31,7 @@ const handler = async (event) => {
           body: JSON.stringify({ message: "Brak obrazu do usunięcia" }),
         };
       } else if (destroyResult.result !== 'ok') {
-        console.error("Error while deleting image: ", destroyResult);
+        console.error("Error while itemDeleting image: ", destroyResult);
         return {
           statusCode: 500,
           body: JSON.stringify({ message: "Błąd przy usuwaniu obrazu" }),
@@ -51,7 +51,7 @@ const handler = async (event) => {
     };
 
   } catch (error) {
-    console.error("Error while deleting image: ", error);
+    console.error("Error while itemDeleting image: ", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: "Błąd przy usuwaniu obrazu" }),

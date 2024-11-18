@@ -33,7 +33,7 @@ const handler = async (event) => {
     await Visit.create({ ipAddress: ipAddress })
       .then(() => console.log('Adres IP zapisany pomyślnie.'))
       .catch(err => {
-        console.error('Error saving IP address:', err);
+        console.error('Error itemSaving IP address:', err);
       });
 
     const results = await Item.find()

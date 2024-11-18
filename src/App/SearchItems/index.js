@@ -18,7 +18,7 @@ const SearchItems = ({ state, setState }) => {
   return (
     <Container>
       <InfoContainer>
-        <Info>Wszystkich elementy: {state.items.length}  </Info>
+        <Info>Wszystkie elementy: {state.items.length}  </Info>
         {state.search && <Info>Znalezione elementy: {state.filteredItems.length}</Info>}
       </InfoContainer>
       <SearchContainer onSubmit={onSearchSubmit}>

@@ -12,7 +12,7 @@ const useExampleItems = (state, setState, setShowBackdrop) => {
       setShowBackdrop(null)
       await fetchData(setState, getItemAPI);
     } catch (error) {
-      console.log(error)
+      console.error(error);
     };
   };
 
