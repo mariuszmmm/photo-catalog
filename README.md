@@ -1,4 +1,4 @@
-# 📸 Photo Catalog - Frontend
+# 📸 Photo Catalog 
 
 ## Description
 "Photo Catalog" is an application that allows you to browse, filter, and manage a catalog of photos. The application was built using React with state managed by `useState`.
@@ -34,7 +34,7 @@
 - npm
 
 ## Demo
-The application is available at: [https://mariuszmmm.github.io/photo-catalog/](https://mariuszmmm.github.io/photo-catalog/)
+The application is available at: [https://photocatalog.netlify.app](https://photocatalog.netlify.app)
 
 ## Login Details
 - **Administrator**
@@ -44,5 +44,13 @@ The application is available at: [https://mariuszmmm.github.io/photo-catalog/](h
   - login: `user`
   - password: `user#`
 
-## Backend Repository
-The backend of the application is in a separate repository: [https://github.com/mariuszmmm/photo-catalog-backend](https://github.com/mariuszmmm/photo-catalog-backend)
+
+## Backend and Deployment Status
+The application has been migrated to a serverless architecture and no longer uses a separate backend or the Railway server. Instead, serverless functions are hosted directly on Netlify.
+
+## Deployment Status
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a315cfe5-02a0-4fed-84b2-9ab82fe50d72/deploy-status)](https://app.netlify.com/sites/photocatalog/deploys)
+
+
+You can access the live application [here](https://photocatalog.netlify.app).
+
