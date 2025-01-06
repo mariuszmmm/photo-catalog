@@ -10,8 +10,9 @@ const App = () => {
   const [state, setState] = useState({
     loading: null,
     user: {},
-    sessionTime: {},
     items: [],
+    search: false,
+    filteredItems: [],
     visitCount: undefined,
   });
 
@@ -28,7 +29,10 @@ const App = () => {
         showBackdrop={showBackdrop}
         setShowBackdrop={setShowBackdrop}
       />
-      <SearchItems state={state} setState={setState} />
+      <SearchItems
+        state={state}
+        setState={setState}
+      />
       <Container>
         <Header>Foto Katalog</Header>
         <Items

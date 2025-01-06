@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { createFormData } from "../utils/createFormData";
 import { useFetch } from "../Fetch/useFetch";
 import { convertToBase64 } from "../utils/convertToBase64";
+import { sendImageToCloudinary } from "../utils/sendImageToCloudinary";
 
 const useAddNewItem = (state, setState) => {
   const headerRef = useRef(null);
@@ -12,7 +12,9 @@ const useAddNewItem = (state, setState) => {
       content: "",
       file: null,
       image: null,
-      targetImage: null
+      targetImage: null,
+      url: null,
+      downloadUrl: null,
     }
   );
   const { sendItemAPI } = useFetch();
@@ -27,21 +29,39 @@ const useAddNewItem = (state, setState) => {
   };
 
   const onNewItemFileChange = (event) => {
-    const targetFile = event.target.files[0];
+    const file = event.target.files[0];
     setNewItem(
       {
         ...newItem,
-        file: targetFile,
+        file,
         targetImage: event.target,
       }
     );
-    convertToBase64(targetFile, setNewItem);
+    convertToBase64(file, setNewItem);
   };
 
   const handleAddNewItem = async () => {
-    const formData = createFormData(newItem.file, newItem.header, newItem.content);
+    const response = await sendImageToCloudinary(newItem.file)
+    let jsonData = {};
+
+    if (newItem.file && response) {
+      const { imageId, url, downloadUrl } = response
+      jsonData = {
+        header: newItem.header,
+        content: newItem.content,
+        image: imageId,
+        url,
+        downloadUrl,
+      };
+    } else {
+      jsonData = {
+        header: newItem.header,
+        content: newItem.content,
+      };
+    };
+
     try {
-      const res = await sendItemAPI(formData)
+      const res = await sendItemAPI(jsonData);
       setState(
         {
           ...state,
@@ -49,7 +69,8 @@ const useAddNewItem = (state, setState) => {
         }
       );
     } catch (err) {
-      alert("error in handleAddNewItem: ")
+      alert("Wystąpił błąd podczas dodawania nowego elementu.");
+      console.error("An error occurred while adding a new item:", err);
     };
   };
 
@@ -63,6 +84,7 @@ const useAddNewItem = (state, setState) => {
         }
       );
       headerRef.current.focus();
+      alert("Proszę podać tytuł.");
       return
     }
     handleAddNewItem();
@@ -72,6 +94,8 @@ const useAddNewItem = (state, setState) => {
         content: "",
         file: null,
         image: null,
+        url: null,
+        downloadUrl: null,
       }
     )
     formRef.current.reset();

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFetch } from "../../Fetch/useFetch";
 
-export const useUserAdd = (setShowBackdrop) => {
+export const useUserAdd = (setLoading, setShowBackdrop) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { userAddAPI } = useFetch();
@@ -14,18 +14,29 @@ export const useUserAdd = (setShowBackdrop) => {
 
   const userAdd = async (event) => {
     event.preventDefault();
-    const response = await userAddAPI(username, password);
-    if (response) {
-      setUsername("");
-      setPassword("");
-      setShowBackdrop("userAdd");
+    try {
+      setLoading(true);
+      const response = await userAddAPI(username, password);
+      if (response) {
+        setUsername("");
+        setPassword("");
+        response.status === 201 && setShowBackdrop(null);
+      };
+    } catch (error) {
+      console.error("Error adding user:", error);
+      alert("Wystąpił błąd podczas dodawania użytkownika. Spróbuj ponownie.");
+    } finally {
+      setLoading(false);
     };
   };
+
 
   return {
     username,
     password,
     userAdd,
     setInputChange,
+    setUsername,
+    setPassword,
   }
 };

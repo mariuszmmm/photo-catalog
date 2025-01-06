@@ -1,29 +1,30 @@
 import axios from "axios";
-import { API_URL } from "../api";
 import { jwtDecode } from "jwt-decode";
 import { getSessionStorage, setSessionStorage } from "../utils/sessionStorage";
 
 export const useFetch = () => {
-
   const getItemAPI = async () => {
     try {
-      return await (axios.get(`${API_URL}/items`))
+      const response = await axios.get("/items");
+      return response.data;
     } catch (err) {
-      alert("error: Brak połączenia z serwerem.")
+      alert("Błąd: Brak połączenia z serwerem.");
+      console.error("Error fetching items:", err);
     }
   };
 
   const exampleItemsAPI = async () => {
     try {
-      await (axios.get(`${API_URL}/example`))
+      await axios.get("/example")
     } catch (err) {
-      alert("error in exampleItemsAPI:")
+      alert("Błąd w exampleItemsAPI: Brak połączenia.");
+      console.error("Error in exampleItemsAPI:", err);
     }
   };
 
   const loginAPI = async (username, password) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, { username, password })
+      const response = await axios.post("/login", { username, password });
       const { token, visitCount } = response.data;
       const decodedToken = token && jwtDecode(token);
       if (decodedToken) {
@@ -32,7 +33,8 @@ export const useFetch = () => {
         return { decodedToken, visitCount }
       };
     } catch (error) {
-      alert(error.response.data.message);
+      alert(`Błąd logowania: ${error.response.data.message}`);
+      console.error("Login error:", error);
     };
   };
 
@@ -40,15 +42,15 @@ export const useFetch = () => {
     try {
       const token = getSessionStorage("token")
       const response = await axios.post(
-        `${API_URL}/user/add`,
+        "/user/add",
         { username, password },
         { headers: { Authorization: token } }
       );
       alert(response.data.message)
-
       return response;
     } catch (error) {
-      alert(error.response.data.message);
+      alert(`Błąd przy dodawaniu użytkownika: ${error.response.data.message}`);
+      console.error("Error adding user:", error);
     }
   };
 
@@ -56,7 +58,7 @@ export const useFetch = () => {
     try {
       const token = getSessionStorage("token")
       const response = await axios.post(
-        `${API_URL}/user/password`,
+        "/user/password",
         { username, password, newPassword },
         { headers: { Authorization: token } }
       );
@@ -64,57 +66,65 @@ export const useFetch = () => {
 
       return response
     } catch (error) {
-      alert(error.response.data.message)
+      alert(`Błąd przy zmianie hasła: ${error.response.data.message}`);
+      console.error("Error changing password:", error);
     }
   };
 
-  const sendItemAPI = async (item) => {
+  const sendItemAPI = async (jsonData) => {
     try {
-      return await axios.post(`${API_URL}/items`, item)
+      return await axios.post("/items/add", jsonData)
     } catch (err) {
-      alert("error in sendItemAPI: ")
+      alert("Błąd przy dodawaniu elementu.");
+      console.error("Error adding item:", err);
     }
   };
 
-  const saveEditedItemAPI = async (item, id) => {
+  const saveEditedItemAPI = async (jsonData) => {
     try {
-      return await axios.put(`${API_URL}/items/${id}`, item)
+      return await axios.put("/items/edit", jsonData)
     } catch (err) {
-      alert("error in saveEditedItemAPI: ")
+      alert("Błąd przy zapisie edytowanego elementu.");
+      console.error("Error itemSaving edited item:", err);
     }
   };
 
-  const deleteItemAPI = async (id) => {
+  const deleteItemAPI = async (jsonData) => {
     try {
-      return await axios.delete(`${API_URL}/items/${id}`);
+      return await axios.delete("/items/delete", jsonData);
     } catch (err) {
-      alert("error in deleteItemAPI: ")
+      alert("Błąd przy usuwaniu elementu.");
+      console.error("Error itemDeleting item:", err);
     }
   };
 
-  const deleteItemImageAPI = async (id) => {
+  const deleteItemImageAPI = async (jsonData) => {
     try {
-      return await axios.put(`${API_URL}/items/${id}/removeImage`);
+      return await axios.put("/items/deleteImage", jsonData);
     } catch (err) {
-      alert("errorr in deleteItemImageAPI: ")
+      alert("Błąd przy usuwaniu obrazu elementu.");
+      console.error("Error itemDeleting item image:", err);
     }
   };
 
   const getFilesListAPI = async () => {
     try {
-      return await (axios.get(`${API_URL}/files`))
+      const response = await (axios.get("/files"));
+      return response.data;
     } catch (err) {
-      alert("error in getFilesListAPI: ")
+      alert("Błąd przy pobieraniu listy plików.");
+      console.error("Error fetching files list:", err);
     }
   };
 
   const getUsersListAPI = async () => {
     try {
-      const response = await (axios.get(`${API_URL}/users`))
+      const response = await (axios.get("/users"))
       const users = response.data.map((item) => item.username);
       return users;
     } catch (err) {
-      alert("error in getUsersListAPI: ")
+      alert("Błąd przy pobieraniu listy użytkowników.");
+      console.error("Error fetching users list:", err);
     }
   };
 

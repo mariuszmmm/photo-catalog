@@ -3,14 +3,17 @@ import { Container, Form, Input, Label } from '../../../common/Modal';
 import { Backdrop } from "../../../common/Backdrop";
 import { useUserAdd } from './useUserAdd';
 import ButtonsContainer from '../../../common/ButtonsContainer';
+import { Loader } from '../../../common/Loader';
+import { useState } from 'react';
 
 const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
+  const [loading, setLoading] = useState(false);
   const {
     username,
     password,
     userAdd,
-    setInputChange,
-  } = useUserAdd(setShowBackdrop);
+    setInputChange
+  } = useUserAdd(setLoading, setShowBackdrop);
 
   return (
     <>
@@ -18,6 +21,8 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
       {showBackdrop === "userAdd" &&
         <Backdrop>
           <Form onSubmit={userAdd}>
+            {loading && <Loader />}
+            <h1>Dodaj użytkownika</h1>
             <Container>
               <Label>login:</Label>
               <Input
@@ -25,8 +30,8 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
                 placeholder="username"
                 name="username"
                 value={username}
-                autoComplete="username"
                 onChange={setInputChange}
+                disabled={loading}
               />
             </Container>
             <Container>
@@ -36,13 +41,13 @@ const UserAdd = ({ showBackdrop, setShowBackdrop }) => {
                 placeholder="password"
                 name="password"
                 value={password}
-                autoComplete="current-password"
                 onChange={setInputChange}
+                disabled={loading}
               />
             </Container>
             <ButtonsContainer>
-              <Button type="submit" >Zapisz</Button>
-              <Button type="button" onClick={() => setShowBackdrop(null)} >Anuluj</Button>
+              <Button type="submit" disabled={loading}>Zapisz</Button>
+              <Button type="button" onClick={() => setShowBackdrop(null)}>Anuluj</Button>
             </ButtonsContainer>
           </Form>
         </Backdrop>}

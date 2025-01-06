@@ -3,6 +3,6 @@ export const logout = (setState) => {
   setState((prevState) => ({
     ...prevState,
     user: {},
-    sessionTime: {},
+    session: {},
   }));
 };

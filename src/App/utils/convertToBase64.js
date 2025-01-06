@@ -1,7 +1,6 @@
-//convert to base64encoded (string)
-export const convertToBase64 = (targetFile, set) => {
+export const convertToBase64 = (file, set) => {
   const reader = new FileReader();
-  reader.readAsDataURL(targetFile);
+  reader.readAsDataURL(file);
   reader.onload = () => {
     set((prevState) => (
       {
@@ -11,6 +10,7 @@ export const convertToBase64 = (targetFile, set) => {
     ));
   };
   reader.onerror = error => {
-    alert("error in convertToBase64: ", error)
+    console.error("Error in convertToBase64:", error);
+    alert("Wystąpił błąd podczas konwersji pliku na base64.");
   };
 };

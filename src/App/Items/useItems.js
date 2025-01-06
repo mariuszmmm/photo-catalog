@@ -1,21 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { useFetch } from "../Fetch/useFetch";
 import { convertToBase64 } from "../utils/convertToBase64";
-import { createFormData } from "../utils/createFormData";
 import { fetchData } from "./fetchData"
+import { sendImageToCloudinary } from "../utils/sendImageToCloudinary";
 
 const useItems = (state, setState, confirmation, setConfirmation) => {
   const headerEditRef = useRef(null);
-  const [editedItem, setEditedItem] = useState(
-    {
-      id: null,
-      header: "",
-      content: "",
-      file: null,
-      image: null,
-      targetImage: null
-    }
-  );
+  const initState = {
+    id: null,
+    header: "",
+    content: "",
+    file: null,
+    image: null,
+    targetImage: null,
+    url: null,
+    downloadUrl: null,
+  };
+  const [editedItem, setEditedItem] = useState({ ...initState });
   const {
     getItemAPI,
     saveEditedItemAPI,
@@ -25,21 +26,30 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
 
   const onEditItemClick = (id, header, content) => {
     setEditedItem({
-      ...editedItem, id, header, content
+      ...editedItem,
+      id,
+      header,
+      content
     });
   };
 
   const onEditedItemChange = ({ target }) => {
     const { name, value } = target;
 
-    setEditedItem({
-      ...editedItem,
+    setEditedItem((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
-  const onEditedItemFileChange = (event) => {
+  const onEditedItemFileChange = (event, InputFileRef) => {
     const targetFile = event.target.files[0]
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/bmp"];
+    if (!allowedMimeTypes.includes(targetFile.type)) {
+      alert("Nieprawidłowy format pliku. Dozwolone formaty: JPEG, PNG, GIF, WebP, BMP.")
+      InputFileRef.current.value = "";
+      return
+    }
     setEditedItem(
       {
         ...editedItem,
@@ -50,35 +60,46 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
     convertToBase64(targetFile, setEditedItem);
   };
 
-  const saveEditedItem = async () => {
-    const formData = createFormData(editedItem.file, editedItem.header, editedItem.content)
+  const saveEditedItem = async (setItemSaving) => {
+    setItemSaving(true);
+    let response = null;
+    if (editedItem.file) {
+      try {
+        await deleteItemImageAPI({ id: editedItem.id });
+        response = await sendImageToCloudinary(editedItem.file);
+      } catch (err) {
+        console.error("Error itemDeleting or uploading image:", err);
+        alert("Wystąpił błąd podczas obsługi obrazu.");
+        return;
+      }
+    }
+    const jsonData = {
+      header: editedItem.header,
+      content: editedItem.content,
+      id: editedItem.id,
+      ...(response && {
+        image: response?.imageId || null,
+        url: response?.url || null,
+        downloadUrl: response?.downloadUrl || null,
+      })
+    };
+
     try {
-      const res = await saveEditedItemAPI(formData, editedItem.id);
+      const res = await saveEditedItemAPI(jsonData);
       const newItems = state.items.map((item) => (
         item._id !== res.data._id ? item : res.data
       ));
-      setState(
-        {
-          ...state,
-          items: newItems,
-        }
-      );
-      setEditedItem(
-        {
-          id: null,
-          header: "",
-          content: "",
-          file: null,
-          image: null,
-          targetImage: null
-        }
-      );
+      setState({ ...state, items: newItems });
+      setEditedItem({ ...initState });
     } catch (err) {
-      alert("error in saveEditedItem: ")
+      console.error("Error in saveEditedItem:", err);
+      alert("Błąd podczas zapisywania zmienionego elementu.");
+    } finally {
+      setItemSaving(false);
     }
   };
 
-  const onSaveEditedItemClick = () => {
+  const onSaveEditedItemClick = (setItemSaving) => {
     if (editedItem.header.trim() === "") {
       setEditedItem(
         {
@@ -90,25 +111,18 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
       headerEditRef.current.focus();
       return
     }
-    saveEditedItem();
+    saveEditedItem(setItemSaving);
   };
 
   const onCancelEditedItemClick = () => {
-    setEditedItem(
-      {
-        id: null,
-        header: "",
-        content: "",
-        file: null,
-        image: null,
-        targetImage: null
-      }
-    )
+    setEditedItem({ ...initState })
   };
 
-  const onDeleteItemClick = async (id) => {
+  const onDeleteItemClick = async (id, setStatus) => {
+    setStatus(true);
+    const jsonData = { data: { id } };
     try {
-      await deleteItemAPI(id);
+      await deleteItemAPI(jsonData);
       const newItems = state.items.filter((item) => item._id !== id);
       setState(
         {
@@ -117,13 +131,17 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
         }
       );
     } catch (err) {
-      alert("error in onDeleteItemClick: ")
+      console.error("Error in onDeleteItemClick:", err);
+      alert("Błąd podczas usuwania elementu.");
+    } finally {
+      setStatus(false);
     }
   };
 
-  const onDeleteItemImageClick = async (id) => {
+  const onDeleteItemImageClick = async (id, setImageDeleting) => {
+    setImageDeleting(true);
     try {
-      await deleteItemImageAPI(id)
+      await deleteItemImageAPI({ id })
       const newItems = state.items.map((item) => (
         item._id === id ? { ...item, image: null } : item));
 
@@ -134,13 +152,16 @@ const useItems = (state, setState, confirmation, setConfirmation) => {
         }
       );
     } catch (err) {
-      alert("error in onDeleteItemImageClick: ")
+      console.error("Error in onDeleteItemImageClick:", err);
+      alert("Błąd podczas usuwania obrazu elementu.");
+    } finally {
+      setImageDeleting(false);
     }
   };
 
-  const confirm = (calback, id) => {
-    if (confirmation.state === null) {
-      setConfirmation({ state: false, calback, id });
+  const confirm = (calback, id, setStatus) => {
+    if (confirmation.state === false) {
+      setConfirmation({ state: false, calback, id, setStatus });
     }
   };
 

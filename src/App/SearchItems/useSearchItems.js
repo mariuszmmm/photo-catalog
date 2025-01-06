@@ -4,10 +4,6 @@ const useSearchItem = (state, setState) => {
   const [searchValue, setSearchValue] = useState("");
   const inputRef = useRef();
 
-  const setSearchValueChange = ({ target }) => {
-    setSearchValue(target.value)
-  };
-
   const onSearchSubmit = (event) => {
     event.preventDefault();
 
@@ -17,27 +13,24 @@ const useSearchItem = (state, setState) => {
       return
     };
 
-    const filteredItems = state.items.map((item) => (
-      {
-        ...item,
-        filteredOut: !(item.header.toUpperCase().includes(searchValue.trim().toUpperCase())),
-      }
+    const filteredItems = state.items.filter((item) => (
+      item.header.toUpperCase().includes(searchValue.trim().toUpperCase())
     ));
-
     setState(
       {
         ...state,
-        items: filteredItems,
+        search: true,
+        filteredItems,
       }
     );
   };
 
   const onResetClick = () => {
-    const resetItems = state.items.map((item) => ({ ...item, filteredOut: false }));
     setState(
       {
         ...state,
-        items: resetItems,
+        search: false,
+        filteredItems: [],
       }
     );
     setSearchValue("");
@@ -46,7 +39,7 @@ const useSearchItem = (state, setState) => {
   return {
     inputRef,
     searchValue,
-    setSearchValueChange,
+    setSearchValue,
     onSearchSubmit,
     onResetClick,
   };

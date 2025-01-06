@@ -7,10 +7,13 @@ const useExampleItems = (state, setState, setShowBackdrop) => {
 
   const exampleItems = async (event) => {
     event.preventDefault();
-
-    await exampleItemsAPI();
-    setShowBackdrop(null)
-    await fetchData(setState, getItemAPI);
+    try {
+      await exampleItemsAPI();
+      setShowBackdrop(null)
+      await fetchData(setState, getItemAPI);
+    } catch (error) {
+      console.error(error);
+    };
   };
 
   useEffect(() => {

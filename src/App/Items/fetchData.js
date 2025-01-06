@@ -9,11 +9,12 @@ export const fetchData = async (setState, getItemAPI) => {
       setState((prevState) =>
       ({
         ...prevState,
-        items: [...items.data],
+        items: [...items],
       }));
     };
   } catch (err) {
-    alert("error in fetchData: ")
+    alert("Błąd przy pobieraniu danych.");
+    console.error("Error fetching data:", err);
   } finally {
     setState((prevState) => ({
       ...prevState,

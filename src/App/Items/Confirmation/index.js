@@ -4,22 +4,23 @@ import { Backdrop } from "../../../common/Backdrop";
 import ButtonsContainer from "../../../common/ButtonsContainer";
 
 
-const Confirmation = ({ confirmation, setConfirmation }) => {
+const Confirmation = ({ query, confirmation, setConfirmation }) => {
   const onConfirmationSubmit = (event) => {
     event.preventDefault();
 
-    confirmation.calback(confirmation.id);
-    setConfirmation({ state: null })
+    confirmation.calback(confirmation.id, confirmation.setStatus);
+    setConfirmation({ state: false })
   };
 
   const onCancelClick = () => {
-    setConfirmation({ state: null })
+    setConfirmation({ state: false })
   };
 
   return (
     <Backdrop>
       <Form onSubmit={onConfirmationSubmit}>
-        <h2>Napewno usunąć ?</h2>
+        <h2>{query}</h2>
+        <br />
         <ButtonsContainer>
           <Button type="submit">Tak</Button>
           <Button type="button" onClick={onCancelClick}>Nie</Button>

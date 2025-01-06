@@ -6,7 +6,7 @@ export default styled.div`
   gap: 10px;
   margin: 30px;
 
-  @media (max-width:600px){
+  @media (max-width:580px){
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     margin: 0;
   }
