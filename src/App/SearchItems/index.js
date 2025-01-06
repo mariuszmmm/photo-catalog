@@ -19,7 +19,7 @@ const SearchItems = ({ state, setState }) => {
     <Container>
       <InfoContainer>
         <Info>Wszystkie elementy: {state.items.length}  </Info>
-        {state.search && <Info>Znalezione elementy: {state.filteredItems.length}</Info>}
+        <Info $hide={!state.search}>Znalezione elementy: {state.filteredItems.length}</Info>
       </InfoContainer>
       <SearchContainer onSubmit={onSearchSubmit}>
         <Input

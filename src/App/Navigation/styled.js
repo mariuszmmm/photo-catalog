@@ -23,4 +23,8 @@ export const Info = styled.p`
   font-size: 1.2em ;
   min-width: max-content;
   margin: 0;
+
+  ${({ $hide }) => $hide && `
+    opacity: 0;
+  `}
 `;

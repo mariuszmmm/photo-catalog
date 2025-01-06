@@ -15,6 +15,8 @@ const useSearchItem = (state, setState) => {
 
     const filteredItems = state.items.filter((item) => (
       item.header.toUpperCase().includes(searchValue.trim().toUpperCase())
+      ||
+      item.content.toUpperCase().includes(searchValue.trim().toUpperCase())
     ));
     setState(
       {
